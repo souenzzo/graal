@@ -67,6 +67,9 @@ public class ReflectionRegistryAdapter implements ReflectionConfigurationParserD
     public TypeResult<ConditionalElement<Class<?>>> resolveType(ConfigurationCondition condition, String typeName) {
         String name = canonicalizeTypeName(typeName);
         TypeResult<Class<?>> clazz = classLoader.findClass(name);
+        if (!clazz.isPresent()) {
+            registry.register(condition, typeName, clazz.getException());
+        }
         return clazz.map(c -> new ConditionalElement<>(condition, c));
     }
 

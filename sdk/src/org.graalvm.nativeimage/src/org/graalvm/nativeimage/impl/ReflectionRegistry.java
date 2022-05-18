@@ -55,4 +55,7 @@ public interface ReflectionRegistry {
 
     void register(ConfigurationCondition condition, boolean finalIsWritable, Field... fields);
 
+    default void register(ConfigurationCondition condition, String typeName, Throwable t) {
+    }
+
 }

@@ -58,7 +58,7 @@ class ReflectionProcessor extends AbstractProcessor {
     public void processEntry(Map<String, ?> entry, ConfigurationSet configurationSet) {
         boolean invalidResult = Boolean.FALSE.equals(entry.get("result"));
         ConfigurationCondition condition = ConfigurationCondition.alwaysTrue();
-        if (invalidResult) {
+        if (invalidResult && !reportReflectiveFailure(entry)) {
             return;
         }
 
@@ -87,8 +87,12 @@ class ReflectionProcessor extends AbstractProcessor {
             if (isLoadClass) { // different array syntax
                 name = MetaUtil.internalNameToJava(MetaUtil.toInternalName(name), true, true);
             }
-            if (!advisor.shouldIgnore(lazyValue(name), lazyValue(callerClass)) &&
-                            !(isLoadClass && advisor.shouldIgnoreLoadClass(lazyValue(name), lazyValue(callerClass)))) {
+            if (!invalidResult) {
+                if (!advisor.shouldIgnore(lazyValue(name), lazyValue(callerClass)) &&
+                                !(isLoadClass && advisor.shouldIgnoreLoadClass(lazyValue(name), lazyValue(callerClass)))) {
+                    configuration.getOrCreateType(condition, name);
+                }
+            } else {
                 configuration.getOrCreateType(condition, name);
             }
             return;
@@ -300,5 +304,14 @@ class ReflectionProcessor extends AbstractProcessor {
         interfaces.addAll(checkedInterfaces);
         interfaces.addAll(uncheckedInterfaces);
         proxyConfiguration.add(ConfigurationCondition.alwaysTrue(), interfaces);
+    }
+
+    private boolean reportReflectiveFailure(Map<String, ?> entry) {
+        String function = (String) entry.get("function");
+        switch (function) {
+            case "forName":
+                return true;
+        }
+        return false;
     }
 }

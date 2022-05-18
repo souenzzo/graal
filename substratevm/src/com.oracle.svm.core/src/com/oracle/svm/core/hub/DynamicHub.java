@@ -1107,38 +1107,52 @@ public final class DynamicHub implements JavaKind.FormatWithToString, AnnotatedE
     private native Constructor<?> getEnclosingConstructor();
 
     @Substitute
-    public static Class<?> forName(String className) throws ClassNotFoundException {
+    public static Class<?> forName(String className) throws Throwable {
         Class<?> caller = Reflection.getCallerClass();
-        return forName(className, true, caller.getClassLoader());
+        return forNameImpl(className, true, caller.getClassLoader(), caller);
     }
 
     @Substitute //
-    public static Class<?> forName(@SuppressWarnings("unused") Module module, String className) {
+    public static Class<?> forName(@SuppressWarnings("unused") Module module, String className) throws Throwable {
         /*
          * The module system is not supported for now, therefore the module parameter is ignored and
          * we use the class loader of the caller class instead of the module's loader.
          */
         Class<?> caller = Reflection.getCallerClass();
         try {
-            return forName(className, false, caller.getClassLoader());
+            return forNameImpl(className, false, caller.getClassLoader(), caller);
         } catch (ClassNotFoundException e) {
             return null;
         }
     }
 
     @Substitute
-    public static Class<?> forName(String name, boolean initialize, ClassLoader loader) throws ClassNotFoundException {
-        Class<?> result = ClassForNameSupport.forNameOrNull(name, loader);
-        if (result == null && loader != null && PredefinedClassesSupport.hasBytecodeClasses()) {
-            result = loader.loadClass(name); // may throw
+    public static Class<?> forName(String name, boolean initialize, ClassLoader loader) throws Throwable {
+        Class<?> caller = Reflection.getCallerClass();
+        return forNameImpl(name, initialize, loader, caller);
+    }
+    
+    private static Class<?> forNameImpl(String name, boolean initialize, ClassLoader loader, Class<?> caller) throws Throwable {
+        try {
+            Class<?> result = ClassForNameSupport.forNameOrNull(name, loader);
+            if (result == null && loader != null && PredefinedClassesSupport.hasBytecodeClasses()) {
+                result = loader.loadClass(name); // may throw
+            }
+            if (result == null) {
+                throw new ClassNotFoundException(name);
+            }
+            if (initialize) {
+                DynamicHub.fromClass(result).ensureInitialized();
+            }
+            return result;
+        } catch (Throwable t) {
+            if (FilterAdvisor.shouldIgnore(name, caller.getName())) {
+                throw t;
+            } else {
+                ProblematicClassSupport.handleClass(name);
+                return null;
+            }
         }
-        if (result == null) {
-            throw new ClassNotFoundException(name);
-        }
-        if (initialize) {
-            DynamicHub.fromClass(result).ensureInitialized();
-        }
-        return result;
     }
 
     @KeepOriginal
