@@ -47,17 +47,12 @@ public class ProblematicClassSupport {
         singleton().problematicClasses.put(className, t);
     }
 
-    public static void handleClass(String className) throws Throwable {
-       Throwable t = singleton().problematicClasses.get(className);
-       if (t == null) {
-           terminateUnconfigured(className);
-       }
-       throw t;
-    }
-
-    private static void terminateUnconfigured(String className) {
-        System.err.println("Encountered unconfigured Class.forName invocation for class name " + className);
-        System.exit(1);
+    public static Throwable getExceptionForClass(String className, Throwable original) {
+        Throwable t = singleton().problematicClasses.get(className);
+        if (t == null || t.getClass() == original.getClass()) {
+            return original;
+        }
+        return t;
     }
 }
 

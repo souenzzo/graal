@@ -1109,7 +1109,7 @@ public final class DynamicHub implements JavaKind.FormatWithToString, AnnotatedE
     @Substitute
     public static Class<?> forName(String className) throws Throwable {
         Class<?> caller = Reflection.getCallerClass();
-        return forNameImpl(className, true, caller.getClassLoader(), caller);
+        return forName(className, true, caller.getClassLoader());
     }
 
     @Substitute //
@@ -1120,7 +1120,7 @@ public final class DynamicHub implements JavaKind.FormatWithToString, AnnotatedE
          */
         Class<?> caller = Reflection.getCallerClass();
         try {
-            return forNameImpl(className, false, caller.getClassLoader(), caller);
+            return forName(className, false, caller.getClassLoader());
         } catch (ClassNotFoundException e) {
             return null;
         }
@@ -1128,11 +1128,6 @@ public final class DynamicHub implements JavaKind.FormatWithToString, AnnotatedE
 
     @Substitute
     public static Class<?> forName(String name, boolean initialize, ClassLoader loader) throws Throwable {
-        Class<?> caller = Reflection.getCallerClass();
-        return forNameImpl(name, initialize, loader, caller);
-    }
-    
-    private static Class<?> forNameImpl(String name, boolean initialize, ClassLoader loader, Class<?> caller) throws Throwable {
         try {
             Class<?> result = ClassForNameSupport.forNameOrNull(name, loader);
             if (result == null && loader != null && PredefinedClassesSupport.hasBytecodeClasses()) {
@@ -1146,12 +1141,7 @@ public final class DynamicHub implements JavaKind.FormatWithToString, AnnotatedE
             }
             return result;
         } catch (Throwable t) {
-            if (FilterAdvisor.shouldIgnore(name, caller.getName())) {
-                throw t;
-            } else {
-                ProblematicClassSupport.handleClass(name);
-                return null;
-            }
+            throw ProblematicClassSupport.getExceptionForClass(name, t);
         }
     }
 

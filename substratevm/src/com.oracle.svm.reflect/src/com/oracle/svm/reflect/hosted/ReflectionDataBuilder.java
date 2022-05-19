@@ -655,23 +655,20 @@ public class ReflectionDataBuilder extends ConditionalConfigurationRegistry impl
     }
 
     private void processRegisteredElements(DuringAnalysisAccessImpl access) {
-        if (modifiedClasses.isEmpty() && problematicClasses.isEmpty()) {
-            return;
-        }
-        access.requireAnalysisIteration();
-
         if (!modifiedClasses.isEmpty()) {
             for (Class<?> clazz : modifiedClasses) {
                 processClass(access, clazz);
             }
             modifiedClasses.clear();
+            access.requireAnalysisIteration();
         }
-        
+
         if (!problematicClasses.isEmpty()) {
             for (Map.Entry<String, Throwable> entry : problematicClasses.entrySet()) {
                 ProblematicClassSupport.registerClass(entry.getKey(), entry.getValue());
             }
             problematicClasses.clear();
+            access.requireAnalysisIteration();
         }
     }
 

@@ -87,12 +87,8 @@ class ReflectionProcessor extends AbstractProcessor {
             if (isLoadClass) { // different array syntax
                 name = MetaUtil.internalNameToJava(MetaUtil.toInternalName(name), true, true);
             }
-            if (!invalidResult) {
-                if (!advisor.shouldIgnore(lazyValue(name), lazyValue(callerClass)) &&
-                                !(isLoadClass && advisor.shouldIgnoreLoadClass(lazyValue(name), lazyValue(callerClass)))) {
-                    configuration.getOrCreateType(condition, name);
-                }
-            } else {
+            if (!advisor.shouldIgnore(lazyValue(name), lazyValue(callerClass)) &&
+                            !(isLoadClass && advisor.shouldIgnoreLoadClass(lazyValue(name), lazyValue(callerClass)))) {
                 configuration.getOrCreateType(condition, name);
             }
             return;
@@ -306,7 +302,7 @@ class ReflectionProcessor extends AbstractProcessor {
         proxyConfiguration.add(ConfigurationCondition.alwaysTrue(), interfaces);
     }
 
-    private boolean reportReflectiveFailure(Map<String, ?> entry) {
+    private static boolean reportReflectiveFailure(Map<String, ?> entry) {
         String function = (String) entry.get("function");
         switch (function) {
             case "forName":
