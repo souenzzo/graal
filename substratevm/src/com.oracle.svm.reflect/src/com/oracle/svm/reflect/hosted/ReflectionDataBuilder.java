@@ -69,7 +69,7 @@ import com.oracle.svm.core.annotate.InjectAccessors;
 import com.oracle.svm.core.hub.AnnotationTypeSupport;
 import com.oracle.svm.core.hub.ClassForNameSupport;
 import com.oracle.svm.core.hub.DynamicHub;
-import com.oracle.svm.core.hub.ProblematicClassSupport;
+import com.oracle.svm.core.hub.ClassLoadingExceptionSupport;
 import com.oracle.svm.core.jdk.RecordSupport;
 import com.oracle.svm.core.jdk.proxy.DynamicProxyRegistry;
 import com.oracle.svm.core.reflect.SubstrateAccessor;
@@ -665,7 +665,7 @@ public class ReflectionDataBuilder extends ConditionalConfigurationRegistry impl
 
         if (!problematicClasses.isEmpty()) {
             for (Map.Entry<String, Throwable> entry : problematicClasses.entrySet()) {
-                ProblematicClassSupport.registerClass(entry.getKey(), entry.getValue());
+                ClassLoadingExceptionSupport.registerClass(entry.getKey(), entry.getValue());
             }
             problematicClasses.clear();
             access.requireAnalysisIteration();

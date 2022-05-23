@@ -1128,21 +1128,17 @@ public final class DynamicHub implements JavaKind.FormatWithToString, AnnotatedE
 
     @Substitute
     public static Class<?> forName(String name, boolean initialize, ClassLoader loader) throws Throwable {
-        try {
-            Class<?> result = ClassForNameSupport.forNameOrNull(name, loader);
-            if (result == null && loader != null && PredefinedClassesSupport.hasBytecodeClasses()) {
-                result = loader.loadClass(name); // may throw
-            }
-            if (result == null) {
-                throw new ClassNotFoundException(name);
-            }
-            if (initialize) {
-                DynamicHub.fromClass(result).ensureInitialized();
-            }
-            return result;
-        } catch (Throwable t) {
-            throw ProblematicClassSupport.getExceptionForClass(name, t);
+        Class<?> result = ClassForNameSupport.forNameOrNull(name, loader);
+        if (result == null && loader != null && PredefinedClassesSupport.hasBytecodeClasses()) {
+            result = loader.loadClass(name); // may throw
         }
+        if (result == null) {
+            throw ClassLoadingExceptionSupport.getExceptionForClass(name, new ClassNotFoundException(name));
+        }
+        if (initialize) {
+            DynamicHub.fromClass(result).ensureInitialized();
+        }
+        return result;
     }
 
     @KeepOriginal

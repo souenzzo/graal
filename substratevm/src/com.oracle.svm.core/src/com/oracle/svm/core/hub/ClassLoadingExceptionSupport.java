@@ -33,10 +33,10 @@ import org.graalvm.nativeimage.hosted.Feature;
 import com.oracle.svm.core.annotate.AutomaticFeature;
 import com.oracle.svm.core.util.ImageHeapMap;
 
-public class ProblematicClassSupport {
+public class ClassLoadingExceptionSupport {
 
-    static ProblematicClassSupport singleton() {
-        return ImageSingletons.lookup(ProblematicClassSupport.class);
+    static ClassLoadingExceptionSupport singleton() {
+        return ImageSingletons.lookup(ClassLoadingExceptionSupport.class);
     }
 
     /** The map used to collect registered problematic classes. */
@@ -57,9 +57,9 @@ public class ProblematicClassSupport {
 }
 
 @AutomaticFeature
-final class ProblematicClassFeature implements Feature {
+final class ClassLoadingExceptionFeature implements Feature {
     @Override
     public void afterRegistration(AfterRegistrationAccess access) {
-        ImageSingletons.add(ProblematicClassSupport.class, new ProblematicClassSupport());
+        ImageSingletons.add(ClassLoadingExceptionSupport.class, new ClassLoadingExceptionSupport());
     }
 }
