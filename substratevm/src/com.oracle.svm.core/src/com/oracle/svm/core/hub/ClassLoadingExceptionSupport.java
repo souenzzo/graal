@@ -25,15 +25,22 @@
 package com.oracle.svm.core.hub;
 
 import org.graalvm.collections.EconomicMap;
+import org.graalvm.compiler.options.Option;
 import org.graalvm.nativeimage.ImageSingletons;
 import org.graalvm.nativeimage.Platform;
 import org.graalvm.nativeimage.Platforms;
 import org.graalvm.nativeimage.hosted.Feature;
 
 import com.oracle.svm.core.annotate.AutomaticFeature;
+import com.oracle.svm.core.option.HostedOptionKey;
 import com.oracle.svm.core.util.ImageHeapMap;
 
 public class ClassLoadingExceptionSupport {
+
+    public static class Options {
+        @Option(help = "Enable termination caused by unconfigured Class.forName calls.")//
+        public static final HostedOptionKey<Boolean> TerminateUnconfigured = new HostedOptionKey<>(false);
+    }
 
     static ClassLoadingExceptionSupport singleton() {
         return ImageSingletons.lookup(ClassLoadingExceptionSupport.class);
@@ -49,10 +56,18 @@ public class ClassLoadingExceptionSupport {
 
     public static Throwable getExceptionForClass(String className, Throwable original) {
         Throwable t = singleton().problematicClasses.get(className);
+        if (t == null && Options.TerminateUnconfigured.getValue()) {
+            terminateUnconfigured(className);
+        }
         if (t == null || t.getClass() == original.getClass()) {
             return original;
         }
         return t;
+    }
+
+    private static void terminateUnconfigured(String className) {
+        System.err.println("Encountered unconfigured Class.forName invocation for class name " + className);
+        System.exit(1);
     }
 }
 
