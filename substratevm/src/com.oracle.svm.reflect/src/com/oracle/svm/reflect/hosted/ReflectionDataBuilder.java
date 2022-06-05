@@ -97,7 +97,7 @@ public class ReflectionDataBuilder extends ConditionalConfigurationRegistry impl
     private boolean sealed;
 
     private final Set<Class<?>> reflectionClasses = Collections.newSetFromMap(new ConcurrentHashMap<>());
-    private final Map<String, Throwable> problematicClasses = new ConcurrentHashMap<>();
+    private final Map<String, Throwable> inaccessibleClasses = new ConcurrentHashMap<>();
     private final Set<Class<?>> unsafeInstantiatedClasses = Collections.newSetFromMap(new ConcurrentHashMap<>());
     private final Map<Executable, ExecutableAccessibility> reflectionMethods = new ConcurrentHashMap<>();
     private final Map<Executable, Object> methodAccessors = new ConcurrentHashMap<>();
@@ -138,10 +138,10 @@ public class ReflectionDataBuilder extends ConditionalConfigurationRegistry impl
     }
 
     @Override
-    public void register(ConfigurationCondition condition, String typeName, Throwable t) {
+    public void registerClassLookupException(ConfigurationCondition condition, String typeName, Throwable t) {
         checkNotSealed();
         registerConditionalConfiguration(condition, () -> {
-            problematicClasses.put(typeName, t);
+            inaccessibleClasses.put(typeName, t);
         });
     }
 
@@ -663,11 +663,11 @@ public class ReflectionDataBuilder extends ConditionalConfigurationRegistry impl
             access.requireAnalysisIteration();
         }
 
-        if (!problematicClasses.isEmpty()) {
-            for (Map.Entry<String, Throwable> entry : problematicClasses.entrySet()) {
+        if (!inaccessibleClasses.isEmpty()) {
+            for (Map.Entry<String, Throwable> entry : inaccessibleClasses.entrySet()) {
                 ClassLoadingExceptionSupport.registerClass(entry.getKey(), entry.getValue());
             }
-            problematicClasses.clear();
+            inaccessibleClasses.clear();
             access.requireAnalysisIteration();
         }
     }

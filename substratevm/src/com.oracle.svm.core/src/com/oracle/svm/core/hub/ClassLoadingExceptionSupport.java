@@ -47,15 +47,15 @@ public class ClassLoadingExceptionSupport {
     }
 
     /** The map used to collect registered problematic classes. */
-    private final EconomicMap<String, Throwable> problematicClasses = ImageHeapMap.create();
+    private final EconomicMap<String, Throwable> inaccessibleClasses = ImageHeapMap.create();
 
     @Platforms(Platform.HOSTED_ONLY.class)
     public static void registerClass(String className, Throwable t) {
-        singleton().problematicClasses.put(className, t);
+        singleton().inaccessibleClasses.put(className, t);
     }
 
     public static Throwable getExceptionForClass(String className, Throwable original) {
-        Throwable t = singleton().problematicClasses.get(className);
+        Throwable t = singleton().inaccessibleClasses.get(className);
         if (t == null && Options.TerminateUnconfigured.getValue()) {
             terminateUnconfigured(className);
         }
