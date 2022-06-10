@@ -306,7 +306,9 @@ class ReflectionProcessor extends AbstractProcessor {
         String function = (String) entry.get("function");
         switch (function) {
             case "forName":
-                return true;
+                List<?> args = (List<?>) entry.get("args");
+                String name = singleElement(args);
+                return name != null;
         }
         return false;
     }
