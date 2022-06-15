@@ -2,6 +2,9 @@
 
 This changelog summarizes major changes between Truffle versions relevant to languages implementors building upon the Truffle framework. The main focus is on APIs exported by Truffle.
 
+## Version 22.3.0
+* GR-39190 Implemented Truffle counters using Graal IR instrumentation for guest and host code. See the [tutorial](https://github.com/oracle/graal/blob/master/truffle/docs/Profiling.md#host-profiling-using-graal-ir-instrumentation) for usage instructions.
+
 ## Version 22.2.0
 
 * GR-38925 Added `InteropLibrary.hasMetaParents(Object)` and `InteropLibrary.getMetaParents(Object)` that allow lookup of the hierarchy of parents for meta objects (e.g. super class or implemented interface of Java classes).
