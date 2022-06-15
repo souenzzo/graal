@@ -37,7 +37,7 @@ native-image -H:IncludeResources="<Java regexp that matches resources to be incl
 ```
 You can pass the `-H:IncludeResources` and `-H:ExcludeResources` options several times to define more than one regexp to include or exclude resources, respectively.
 
-To see which resources are included in the native executable, use the option `-H:Log=registerResource:<log level>`. The `<log level>` must be in the range from `1` to `5`, from least detailed to most detailed.
+To see which resources are included in the native executable, use the option `-H:Log=registerResource:<log level>`. The `<log level>` argument must be in the range `1` to `5` (from least detailed to most detailed). A `log level` of `3` provides brief details of the included resources.
 
 ### Example Usage
 
@@ -186,7 +186,7 @@ InputStream resource = ModuleLayer.boot().findModule(moduleName).getResourceAsSt
 ```
 will always work as expected for resources registered as described above (even if the module does not contain any code that is considered reachable by static analysis).
 
-### Java VM Mode of Localization
+## Java VM Mode of Localization
 
 Resource Bundle lookup is a complex and dynamic mechanism which utilizes a lot of Java VM infrastructure.
 As a result, it causes the size of the executable to increase for smaller applications such as `HelloWorld`.

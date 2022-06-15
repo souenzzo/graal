@@ -61,6 +61,7 @@ As a result, the safety analysis would consider some methods safe but calling th
 A test that shows examples of classes that are proven safe can be found [here](https://github.com/oracle/graal/blob/master/substratevm/src/com.oracle.svm.test/src/com/oracle/svm/test/clinit/TestClassInitializationMustBeSafeEarly.java).
 The list of all classes that are proven safe is output to a file via the `-H:+PrintClassInitialization` command line argument to the `native-image` tool.
 
+<<<<<<< HEAD
 ## Specifying Class Initialization Explicitly
 
 Two command line flags explicitly specify when a class should be initialized: `--initialize-at-build-time` and `--initialize-at-run-time`.
@@ -83,3 +84,12 @@ Class initialization can also be specified programmatically using [`RuntimeClass
 
 * [Native Image Basics](ProgrammingModel.md#image-build-time-vs-image-run-time)
 * [Native Image Compatibility Guide](Compatibility.md)
+=======
+## Related Documentation
+* [Accessing Resources in Native Executables](Resources.md)
+* [Logging in Native Image](Logging.md)
+* [Native Image Build Configuration](BuildConfiguration.md)
+* [Native Image Compatibility and Optimization Guide](Limitations.md)
+* [Specify Class Initialization Explicitly](guides/specify-class-initialization.md)
+* [Use System Properties in a Native Executable](guides/use-system-properties.md)
+>>>>>>> ec2a9684cbc (Deliver NI Docs Package: How-Tos and Quick Start Guide.)

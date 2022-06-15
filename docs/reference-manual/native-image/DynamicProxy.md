@@ -1,9 +1,16 @@
 ---
+<<<<<<< HEAD
 layout: docs
 toc_group: dynamic-features
 link_title: Dynamic Proxy
 permalink: /reference-manual/native-image/dynamic-features/DynamicProxy/
 redirect_from: /$version/reference-manual/native-image/DynamicProxy/
+=======
+layout: ni-docs
+toc_group: native-image
+link_title: Dynamic Proxy on Native Image
+permalink: /reference-manual/native-image/DynamicProxy/
+>>>>>>> ec2a9684cbc (Deliver NI Docs Package: How-Tos and Quick Start Guide.)
 ---
 
 # Dynamic Proxy in Native Image
@@ -11,8 +18,15 @@ redirect_from: /$version/reference-manual/native-image/DynamicProxy/
 Java dynamic proxies, implemented by `java.lang.reflect.Proxy`, provide a mechanism which enables object level access control by routing all method invocations through `java.lang.reflect.InvocationHandler`.
 Dynamic proxy classes are generated from a list of interfaces.
 
+<<<<<<< HEAD
 Native Image does not provide machinery for generating and interpreting bytecodes at run time.
 Therefore all dynamic proxy classes need to be generated at image build time.
+=======
+Native Image does not provide machinery for generating and interpreting bytecode at run time.
+Therefore all dynamic proxy classes need to be generated at native executable build time. This can be achieved automatically (as described below) or manually (see [Configure Dynamic Proxies Manually](guides/configure-dynamic-proxies.md)).
+
+See also [Assisted Configuration of Native Image Builds](Agent.md#assisted-configuration-of-native-image-builds).
+>>>>>>> ec2a9684cbc (Deliver NI Docs Package: How-Tos and Quick Start Guide.)
 
 ## Automatic Detection
 
