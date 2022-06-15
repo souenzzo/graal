@@ -559,5 +559,10 @@ public abstract class PartialEvaluator {
             return delegate.getNodeClassName();
         }
 
+        @Override
+        public String getQualifiedRootName() {
+            return delegate.getQualifiedRootName();
+        }
+
     }
 }
