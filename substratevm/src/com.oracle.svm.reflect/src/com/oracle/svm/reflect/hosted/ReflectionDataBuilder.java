@@ -664,9 +664,7 @@ public class ReflectionDataBuilder extends ConditionalConfigurationRegistry impl
         }
 
         if (!inaccessibleClasses.isEmpty()) {
-            for (Map.Entry<String, Throwable> entry : inaccessibleClasses.entrySet()) {
-                ClassLoadingExceptionSupport.registerClass(entry.getKey(), entry.getValue());
-            }
+            inaccessibleClasses.forEach(ClassLoadingExceptionSupport::registerClass);
             inaccessibleClasses.clear();
             access.requireAnalysisIteration();
         }
