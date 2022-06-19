@@ -35,6 +35,7 @@ import org.graalvm.nativeimage.impl.ReflectionRegistry;
 import com.oracle.svm.core.TypeResult;
 import com.oracle.svm.core.configure.ConditionalElement;
 import com.oracle.svm.core.configure.ReflectionConfigurationParserDelegate;
+import com.oracle.svm.core.hub.ClassLoadingExceptionSupport;
 import com.oracle.svm.core.jdk.SealedClassSupport;
 import com.oracle.svm.hosted.ImageClassLoader;
 import com.oracle.svm.util.ClassUtil;
@@ -68,7 +69,10 @@ public class ReflectionRegistryAdapter implements ReflectionConfigurationParserD
         String name = canonicalizeTypeName(typeName);
         TypeResult<Class<?>> clazz = classLoader.findClass(name);
         if (!clazz.isPresent()) {
-            registry.registerClassLookupException(condition, typeName, clazz.getException());
+            Throwable classLookupException = clazz.getException();
+            if (classLookupException instanceof LinkageError || ClassLoadingExceptionSupport.Options.ExitOnUnknownClassLoadingFailure.getValue()) {
+                registry.registerClassLookupException(condition, typeName, classLookupException);
+            }
         }
         return clazz.map(c -> new ConditionalElement<>(condition, c));
     }

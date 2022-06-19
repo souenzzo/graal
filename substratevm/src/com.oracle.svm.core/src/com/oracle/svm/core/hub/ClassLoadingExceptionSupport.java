@@ -39,7 +39,7 @@ public class ClassLoadingExceptionSupport {
 
     public static class Options {
         @Option(help = "Enable termination caused by unconfigured Class.forName calls.")//
-        public static final HostedOptionKey<Boolean> TerminateUnconfigured = new HostedOptionKey<>(false);
+        public static final HostedOptionKey<Boolean> ExitOnUnknownClassLoadingFailure = new HostedOptionKey<>(false);
     }
 
     static ClassLoadingExceptionSupport singleton() {
@@ -56,7 +56,7 @@ public class ClassLoadingExceptionSupport {
 
     public static Throwable getExceptionForClass(String className, Throwable original) {
         Throwable t = singleton().inaccessibleClasses.get(className);
-        if (t == null && Options.TerminateUnconfigured.getValue()) {
+        if (t == null && Options.ExitOnUnknownClassLoadingFailure.getValue()) {
             terminateUnconfigured(className);
         }
         if (t == null || t.getClass() == original.getClass()) {
