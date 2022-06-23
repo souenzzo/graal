@@ -18,6 +18,7 @@ redirect_from: /$version/reference-manual/native-image/DynamicProxy/
 * [Serialization](#serialization)
 * [Predefined Classes](#predefined-classes)
 
+<<<<<<< HEAD
 The dynamic language features of the JVM (including reflection and resource handling) compute the *dynamically-accessed program elements* such as invoked methods or resource URLs at runtime. 
 The `native-image` tool performs [static analysis](ProgrammingModel.md#static-analysis-reachability-and-the-closed-world-assumption) while building a native binary to determine those dynamic features, but it cannot always exhaustively predict all uses.
 To ensure inclusion of these elements into the native binary, you should provide **reachability metadata** (in further text referred as *metadata*) to the `native-image` builder. 
@@ -26,12 +27,26 @@ Providing the builder with reachability metadata also ensures seamless compatibi
 Metadata can be provided to the `native-image` builder in following ways:
 - By [computing metadata in code](#computing-metadata-in-code) [when the native binary is built](ProgrammingModel.md#image-build-time-vs-image-run-time) and storing required elements into the [initial heap of the native binary](ProgrammingModel.md#the-native-image-heap)
 - By [providing JSON files](#specifying-metadata-with-json) stored in the `META-INF/native-image/<artifact.id>` project directory. For more information about how to collect metadata for your application automatically, see [Collecting Metadata Automatically](AutomaticMetadataCollection.md).
+=======
+The dynamic language features of the JVM (reflection, resource handling, etc.) compute the *dynamically-accessed program elements* like invoked methods or resource URLs at run time. 
+The `native-image` tool performs [static analysis](ProgrammingModel.md#static-analysis-reachability-and-the-closed-world-assumption) while building a native image to determine those dynamic features, but it cannot always exhaustively predict all calls.
+To ensure inclusion of these elements into the native image, and hence undisturbed execution, the user should provide **reachability metadata** (in further text referred as *metadata*) to the `native-image` builder. 
+Providing the builder with reachability metadata also ensures the seamless compatibility with third-party libraries at run time.
+
+Metadata can be provided to the `native-image` builder in following ways:
+- By [computing metadata in code](#computing-metadata-in-code) at [image build time](ProgrammingModel.md#image-build-time-vs-image-run-time) and storing required elements into the [initial image heap](ProgrammingModel.md#the-native-image-heap)
+- By [providing JSON files](#specifying-metadata-with-json) stored in the `META-INF/native-image/<artifact.id>` project directory. To learn how to automatically collect metadata for your application, see [Automatic Collection of Metadata](AutomaticMetadataCollection.md).
+>>>>>>> b6d1f8e53ba (Structure, review and test NI refactored documentation before going to public)
 
 ## Computing Metadata in Code
 
 Computing metadata in code can be achieved in two ways:
 
+<<<<<<< HEAD
 1. By providing constant arguments to functions that dynamically access elements of the JVM. A good example of such a function is the `Class.forName` method. In the following code:
+=======
+1. By providing constant arguments to functions that dynamically access elements of the JVM. A good example of such function is the `Class.forName` method. In the following code:
+>>>>>>> b6d1f8e53ba (Structure, review and test NI refactored documentation before going to public)
 
     ```java
     class ReflectiveAccess {
@@ -40,10 +55,17 @@ Computing metadata in code can be achieved in two ways:
         }
     }
     ```
+<<<<<<< HEAD
   the `Class.forName("Foo")` will be computed into a constant when native binary is built and stored in its [initial heap](ProgrammingModel.md#the-native-image-heap).
   If the class `Foo` does not exist, the call will be transformed into `throw ClassNotFoundException("Foo")`.
 
 2. By [initializing classes at build time](ClassInitialization.md) and storing dynamically accessed elements into the initial heap of the native executable. For example:
+=======
+  the `Class.forName("Foo")` will be computed at image build time into a constant and stored in the [initial image heap](ProgrammingModel.md#the-native-image-heap).
+  If the class `Foo` does not exist, the call will be transformed into `throw ClassNotFoundException("Foo")`.
+
+2. By [initializing classes at build time](ClassInitialization.md) and storing dynamically-accessed elements into the initial image heap. For example:
+>>>>>>> b6d1f8e53ba (Structure, review and test NI refactored documentation before going to public)
 
     ```java
     class InitializedAtBuildTime {
@@ -62,12 +84,20 @@ Computing metadata in code can be achieved in two ways:
     }
   ```
 
+<<<<<<< HEAD
   When metadata is computed in code, the dynamically accessed elements will be included into the native executable's heap only if that part of the heap is reachable through an enclosing method (for example, `ReflectiveAccess#fetchFoo`) or a static field (for example, `InitializedAtBuildTime.aClass`).
+=======
+  When metadata is computed in code, the dynamically-accessed elements will be included into the image heap only if that part of the heap is reachable through an enclosing method (e.g., `ReflectiveAccess#fetchFoo`) or a static field (e.g., `InitializedAtBuildTime.aClass`).
+>>>>>>> b6d1f8e53ba (Structure, review and test NI refactored documentation before going to public)
 
 ## Specifying Metadata with JSON
 
 Each dynamic Java feature that requires metadata has a corresponding JSON file named `<feature>-config.json`.
+<<<<<<< HEAD
 The JSON file consists of entries that tell Native Image the elements to include.
+=======
+The JSON file consists of entries that tell Native Image what elements need to be included.
+>>>>>>> b6d1f8e53ba (Structure, review and test NI refactored documentation before going to public)
 For example, Java reflection metadata is specified in `reflection-config.json`, and a sample entry looks like:
 ```json
 {
@@ -122,7 +152,11 @@ Integer.class.getField("MAX_VALUE")
 Integer.class.getDeclaredField("value")
 ```
 
+<<<<<<< HEAD
 When passing constant arrays, the following approaches to declare and populate an array are equivalent from the point of view of the `native-image` builder:
+=======
+When passing constant arrays, the following ways to declare and populate an array are equivalent from the point of view of the `native-image` builder:
+>>>>>>> b6d1f8e53ba (Structure, review and test NI refactored documentation before going to public)
 
 ```java
 Class<?>[] params0 = new Class<?>[]{String.class, int.class};
@@ -196,8 +230,13 @@ The fields in a reflection entry have the following meaning:
 ## Java Native Interface
 
 Java Native Interface (JNI) allows native code to access arbitrary Java types and type members.
+<<<<<<< HEAD
 Native Image cannot predict what such native code will lookup, write to or invoke.
 To build a native binary for a Java application that uses JNI, JNI metadata is most likely required.
+=======
+Native Image cannot now ahead-of-time predict what such native code will lookup, write to or invoke.
+To build a native image for a Java application that uses JNI, JNI metadata is most likely required.
+>>>>>>> b6d1f8e53ba (Structure, review and test NI refactored documentation before going to public)
 For example, the given `C` code:
 ```C
 jclass clazz = FindClass(env, "java/lang/String");
@@ -211,7 +250,11 @@ The generated metadata entry for the above call would look like:
 ```
 
 ### JNI Metadata In Code
+<<<<<<< HEAD
 It is not possible to specify JNI metadata in code.
+=======
+There is currently no way to specify JNI metadata in code.
+>>>>>>> b6d1f8e53ba (Structure, review and test NI refactored documentation before going to public)
 
 ### JNI Metadata in JSON
 Metadata for JNI is provided in `jni-config.json` files.
@@ -220,7 +263,11 @@ The JSON schema of JNI metadata is identical to the [Reflection metadata schema]
 ## Resources and Resource Bundles
 Java is capable of accessing any resource on the application class path, or the module path for which the requesting code has permission to access.
 Resource metadata instructs the `native-image` builder to include specified resources and resource bundles in the produced binary.
+<<<<<<< HEAD
 A consequence of this approach is that some parts of the application that use resources for configuration (such as logging) are effectively configured at build time.
+=======
+A consequence of this approach is that some parts of the application that use resources for configuration (e.g., logging) are effectively configured at build time.
+>>>>>>> b6d1f8e53ba (Structure, review and test NI refactored documentation before going to public)
 
 The code below accesses a text file and requires providing resource metadata: 
 ```java
@@ -234,7 +281,11 @@ class Example {
 ```
 
 ### Resource Metadata In Code
+<<<<<<< HEAD
 It is not possible to specify used resources and resource bundles in code.
+=======
+There is currently no way to specify used resources and resource bundles in code.
+>>>>>>> b6d1f8e53ba (Structure, review and test NI refactored documentation before going to public)
 
 ### Resource Metadata in JSON
 Metadata for resources is provided in `resource-config.json` files.
@@ -279,7 +330,11 @@ The `excludes` statement instructs `native-image` to omit certain included resou
 The JDK supports generating proxy classes for a given interface list.
 Native Image does not support generating new classes at runtime and requires metadata to properly run code that uses these proxies.
 
+<<<<<<< HEAD
 > Note: The order of interfaces in the interface list used to create a proxy matters. Creating a proxy with two identical interface lists in which the interfaces are not in the same order, creates two distinct proxy classes.
+=======
+> NOTE: The order of interfaces in the interface list used to create a proxy matters. Creating a proxy with two identical interface lists in which the interfaces are not in the same order, creates two distinct proxy classes.
+>>>>>>> b6d1f8e53ba (Structure, review and test NI refactored documentation before going to public)
 
 ### Code Example
 The following code creates two distinct proxies:
@@ -306,7 +361,11 @@ class Example {
 ```
 
 ### Dynamic Proxy Metadata In Code
+<<<<<<< HEAD
 The following methods are evaluated at build time when called with constant arguments:
+=======
+The following methods are evaluated at image build time when called with constant arguments:
+>>>>>>> b6d1f8e53ba (Structure, review and test NI refactored documentation before going to public)
  - `java.lang.reflect.Proxy.getProxyClass`
  - `java.lang.reflect.Proxy.newProxyInstance`
 
@@ -333,7 +392,11 @@ The JDK also requires additional information about the class to serialize its ob
 Native Image supports serialization with proper metadata.
 
 ### Serialization Metadata In Code
+<<<<<<< HEAD
 It is not possible to register classes used for serialization in code.
+=======
+There is currently no way to register classes used for serialization in code.
+>>>>>>> b6d1f8e53ba (Structure, review and test NI refactored documentation before going to public)
 
 ### Serialization Metadata in JSON
 Metadata for serialization is provided in `serialization-config.json` files.
@@ -359,12 +422,20 @@ Metadata for serialization is provided in `serialization-config.json` files.
   ]
 }
 ```
+<<<<<<< HEAD
 Each entry in `types` enables serializing and deserializing objects of the class given by `name`.
+=======
+Each entry in `types` allows serializing and deserializing objects of the class given by `name`.
+>>>>>>> b6d1f8e53ba (Structure, review and test NI refactored documentation before going to public)
 Lambda serialization is also supported: all lambdas declared in the methods of the class given by `name` can be serialized/deserialized.
 
 ## Predefined Classes
 
+<<<<<<< HEAD
 Native Image requires all classes to be known at build time (a "closed-world assumption").
+=======
+Native Image requires all classes to be known at image build time (a "closed-world assumption").
+>>>>>>> b6d1f8e53ba (Structure, review and test NI refactored documentation before going to public)
 However, Java has support for loading new classes at runtime.
 To emulate class loading, the [agent](AutomaticMetadataCollection.md) can trace dynamically loaded classes and save their bytecode for later use by the native image builder.
 At runtime, if there is an attempt to load a class with the same name and bytecodes as one of the classes encountered during tracing, the predefined class will be supplied to the application.
@@ -372,7 +443,11 @@ At runtime, if there is an attempt to load a class with the same name and byteco
 > Note: Predefined classes metadata is not meant to be manually written.
 
 ### Predefined Classes Metadata In Code
+<<<<<<< HEAD
 It is not possible to specify predefined classes in code.
+=======
+There is currently no way to specify predefined classes in code.
+>>>>>>> b6d1f8e53ba (Structure, review and test NI refactored documentation before going to public)
 
 ### Predefined Classes Metadata in JSON
 Metadata for predefined classes is provided in `predefined-classes-config.json` files.
@@ -389,7 +464,11 @@ Metadata for predefined classes is provided in `predefined-classes-config.json` 
   }
 ]
 ```
+<<<<<<< HEAD
 The JSON schema is accompanied by the `agent-extracted-predefined-classes` directory that contains the bytecode of the listed classes.
+=======
+The JSON schema is accompanied by the `agent-extracted-predefined-classes` directory that contains the bytecodes of the listed classes.
+>>>>>>> b6d1f8e53ba (Structure, review and test NI refactored documentation before going to public)
 
 ### Related Documentation
 

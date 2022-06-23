@@ -22,9 +22,15 @@ First, the `native-image` tool performs a static analysis of your code to determ
 Second, it compiles classes, methods, and resources into a binary executable.
 This entire process is called **build time** (or **image build time**) to clearly distinguish it from the compilation of Java source code to bytecode. 
 
+<<<<<<< HEAD
 The `native-image` tool can be used to build a **native executable**, which is the default, or a **native shared library**. This quick start guide focuses on building a native executable; to learn more about shared libraries, go [here](InteropWithNativeCode.md).
 
 To get used to Native Image terminology and get better understanding of the technology, we recommend you to read about the [Basics of Native Image](ProgrammingModel.md). 
+=======
+The `native-image` tool can be used to build a **native executable**, which is the default, or a **native shared library**. This quick start guide focuses on building a native executable; to learn more about shared libraries, go [here](SharedLibrary.md).
+
+To get used to Native Image terminology and get better understanding of the technology, we recommend you to read about the [Native Image Programming Model](ProgrammingModel.md). 
+>>>>>>> b6d1f8e53ba (Structure, review and test NI refactored documentation before going to public)
 
 ### Table of Contents
 
@@ -141,7 +147,11 @@ For example, build a native executable for a HelloWorld application.
 
 To build a native executable from a JAR file in the current working directory, use the following command:
 ```shell
+<<<<<<< HEAD
 native-image [options] -jar jarfile [imagename]
+=======
+native-image [options] -jar jarfile [imagename] [options]
+>>>>>>> b6d1f8e53ba (Structure, review and test NI refactored documentation before going to public)
 ```
 
 1. Prepare the application.
@@ -255,7 +265,11 @@ For more details, see [Native Image Compatibility and Optimization Guide](Limita
 
 Native Image can also interop with native languages through a custom API.
 Using this API, you can specify custom native entry points into your Java application and build it into a shared library.
+<<<<<<< HEAD
 To learn more, see [Building a Shared Library](InteropWithNativeCode.md).
+=======
+To learn more, see [Building a Shared Library](SharedLibrary.md).
+>>>>>>> b6d1f8e53ba (Structure, review and test NI refactored documentation before going to public)
 
 To find asnwers to most frequently asked questions, go [here](FAQ.md).
 
@@ -269,7 +283,11 @@ Native Image for GraalVM Enterprise Edition is licensed under the [Oracle Techno
 ### Further Reading
 
 This getting started guide is intended for new users or those with little experience of using GraalVM Native Image. 
+<<<<<<< HEAD
 We strongly recommend these users to check the [Native Image Basics](ProgrammingModel.md) guide to better understand some key aspects before going deeper.
+=======
+We strongly recommend these users to check the [Native Image Programming Model](ProgrammingModel.md) guide to better understand some key aspects before going deeper.
+>>>>>>> b6d1f8e53ba (Structure, review and test NI refactored documentation before going to public)
 
 For a gradual learning process, check the Native Image [Build Overview](BuildOverview.md) and [Build Configuration](BuildConfiguration.md) documentation.
 

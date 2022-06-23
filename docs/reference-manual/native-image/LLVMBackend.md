@@ -1,7 +1,7 @@
 ---
 layout: docs
 toc_group: native-image
-link_title: LLVM Backend for Native Image
+link_title: LLVM Backend
 permalink: /reference-manual/native-image/LLVMBackend/
 ---
 
