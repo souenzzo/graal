@@ -1,7 +1,7 @@
 ---
 layout: docs
-toc_group: native-image
-link_title: Native Image Inspection Tool
+toc_group: debugging-and-diagnostics
+link_title: Inspection Tool
 permalink: /reference-manual/native-image/debugging-and-diagnostics/inspect
 redirect_from: /$version/reference-manual/native-image/inspect/
 ---
@@ -85,9 +85,6 @@ netty-codec-http2    4.1.76.Final   CVE-2022-24823  Medium
 
 Users can then use this report to update any vulnerable dependencies found in their executable.
 
-## Evolution
+### Related Documentation
 
-The tool is continuously being improved upon. Envisioned new features include:
-
-* Outputting the list of classes and fields included in the image alongside the methods.
-* Windows support
+- [Debugging and Diagnostics](DebuggingAndDiagnostics.md)

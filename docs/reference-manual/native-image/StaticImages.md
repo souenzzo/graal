@@ -1,16 +1,17 @@
 ---
 layout: docs
-toc_group: native-image
+toc_group: build-overview
 link_title: Static Native Images
 permalink: /reference-manual/native-image/overview/StaticImages/
 ---
+
 # Static and Mostly Static Images
 
-With GraalVM Native Image you can create static or mostly static images, depending on the purposes.
+With GraalVM Native Image you can create static or mostly static images, depending on the purpose.
 
 **Static native images** are statically linked binaries which can be used without any additional library dependencies.
 This makes them easier to distribute and to deploy on slim or distroless container images.
-They are created by statically linking against [musl-libc](https://musl.libc.org/), a lightweight, fast and simple `libc` implementation.
+They are created by statically linking against [musl-libc](https://musl.libc.org/), a lightweight `libc` implementation.
 
 **Mostly static native images** statically link against all libraries except `libc`.
 This approach is ideal for deploying such native images on distroless container images.
@@ -19,11 +20,9 @@ Note that it currently only works when linking against `glibc`.
 ## Prerequisites
 
 - Linux AMD64 operating system
-- GraalVM distribution for Java 11 with [Native Image support](README.md#install-native-image)
+- GraalVM distribution for Java 11 with Native Image support
 - A 64-bit `musl` toolchain, `make`, and `configure`
 - The latest `zlib` library
-
-## Preparation
 
 You should get the `musl` toolchain first, and then compile and install `zlib` into the toolchain.
 
@@ -40,7 +39,7 @@ You should get the `musl` toolchain first, and then compile and install `zlib` i
     make install
     ```
 
-## Build Static Native Image
+## Build a Static Native Image
 
 1. First, ensure `$TOOLCHAIN_DIR/bin` is present on your `PATH` variable.
     To verify this, run:
@@ -55,25 +54,21 @@ You should get the `musl` toolchain first, and then compile and install `zlib` i
 
 2. Build a static native image by using this command:
     ```shell
-    native-image --static --libc=musl [other arguments] Class
+    native-image --static --libc=musl Class
     ```
 
-## Build Mostly Static Native Image
+## Build a Mostly Static Native Image
 
-As of GraalVM version 20.2, you can build a “mostly static” native image which statically links everything except `libc`.
+You can build a mostly static native image which statically links everything except `libc`.
 Statically linking all your libraries except `glibc` ensures your application has all the libraries it needs to run on any Linux `glibc`-based distribution.
 
-To build a mostly-static native image native image, use this command:
+To build a mostly static native image, use this command:
 ```shell
-native-image -H:+StaticExecutableWithDynamicLibC [other arguments] Class
+native-image -H:+StaticExecutableWithDynamicLibC Class
 ```
 
 > Note: This currently only works for `glibc`.
 
-## Frequently Asked Questions
+### Related Documentation
 
-### What is the recommended base Docker image for deploying a static or mostly static native image?
-
-A fully static native image gives you the most flexibility to choose a base image - it can run on anything including a `FROM scratch` image.
-A mostly static native image requires a container image that provides `glibc`, but has no additional requirements.
-In both cases, choosing the base image mostly depends on what your particular native image needs without having to worry about run-time library dependencies.
+* Run an interactive lab and practice creating small Distroless containers in Oracle Linux environment with GraalVM Native Image and a simple a Spring boot application: [GraalVM Native Image, Spring and Containerisation](https://luna.oracle.com/lab/fdfd090d-e52c-4481-a8de-dccecdca7d68).

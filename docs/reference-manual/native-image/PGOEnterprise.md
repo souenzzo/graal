@@ -1,10 +1,11 @@
 ---
 layout: docs
-toc_group: native-image
+toc_group: optimizations-and-performance
 link_title: Profile-Guided Optimizations
 permalink: /reference-manual/native-image/optimizations-and-performance/PGO/
 redirect_from: /$version/reference-manual/native-image/PGO/
 ---
+
 # Profile-Guided Optimizations
 
 GraalVM Enterprise allows to apply profile-guided optimizations (PGO) for additional performance gain and higher throughput of native images.
@@ -14,45 +15,50 @@ Note: This feature is available with **GraalVM Enterprise** only.
 
 Here is how you can build an optimized native image, using the _OptimizedImage.java_ example program.
 
-1&#46; Save this Java program that iterates over `ArrayList` using a lambda expression to a file and compile it:
-```java
-import java.util.ArrayList;
+1. Save this Java program that iterates over `ArrayList` using a lambda expression to a file and compile it:
+  ```java
+  import java.util.ArrayList;
 
-class OptimizedImage {
-  public static void main(String[] args) {
-    ArrayList<String> languages = new ArrayList<>();
+  class OptimizedImage {
+    public static void main(String[] args) {
+      ArrayList<String> languages = new ArrayList<>();
 
-    languages.add("JavaScript");
-    languages.add("Python");
-    languages.add("Ruby");
+      languages.add("JavaScript");
+      languages.add("Python");
+      languages.add("Ruby");
 
-    System.out.print("ArrayList: ");
+      System.out.print("ArrayList: ");
 
-    languages.forEach((e) -> {
-      System.out.print(e + ", ");
-    });
+      languages.forEach((e) -> {
+        System.out.print(e + ", ");
+      });
+    }
   }
-}
-```
-```shell
-javac OptimizedImage.java
-```
+  ```
+  ```shell
+  javac OptimizedImage.java
+  ```
 
-2&#46; Build an instrumented native image by appending the `--pgo-instrument` option, whose execution will collect the code-execution-frequency profiles:
-```shell
-native-image --pgo-instrument OptimizedImage
-```
+2. Build an instrumented native image by appending the `--pgo-instrument` option, whose execution will collect the code-execution-frequency profiles:
+  ```shell
+  native-image --pgo-instrument OptimizedImage
+  ```
 
-3&#46; Run this instrumented image, saving the result in a _default.iprof_ file, if nothing else is specified:
-```shell
-./optimizedimage
-```
+3. Run this instrumented image, saving the result in a _default.iprof_ file, if nothing else is specified:
+  ```shell
+  ./optimizedimage
+  ```
 
-4&#46; Lastly, create the second native image by specifying the path to the _default.iprof_ file and execute it.
-```shell
-native-image --pgo=default.iprof OptimizedImage
-./optimizedimage
-```
-
+4. Lastly, create the second native image by specifying the path to the _default.iprof_ file and execute it.
+  ```shell
+  native-image --pgo=default.iprof OptimizedImage
+  ./optimizedimage
+  ```
+  
 You can specify where to write the profile when running an instrumented native image by passing the `-XX:ProfilesDumpFile=YourFileName` option at run time.
 You can also collect multiple profile files, by specifying different names, and add them to the image build.
+
+### Related Documentation
+
+* [Memory Management](MemoryManagement.md)
+* [Class Initialization at Image Build Time](ClassInitialization.md)

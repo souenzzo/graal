@@ -1,9 +1,9 @@
 ---
 layout: docs
-toc_group: native-image
+toc_group: debugging-and-diagnostics
 link_title: Debug Info Feature
 permalink: /reference-manual/native-image/debugging-and-diagnostics/DebugInfo/
-redirect_from: /$version/reference-manual/native-image/debugging-and-diagnostics/DebugInfo/
+redirect_from: /$version/reference-manual/native-image/DebugInfo/
 ---
 
 # Debug Info Feature
@@ -765,3 +765,7 @@ For example, calling the method below prints high-level information about the Na
 ```
 (gdb) call svm_dbg_print_fatalErrorDiagnostics($r15, $rsp, $rip)
 ```
+
+### Related Documentation
+
+- [Debugging Native Image in VS Code](Debugging.md)

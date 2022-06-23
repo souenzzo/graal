@@ -1,10 +1,12 @@
 ---
 layout: docs
-toc_group: native-image
-link_title: Debugging And Diagnostics
+toc_group: debugging-and-diagnostics
+link_title: Debugging and Diagnostics
 permalink: /reference-manual/native-image/debugging-and-diagnostics/
 ---
+
 # Debugging and Diagnostics
+
 Native Image provides utilities for debugging and inspecting the produced binary:
  - For JFR support, see [JFR](JFR.md)
  - For the Native Image Inspection Tool, see [Inspection Tool](InspectTool.md)

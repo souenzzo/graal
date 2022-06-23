@@ -1,11 +1,12 @@
 ---
 layout: docs
-toc_group: native-image
-link_title: Using System Properties in Native Image
-permalink: /reference-manual/native-image/Properties/
+toc_group: build-overview
+link_title: System Properties
+permalink: /reference-manual/native-image/build-overview/SystemProperties/
+redirect_from: /$version/reference-manual/native-image/Properties/
 ---
 
-# Using System Properties in Native Image
+# System Properties with Native Image
 
 Assume you have the following Java application that you have compiled using `javac`:
 ```java
@@ -15,17 +16,18 @@ public class App {
     }
 }
 ```
-If you build a native executable using `native-image -Dfoo=bar App`, the system property `foo` will be available at *executable build time*, for example, whenever you are in the [code that is part of your application but run at build time](http://www.graalvm.org/sdk/javadoc/org/graalvm/nativeimage/ImageInfo.html#inImageBuildtimeCode--) (usually static field initializations and static initializers).
+If you build a native image using `native-image -Dfoo=bar App`, the system property `foo` will be available at image build time, for example, whenever you are in the [code that is part of your application but run at build time](http://www.graalvm.org/sdk/javadoc/org/graalvm/nativeimage/ImageInfo.html#inImageBuildtimeCode--) (usually static field initializations and static initializers).
 Thus if you run the executable above it will not contain `foo` in the printed list of properties.
 
-If, on the other hand, you run the executable with `app -Dfoo=bar`, it will display `foo` in the list of properties because you specified it at *executable runtime*.
+If, on the other hand, you run the executable with `app -Dfoo=bar`, it will display `foo` in the list of properties because you specified it at image run time.
 
 In other words:
-* Passing `-D<key>=<value>` as an argument to `native-image` affects properties seen at executable build time.
-* Passing `-D<key>=<value>` as an argument to a native executable affects properties seen at executable runtime.
+* Passing `-D<key>=<value>` as an argument to `native-image` affects properties seen at build time.
+* Passing `-D<key>=<value>` as an argument to a native executable affects properties seen at run time.
 
-### Using System Properties at Build Time
-System Properties can be read at build time and incorporated into the resulting executable file, as shown in the following example.
+## Using System Properties at Build Time
+
+System Properties can be read at build time and incorporated into the native executable, as shown in the following example.
 
 1. Save the following Java code into a file named _ReadProperties.java_, then compile it using `javac`:
 
@@ -57,14 +59,14 @@ System Properties can be read at build time and incorporated into the resulting 
     }
     ```
 
-2. Build and run the native executable
+2. Build and run the native executable:
 
     ```shell
     native-image -Dstatic_key=STATIC_VALUE ReadProperties
     ./readproperties -Dinstance_key=INSTANCE_VALUE
     ```
 
-    You should see output similar to
+    You should see output similar to:
 
     ```
     Getting value of static property with key: static_key
@@ -73,7 +75,7 @@ System Properties can be read at build time and incorporated into the resulting 
     Value of instance property: INSTANCE_VALUE
     ```
 
-    This indicates that the class static initializer was run at **runtime**, not at build time.
+    This indicates that the class static initializer was run at **run time**, not at build time.
 
     To force the class static initializer to run at build time, use the `--initialize-at-build-time` flag, as follows:
 
@@ -81,7 +83,7 @@ System Properties can be read at build time and incorporated into the resulting 
     native-image --initialize-at-build-time=ReadProperties -Dstatic_key=STATIC_VALUE ReadProperties
     ```
 
-    In the output from the `native-image` tool you should see output similar to the following
+    In the output from the `native-image` tool you should see output similar to the following:
 
     ```
     ...
@@ -89,13 +91,13 @@ System Properties can be read at build time and incorporated into the resulting 
     Getting value of static property with key: static_key
     ...
     ```
-    Run the executable again, as follows
+    Run the executable again, as follows:
 
     ```shell
     ./readproperties -Dinstance_key=INSTANCE_VALUE
     ```
 
-    This time you should see output similar to 
+    This time you should see output similar to:
 
     ```
     Value of static property: STATIC_VALUE
@@ -103,10 +105,9 @@ System Properties can be read at build time and incorporated into the resulting 
     Value of instance property: INSTANCE_VALUE
     ```
 
-    This confirms that the static initializer was run at **build time**, not at runtime.
+    This confirms that the static initializer was run at **build time**, not at run time.
 
-
-## Access Environment Variables at Runtime
+## Accessing Environment Variables at Runtime
 
 NaA native executable can also access environment variables at runtime.
 Consider the following example.
@@ -148,5 +149,8 @@ Consider the following example.
     ./envmap HELLO
     HELLOWORLD=Hello World!
     ```
-## Related Documentation
+    
+### Related Documentation
+
+* [Native Image Programming Model: Image Build Time vs Image Run Time](ProgrammingModel.md#image-build-time-vs-image-run-time)
 * [Class Initialization in Native Image](ClassInitialization.md)

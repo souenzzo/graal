@@ -1,17 +1,18 @@
 ---
 layout: docs
-toc_group: native-image
-link_title: Implementing Native Methods in Java with Native Image
-permalink: /reference-manual/native-image/SharedLibrary/
+toc_group: native-interoperability
+link_title: JNI Invocation API
+permalink: /reference-manual/native-image/native-interoperability/JNIInvocationAPI/
 redirect_from: /$version/reference-manual/native-image/ImplementingNativeMethodsInJavaWithSVM/
 ---
-# Implementing Native Methods in Java with Native Image
 
-Native Image can be used to implement low-level system operations in Java and make them available via JNI to Java code executing on a standard JVM.
+# JNI Invocation API
+
+Native Image can be used to implement low-level system operations in Java and make them available via JNI Invocation API to Java code executing on a standard JVM.
 As a result one can use the same language to write the application logic as well as the system calls.
 
 Note that this document describes the opposite of what is commonly done via JNI: usually low-level system operations are implemented in C and invoked from Java using JNI.
-If you are interested in how Native Image supports the common use case, continue reading to the [Native Image JNI support](JNI.md) guide instead.
+If you are interested in how Native Image supports the common use case, see [Java Native Interface (JNI) in Native Image](JNI.md).
 
 ## Create a Shared Library
 
@@ -270,3 +271,8 @@ The good thing is that `jni.h` is inside of every JDK, so one can use the `java.
 The actual logic can, of course, be made more robust and OS-independent.
 
 Implementing any JVM native method in Java and/or making callbacks to the JVM with Native Image should now be as easy as expanding upon the given example and invoking `native-image`.
+
+### Related Documentation
+
+* [Native Image C API](JNI.md)
+* [Java Native Interface (JNI) on Native Image](JNI.md)

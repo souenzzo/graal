@@ -1,15 +1,19 @@
 ---
 layout: docs
-toc_group: native-image
+toc_group: build-overview
 link_title: Build Output
 permalink: /reference-manual/native-image/overview/BuildOutput/
 redirect_from: /$version/reference-manual/native-image/BuildOutput/
-
 ---
+
 # Native Image Build Output
 
-This page provides documentation for the build output of GraalVM Native Image.
-Below is the example output when building a native image of the `HelloWorld` class:
+* [Build Stages](#build-stages)
+* [Resource Usage Statistics](#resource-usage-statistics)
+* [Build Output Options](#build-output-options)
+
+Here you will find information about the build output of GraalVM Native Image.
+Below is the example output when building a native executable of the `HelloWorld` class:
 
 ```shell
 ================================================================================
@@ -64,19 +68,19 @@ Finished generating 'helloworld' in 16.2s.
 ## Build Stages
 
 ### <a name="stage-initializing"></a>Initializing
-In this stage, the Native Image build process is set up and [`Features`][jdoc_feature] are initialized.
+In this stage, the Native Image build process is set up and [`Features`][https://www.graalvm.org/sdk/javadoc/org/graalvm/nativeimage/hosted/Feature.html] are initialized.
 
 #### <a name="glossary-imagekind"></a>Native Image Kind
-By default, Native Image generates *executables* but it can also generate [*shared libraries*][doc_shared_library] and [*static executables*][doc_static_images].
+By default, Native Image generates *executables* but it can also generate [*native shared libraries*][SharedLibrary.md] and [*static executables*][StaticImages.md].
 
 #### <a name="glossary-version-info"></a>Version Info
 The version info of the Native Image process.
 This string is also used for the `java.vm.version` property within the generated image.
-Please report this version info when you [file issues][new_issue].
+Please report this version info when you [file issues][https://github.com/oracle/graal/issues/new].
 
 #### <a name="glossary-java-version-info"></a>Java Version Info
 The Java version info (`java.runtime.version` property) of the Native Image build process.
-Please report this version info when you [file issues][new_issue].
+Please report this version info when you [file issues][https://github.com/oracle/graal/issues/new].
 
 #### <a name="glossary-ccompiler"></a>C Compiler
 The C compiler executable, vendor, target architecture, and version info used by the Native Image build process.
@@ -87,14 +91,14 @@ The garbage collector used within the generated image:
 - The *G1 GC* (only available with GraalVM Enterprise Edition) is a multi-threaded GC that is optimized to reduce stop-the-world pauses and therefore improve latency while achieving high throughput.
 - The *Epsilon GC* does not do any garbage collection and is designed for very short-running applications that only allocate a small amount of memory.
 
-For more information see the [docs on Memory Management at Image Run Time][doc_mem_mgmt].
+For more information see the [docs on Memory Management at Image Run Time][MemoryManagement.md].
 
-#### <a name="glossary-user-specific-features"></a>User-specific Features
-All [`Features`][jdoc_feature] that are either provided or specifically enabled by the user, or implicitly registered for the user, for example, by a framework.
+#### <a name="glossary-user-specific-features"></a>User-Specific Features
+All [`Features`][https://www.graalvm.org/sdk/javadoc/org/graalvm/nativeimage/hosted/Feature.html] that are either provided or specifically enabled by the user, or implicitly registered for the user, for example, by a framework.
 GraalVM Native Image deploys a number of internal features, which are excluded from this list.
 
 ### <a name="stage-analysis"></a>Performing Analysis
-In this stage, a [points-to analysis][oopsla19_initialize_once_start_fast] is performed.
+In this stage, a [points-to analysis][https://dl.acm.org/doi/10.1145/3360610] is performed.
 The progress indicator visualizes the number of analysis iterations.
 A large number of iterations can indicate problems in the analysis likely caused by misconfiguration or a misbehaving feature.
 
@@ -108,11 +112,11 @@ The number of classes, fields, and methods that are registered for reflection.
 Large numbers can cause significant reflection overheads, slow down the build process, and increase the size of the native image (see [reflection metadata](#glossary-reflection-metadata)).
 
 #### <a name="glossary-jni-access-registrations"></a>JNI Access Registrations
-The number of classes, fields, and methods that are registered for [JNI][doc_jni] access.
+The number of classes, fields, and methods that are registered for [JNI][JNI.md] access.
 
 #### <a name="glossary-runtime-methods"></a>Runtime Compiled Methods
 The number of methods marked for runtime compilation.
-This number is only shown if runtime compilation is built into the image, for example, when building a [Truffle][truffle] language.
+This number is only shown if runtime compilation is built into the image, for example, when building a [Truffle][https://github.com/oracle/graal/tree/master/truffle] language.
 Runtime compiled methods account for [graph encodings](#glossary-graph-encodings) in the image heap.
 
 ### <a name="stage-universe"></a>Building Universe
@@ -168,7 +172,7 @@ The total size of generated debug information (if enabled).
 The amount of data in the image that is neither in the [code area](#glossary-code-area), nor in the [image heap](#glossary-image-heap), nor [debug info](#glossary-debug-info).
 This data typically contains internal information for Native Image and should not be dominating.
 
-### Resource Usage Statistics
+## Resource Usage Statistics
 
 #### <a name="glossary-garbage-collection"></a>Garbage Collections
 The total time spent in all garbage collectors, total GC time divided by the total process time in percent, and the total number of garbage collections.
@@ -176,7 +180,7 @@ A large number of collections or time spent in collectors usually indicates that
 Increase the amount of available memory to reduce the time to build the image.
 
 #### <a name="glossary-peak-rss"></a>Peak RSS
-Peak [resident set size][rss_wiki] as reported by the operating system.
+Peak [resident set size][https://en.wikipedia.org/wiki/Resident_set_size] as reported by the operating system.
 This value indicates the maximum amount of memory consumed by the build process.
 If the [GC statistics](#glossary-garbage-collection) do not show any problems, the amount of available memory of the system can be reduced to a value closer to the peak RSS.
 
@@ -197,13 +201,7 @@ Run `native-image --expert-options-all | grep "BuildOutput"` to see all build ou
 -H:±BuildOutputProgress      Report progress in build output. Default: + (enabled).
 ```
 
+### Related Documentation
 
-[jdoc_feature]: https://www.graalvm.org/sdk/javadoc/org/graalvm/nativeimage/hosted/Feature.html
-[doc_jni]: https://github.com/oracle/graal/blob/master/docs/reference-manual/native-image/JNI.md
-[doc_mem_mgmt]: https://github.com/oracle/graal/blob/master/docs/reference-manual/native-image/MemoryManagement.md
-[doc_shared_library]: https://github.com/oracle/graal/tree/master/docs/reference-manual/native-image#build-a-shared-library
-[doc_static_images]: https://github.com/oracle/graal/blob/master/docs/reference-manual/native-image/StaticImages.md
-[new_issue]: https://github.com/oracle/graal/issues/new
-[oopsla19_initialize_once_start_fast]: https://dl.acm.org/doi/10.1145/3360610
-[rss_wiki]: https://en.wikipedia.org/wiki/Resident_set_size
-[truffle]: https://github.com/oracle/graal/tree/master/truffle
+* [Native Image Build Overview](BuildOverview.md)
+* [Native Image Build Configuration](BuildConfiguration.md)

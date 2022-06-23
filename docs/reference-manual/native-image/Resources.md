@@ -1,12 +1,14 @@
 ---
 layout: docs
-toc_group: native-image
-link_title: Accessing Resources in Native Images
-permalink: /reference-manual/native-image/Resources/
+toc_group: java-features
+link_title: Accessing Resources
+permalink: /reference-manual/native-image/java-features/Resources/
+redirect_from: /$version/reference-manual/native-image/Resources/
 ---
-# Accessing Resources in Native Images
 
-By default, the `native-image` tool will not integrate any of the resources that are on the classpath into the native executable.
+# Accessing Resources
+
+By default, the `native-image` builder will not integrate any of the resources that are on the classpath into the native executable.
 To make calls such as `Class.getResource()` or `Class.getResourceAsStream()` (or their corresponding `ClassLoader` methods) return specific resources (instead of `null`), you must specify the resources that should be accessible at runtime. 
 This can be achieved using a configuration file with the following content:
 
@@ -134,7 +136,7 @@ The locales are specified using [language tags](https://docs.oracle.com/javase/t
 locales via ``-H:+IncludeAllLocales``, but note that it increases the size of the resulting
 executable.
 
-## Resource Bundles in Native Image
+## Resource Bundles
 
 Java localization support (`java.util.ResourceBundle`) enables Java code to load L10N resources and show the user messages suitable for runtime settings such as time, locale, and format.
 
@@ -159,7 +161,7 @@ native-image -H:IncludeResourceBundles=your.pgk.Bundle,another.pkg.Resource,etc.
 By default, requested bundles are included for all requested locales.
 To optimize this, it is possible to use `IncludeResourceBundles` with a locale-specific substring, for example `-H:+IncludeResourceBundles=com.company.bundles.MyBundle_fr-FR` will only include the bundle in French.
 
-### Resources in Java modules
+### Resources in Java Modules
 
 Wherever resources are specified with `<Java regexp that matches resources to be included in the image>` or resource bundles are specified via bundle name, it is possible to specify the exact modules from which these resources or bundles should be taken. To do so, specify the module name before the resource-regex or bundle name with `:` as the separator. For example:
 
@@ -191,5 +193,6 @@ As a result, it causes the size of the executable to increase for smaller applic
 Therefore, an optimized mode is set by default in which this lookup is simplified utilizing the fact that all bundles are known ahead of build time.
 For the original Java VM lookup, use the `-H:-LocalizationOptimizedMode` option.
 
-## Related Documentation
+### Related Documentation
+
 * [Logging in Native Image](Logging.md)

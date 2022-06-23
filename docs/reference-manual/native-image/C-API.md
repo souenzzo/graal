@@ -1,13 +1,15 @@
 ---
 layout: docs
-toc_group: native-image
-link_title: Native Image C API
-permalink: /reference-manual/native-image/C-API/
+toc_group: native-interoperability
+link_title: C API
+permalink: /reference-manual/native-image/native-interoperability/C-API/
+redirect_from: /$version/reference-manual/native-image/C-API/
 ---
+
 #  Native Image C API
 
-Native Image provides an API for the C language for initializing isolates and attaching threads for use with the entry point feature that is demonstrated [here](README.md#images-and-entry-points).
-The C API is available when Native Image is built as a shared library and its declarations are included in the header file that is generated during the build.
+Native Image provides a GraalVM-specific API to manage Java objects from the C/C++ languages, initialize isolates and attach threads.
+The C API is available when Native Image is built as a shared library and its declarations are included in the header file that is generated during the native image build.
 
 ```c
 /*
@@ -79,4 +81,10 @@ int graal_detach_thread(graal_isolatethread_t* thread);
  */
 int graal_tear_down_isolate(graal_isolatethread_t* thread);
 ```
-In addition to the C level API, there is also a way to initialize an isolate from Java and thus use Java and Native Image to [implement native methods in Java](SharedLibrary.md).
+
+In addition to the C level API, you can use [JNI Invocation API](NativeMethodsInJava.md) to create an isolate from Java, expose and call Java methods embeded in a native shared library.
+
+### Related Documentation
+
+* [Implementing Native Methods in Java with Native Image using JNI Invocation API](NativeMethodsInJava.md)
+* [Java Native Interface (JNI) on Native Image](JNI.md)

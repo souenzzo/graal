@@ -1,9 +1,10 @@
 ---
 layout: docs
 toc_group: native-image
-link_title: LLVM Backend for Native Image
+link_title: LLVM Backend
 permalink: /reference-manual/native-image/LLVMBackend/
 ---
+
 # LLVM Backend for Native Image
 
 Native Image includes an alternative backend which uses the [LLVM intermediate representation](https://llvm.org/docs/LangRef.html) and the [LLVM compiler](http://llvm.org/docs/CommandGuide/llc.html) to produce native executables.
@@ -59,3 +60,7 @@ This means that the Graal compiler needs an understanding of object file relocat
 Emitting the data section with the code as LLVM bitcode is our next priority for the LLVM backend, so this should not be an issue for future targets.
 
 _(see `ELFMachine$ELFAArch64Relocations` for an example)_
+
+### Related Documentation
+
+* [Native Image Programming Model](ProgrammingModel)

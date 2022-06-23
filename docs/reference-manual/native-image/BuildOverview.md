@@ -1,10 +1,11 @@
 ---
 layout: docs
-toc_group: native-image
+toc_group: build-overview
 link_title: Build Overview
 permalink: /reference-manual/native-image/overview/Build-Overview/
 redirect_from: /$version/reference-manual/native-image/Build-Overview/
 ---
+
 # Native Image Build Overview
 
 The syntax of the `native-image` command is:
@@ -13,27 +14,20 @@ The syntax of the `native-image` command is:
 - `native-image [options] -jar jarfile [imagename] [options]` to build an image from a JAR file.
 - `native-image [options] -m <module>/<mainClass> [imagename] [options]` to build an image from a Java module.
 
+Native Image supports a wide range of options to configure the `native-image` tool. 
 The options passed to `native-image` are evaluated left-to-right.
-For more information, see [Native Image Build Configuration](BuildConfiguration.md#order-of-arguments-evaluation).
 
 The options fall into three categories:
- - [Image generation options](NativeImageOptions.md#image-generation-options) - for the full list, run `native-image --help`
- - [Macro options](NativeImageOptions.md#macro-options)
- - [Non-standard options](NativeImageOptions.md#non-standard-options) - subject to change through a deprecation cycle, run `native-image --help-extra` for the full list.
+ - [Image generation options](BuildOptions.md#image-generation-options) - for the full list, run `native-image --help`
+ - [Macro options](BuildOptions.md#macro-options)
+ - [Non-standard options](BuildOptions.md#non-standard-options) - subject to change through a deprecation cycle, run `native-image --help-extra` for the full list.
 
-For non-trivial applications reachability metadata should be provided to the image builder.
-To learn more about metadata, see [Reachability Metadata](ReachabilityMetadata.md).
-To automatically collect metadata for your application, see [Automatic Collection of Metadata](AutomaticMetadataCollection.md).
-For further image build tweaks, see [Build Configuration](BuildConfiguration.md).
+Find a complete list of options for the `native-image` builder [here](BuildOptions.md).
 
-If your project uses Gradle or Maven, you can leverage the [Native Build Tools](https://github.com/graalvm/native-build-tools) for a smoother Native Image experience.
+For more native image build tweaks and how to properly configure the native image build, see [Build Configuration](BuildConfiguration.md#order-of-arguments-evaluation).
 
-Native Image can interop with native languages through a custom API.
-Using this API, you can specify custom native entry points into your Java application and build it into a shared library.
-To learn more, see [Building a Shared Library](SharedLibrary.md)
+Native Image will output the progress and various statistics during the image build. To learn more about the output, and the different image build phases, see [Build Output](BuildOutput.md).
 
-Native Image can also leverage Truffle to allow code in supported Truffle languages (e.g., Javascript and Python) to be executed in the image. (TODO link?)
-To inform `native-image` of a guest language used by an application, specify `--language:<languageId>` for each guest language (e.g., `--language:js`).
+With Native Image you can build static or mostly static images, ideal for deploying in containers. Learn more [here](StaticImages.md).
 
-Native Image will output the progress and various statistics during the image build. To learn more about the output, and the different image build phases, see [Build Output](BuildOutput.md)
-
+If you are new to GraalVM Native Image or have with little experience using it, we recommend check the [Native Image Programming Model](ProgrammingModel.md) to better understand some key aspects before going deeper.

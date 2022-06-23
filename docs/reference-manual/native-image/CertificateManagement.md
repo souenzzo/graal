@@ -1,9 +1,10 @@
 ---
 layout: docs
 toc_group: native-image
-link_title: Certificate Management in Native Image
+link_title: Certificate Management
 permalink: /reference-manual/native-image/CertificateManagement/
 ---
+
 # Certificate Management in Native Image
 
 Native Image provides multiple ways to specify the certificate file used to define the default TrustStore.
@@ -17,7 +18,7 @@ This TrustStore is by default created from the root certificate file provided wi
 
 Since the contents of the build-time certificate file is embedded into the native executable, the file itself does not need to be present in the target environment.
 
-## Run-time Options
+## Runtime Options
 
 The certificate file can also be changed dynamically at run time via setting the `javax.net.ssl.trustStore\*` system properties.
 
@@ -43,3 +44,7 @@ During the image building process, a list of untrusted certificates is loaded fr
 This file is used when validating certificates at both build time and run time.
 In other words, when a new certificate file is specified at run time via setting the `javax.net.ssl.trustStore\*` system properties, the new certificates will still be checked against the `<java.home>/lib/security/blacklisted.certs` loaded at
 image build time.
+
+### Related Documentation
+
+- [JCA Security Services in Native Image](JCASecurityServices.md)

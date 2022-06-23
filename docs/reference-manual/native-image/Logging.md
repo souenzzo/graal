@@ -1,16 +1,16 @@
 ---
 layout: docs
-toc_group: native-image
-link_title: Logging on Native Image
-permalink: /reference-manual/native-image/Logging/
+toc_group: java-features
+link_title: Logging
+permalink: /reference-manual/native-image/java-features/Logging/
+redirect_from: /$version/reference-manual/native-image/Logging/
 ---
+
 # Logging in Native Image
 
 By default, Native Image supports logging via the `java.util.logging.*` API.
 
-## Default Logging Configuration
-
-The default logging configuration in a native executable is based on the `logging.properties` file found in the JDK.
+The default logging configuration in Native Image is based on the `logging.properties` file found in the JDK.
 This configures a `java.util.logging.ConsoleHandler` which will only show messages at the `INFO` level and above.
 Custom logging configuration can be loaded either at executable build time or at runtime as described below.
 
@@ -28,7 +28,7 @@ For more details, see [Reflection Support](Reflection.md).
 
 ## Build-Time Logger Initialization
 
-The logger can be initialized at executable build time with a custom _logging.properties_ configuration file, as illustrated in following example.
+The logger can be initialized at build time with a custom _logging.properties_ configuration file, as illustrated in following example.
 
 1. Save the following Java code into a file named _BuildTimeLoggerInit.java_, then compile it using `javac`:
     ```java
@@ -55,21 +55,21 @@ The logger can be initialized at executable build time with a custom _logging.pr
     ```
 2. Download the [_logging.properties_](assets/logging.properties) resource file and save it in the same directory as _BuildTimeLoggerInit.java_.
 
-3. Build and run the native executable
+3. Build and run the native executable:
 
     ```shell
     native-image BuildTimeLoggerInit --initialize-at-build-time=BuildTimeLoggerInit
     ./buildtimeloggerinit
     ```
 The _logging.properties_ file is processed at build time.
-It does not need to be included in the native executable, therefore reducing the size of the executable file.
+It does not need to be included in the native executable, therefore reducing the size of the file.
 
-`LoggerHolder.LOGGER` is also initialized at build time and is readily available at runtime, therefore improving the startup time. 
+`LoggerHolder.LOGGER` is also initialized at build time and is readily available at run time, therefore improving the startup time. 
 Unless your application needs to process a custom _logging.properties_ configuration file at runtime, this approach is recommended.
 
 ## Runtime Logger Initialization
 
-The logger can also be initialized at runtime, as shown in the following example.
+The logger can also be initialized at run time, as shown in the following example.
 
 1. Save the following Java code into a file named _RuntimeLoggerInit.java_, then compile it using `javac`:
 
@@ -97,10 +97,10 @@ The logger can also be initialized at runtime, as shown in the following example
     ./runtimeloggerinit
     ```
 
-In this case, the _logging.properties_ file needs to be available for runtime processing and it must be included in the executable via the `-H:IncludeResources=logging.properties` option. For more details on this option, see [accessing resources at runtime](Resources.md).
+In this case, the _logging.properties_ file needs to be available for runtime processing and it must be included in the executable via the `-H:IncludeResources=logging.properties` option. For more details on this option, see [Accessing Resources at Runtime](Resources.md).
 
-## Related Documentation
+### Related Documentation
+
 * [Accessing Resources in Native Images](Resources.md)
 * [Class Initialization in Native Image](ClassInitialization.md)
-* [Native Image Build Configuration](BuildConfiguration.md)
-* [Reflection Use in Native Images](Reflection.md)
+

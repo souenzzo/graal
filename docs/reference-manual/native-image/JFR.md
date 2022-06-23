@@ -1,7 +1,7 @@
 ---
 layout: docs
-toc_group: native-image
-link_title: JDK Flight Recorder with Native Image
+toc_group: debugging-and-diagnostics
+link_title: JDK Flight Recorder
 permalink: /reference-manual/native-image/debugging-and-diagnostics/JFR
 redirect_from: /$version/reference-manual/native-image/JFR/
 ---
@@ -12,8 +12,6 @@ JDK Flight Recorder (JFR) is a production-time profiling system that is now supp
 
 Basically, native images that are built with `-H:+AllowVMInspection` support JFR events written in Java, and users can continue to make use of the  [`jdk.jfr.Event`](https://docs.oracle.com/en/java/javase/11/docs/api/jdk.jfr/jdk/jfr/Event.html) API and JFR itself, with a similar experience to using JFR in the Java HotSpot VM.
 However, to record JFR events at run time, JFR support and JFR recording must be enabled, and this page covers how to start using JFR with native images.
-
-### Current limitations
 
 At the moment, the JFR support is still limited, i.e., most VM-internal events and advanced features such as stack traces or memory leak detection are still missing.
 A subset of JFR features are currently available: custom and system events and disk-based recordings.
@@ -40,7 +38,7 @@ For example:
 ./javaapplication -XX:+FlightRecorder -XX:StartFlightRecording="filename=recording.jfr"
 ```
 
-## Run a Demo
+### Run a Demo
 
 Transform this very simple demo application into a native image and see how to use JFR events from it.
 Save the following code to the _Example.java_ file.
@@ -145,3 +143,7 @@ Otherwise, this option expects a comma separated list of tag combinations, each 
 * If more than one tag combination matches a message's tags, the rightmost one will apply.
 * Messages with tags that do not have any matching tag combinations are set to log at a default level of `WARNING`.
 * This option is case insensitive.
+
+### Related Documentation
+
+- [Debugging and Diagnostics](DebuggingAndDiagnostics.md)

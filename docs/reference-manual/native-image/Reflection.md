@@ -1,16 +1,17 @@
 ---
 layout: docs
-toc_group: native-image
-link_title: Reflection on Native Image
-permalink: /reference-manual/native-image/Reflection/
+toc_group: java-features
+link_title: Java Reflection
+permalink: /reference-manual/java-features/Reflection/
+redirect_from: /$version/reference-manual/native-image/Reflection/
 ---
+
+# Java Reflection in Native Images
 
 * [Automatic Detection](#automatic-detection)
 * [Manual Configuration](#manual-configuration)
 * [Conditional Configuration](#conditional-configuration)
 * [Configuration with Features](#configuration-with-features)
-
-# Reflection Use in Native Images
 
 Java reflection support (the `java.lang.reflect.*` API) enables Java code to examine its own classes, methods, fields and their properties at run time.
 
@@ -137,7 +138,7 @@ Code may also write non-static final fields like `String.value` in this example,
 More than one configuration can be used by specifying multiple paths for `ReflectionConfigurationFiles` and separating them with `,`.
 Also, `-H:ReflectionConfigurationResources` can be specified to load one or several configuration files from the native image build's class path, such as from a JAR file.
 
-### Conditional Configuration
+## Conditional Configuration
 
 With conditional configuration, a class configuration entry is applied only if a provided `condition` is satisfied.
 The only currently supported condition is `typeReachable`, which enables the configuration entry if the specified type is reachable through other code.
@@ -162,7 +163,7 @@ When a configuration entry should be enabled if one of several types are reachab
 
 When used with [assisted configuration](BuildConfiguration.md#assisted-configuration-of-native-image-builds), conditional entries of existing configuration will not be fused with agent-collected entries.
 
-### Configuration with Features
+## Configuration with Features
 
 Alternatively, a custom `Feature` implementation can register program elements before and during the analysis phase of the native image build using the `RuntimeReflection` class. For example:
 ```java
@@ -184,11 +185,18 @@ class RuntimeReflectionRegistrationFeature implements Feature {
 To activate the custom feature `--features=<fully qualified name of RuntimeReflectionRegistrationFeature class>` needs to be passed to native-image.
 [Native Image Build Configuration](BuildConfiguration.md) explains how this can be automated with a `native-image.properties` file in `META-INF/native-image`.
 
-### Use of Reflection during Native Image Generation
-Reflection can be used without restrictions during a native image generation, for example, in static initializers.
+### Use of Reflection at Image Build Time
+
+Reflection can be used without restrictions during the native image generation, for example, in static initializers.
 At this point, code can collect information about methods and fields and store them in their own data structures, which are then reflection-free at run time.
 
 ### Unsafe Accesses
 The `Unsafe` class, although its use is discouraged, provides direct access to the memory of Java objects.
 The `Unsafe.objectFieldOffset()` method provides the offset of a field within a Java object.
 Note that the offsets that are queried during native image generation can be different from the offsets at run time.
+
+
+### Related Documentation
+
+* [Reachability Metadata: Reflection](ReachabilityMetadata.md#reflection)
+* [Class Initialization in Native Image](ClassInitialization.md)
