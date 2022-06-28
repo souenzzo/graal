@@ -1,11 +1,11 @@
 ---
 layout: docs
 toc_group: contributing
-link_title: For Contributors
+link_title: Contributing
 permalink: /reference-manual/native-image/contributing/
 ---
 
-# For Native Image Contributors
+# Contributing to Native Image
 
 [GraalVM](https://github.com/oracle/graal/) is an open source project, so is [Substrate VM](https://github.com/oracle/graal/tree/master/substratevm) - a codename behind the Native Image technology.
 We welcome contributors to the core!
