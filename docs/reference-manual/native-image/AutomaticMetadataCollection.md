@@ -30,33 +30,33 @@ You enable the agent on the command line with the `java` command from GraalVM JD
 $JAVA_HOME/bin/java -agentlib:native-image-agent=config-output-dir=/path/to/config-dir/ ...
 ```
 
-Note that `-agentlib` must be specified _before_ a `-jar` option or a class name or any application parameters in the `java` command.
+>Note: `-agentlib` must be specified _before_ a `-jar` option or a class name or any application parameters as part of the `java` command.
 
-During execution, the agent looks up for classes, methods, fields, resources for which `native-image` needs additional information -- traces calls.
-Once the application finishes and the JVM exits, the agent writes metadata to JSON files in the specified output directory (`/path/to/config-dir/`).
+When run, the agent looks up classes, methods, fields, resources for which the `native-image` tool needs additional information.
+When the application completes and the JVM exits, the agent writes metadata to JSON files in the specified output directory (`/path/to/config-dir/`).
 
-It can be necessary to run the target application more than once with different inputs to trigger separate execution paths for a better coverage of dynamic calls.
-The agent supports this with the `config-merge-dir` option which adds the intercepted accesses to an existing set of configuration files:
+It may be necessary to run the application more than once (with different execution paths) for improved coverage of dynamic features.
+The `config-merge-dir` option adds to an existing set of configuration files, as follows:
 ```shell
 $JAVA_HOME/bin/java -agentlib:native-image-agent=config-merge-dir=/path/to/config-dir/ ...                                                              ^^^^^
 ```
 
-The agent also provides the following flags to write metadata on a periodic basis:
+The agent also provides the following options to write metadata on a periodic basis:
 - `config-write-period-secs=n`: writes metadata files every `n` seconds; `n` must be greater than 0.
-- `config-write-initial-delay-secs=n`: waits `n` seconds before the first metadata file write; defaults to `1`.
+- `config-write-initial-delay-secs=n`: waits `n` seconds before first writing metadata; defaults to `1`.
 
 For example:
 ```shell
 $JAVA_HOME/bin/java -agentlib:native-image-agent=config-output-dir=/path/to/config-dir/,config-write-period-secs=300,config-write-initial-delay-secs=5 ...
 ```
 
-The above agent command will output metadata files to `/path/to/config-dir/` every 300 seconds after an initial delay of 5 seconds.
+The above command will write metadata files to `/path/to/config-dir/` every 300 seconds after an initial delay of 5 seconds.
 
 It is advisable to manually review the generated configuration files.
 Because the agent observes only executed code, the application input should cover as many code paths as possible.
 
 The generated configuration files can be supplied to the `native-image` tool by placing them in a `META-INF/native-image/` directory on the class path. 
-This directory (or any of its subdirectories) is searched for files with the names `jni-config.json`, `reflect-config.json`, `proxy-config.json`, `resource-config.json`, `predefined-classes-config.json`, `serialization-config.json` which are then automatically included in the build. 
+This directory (or any of its subdirectories) is searched for files with the names `jni-config.json`, `reflect-config.json`, `proxy-config.json`, `resource-config.json`, `predefined-classes-config.json`, `serialization-config.json` which are then automatically included in the build process. 
 Not all of those files must be present. 
 When multiple files with the same name are found, all of them are considered.
 
@@ -205,7 +205,9 @@ Filter files have the following structure:
 
 The `rules` section contains a sequence of rules.
 Each rule specifies either `includeClasses`, which means that lookups originating in matching classes will be included in the resulting configuration, or `excludeClasses`, which excludes lookups originating in matching classes from the configuration.
-Each rule defines a pattern for the set of matching classes, which can end in `.*` or `.**`: a `.*` ending matches all classes in a package and that package only, while a `.**` ending matches all classes in the package as well as in all subpackages at any depth. 
+Each rule defines a pattern to match classes. The pattern can end in `.*` or `.**`, interpreted as follows:
+    - `.*` matches all classes in the package and only that package;
+    - `.**` matches all classes in the package as well as in all subpackages at any depth. 
 Without `.*` or `.**`, the rule applies only to a single class with the qualified name that matches the pattern.
 All rules are processed in the sequence in which they are specified, so later rules can partially or entirely override earlier ones.
 When multiple filter files are provided (by specifying multiple `caller-filter-file` options), their rules are chained together in the order in which the files are specified.
@@ -223,12 +225,12 @@ If a `regexRules` section is specified, a class will be considered included if (
 With no `regexRules` section, only the `rules` section determines whether a class is included or excluded.
 
 For testing purposes, the built-in filter for Java class library lookups can be disabled by adding the `no-builtin-caller-filter` option, but the resulting metadata files are generally unsuitable for the build.
-Similarly, the built-in filter for Java VM-internal accesses based on heuristics can be disabled with `no-builtin-heuristic-filter` and will also generally lead to less usable configuration files.
+Similarly, the built-in filter for Java VM-internal accesses based on heuristics can be disabled with `no-builtin-heuristic-filter` and will also generally lead to less usable metadata files.
 For example: `-agentlib:native-image-agent=no-builtin-caller-filter,no-builtin-heuristic-filter,config-output-dir=...`
 
 ### Access Filters
 
-Unlike the caller-based filters described above, which filter dynamic accesses based on where they originate from, _access filters_ apply to the _target_ of the access.
+Unlike the caller-based filters described above, which filter dynamic accesses based on where they originate, _access filters_ apply to the _target_ of the access.
 Therefore, access filters enable directly excluding packages and classes (and their members) from the generated configuration.
 
 By default, all accessed classes (which also pass the caller-based filters and the built-in filters) are included in the generated configuration.
@@ -264,15 +266,15 @@ However, for a better understanding of the execution, the agent can also write a
 $JAVA_HOME/bin/java -agentlib:native-image-agent=trace-output=/path/to/trace-file.json ...
 ```
 
-The `native-image-configure` tool can transform trace files to configuration files that can be used at image build time.
-The following command reads and processes `trace-file.json` and generates a set of configuration files in directory `/path/to/config-dir/`:
+The `native-image-configure` tool can transform trace files to configuration files.
+The following command reads and processes `trace-file.json` and generates a set of configuration files in the directory `/path/to/config-dir/`:
 ```shell
 native-image-configure generate --trace-input=/path/to/trace-file.json --output-dir=/path/to/config-dir/
 ```
 
 ### Interoperability
 
-Although the agent is distributed with GraalVM, it uses the JVM Tool Interface (JVMTI) and can potentially be used with other JVMs that support JVMTI.
+The agent uses the JVM Tool Interface (JVMTI) and can potentially be used with other JVMs that support JVMTI.
 In this case, it is necessary to provide the absolute path of the agent:
 ```shell
 /path/to/some/java -agentpath:/path/to/graalvm/jre/lib/amd64/libnative-image-agent.so=<options> ...
