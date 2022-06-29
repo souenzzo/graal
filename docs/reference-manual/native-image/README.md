@@ -22,7 +22,7 @@ First, the `native-image` tool performs a static analysis of your code to determ
 Second, it compiles classes, methods, and resources into a binary executable.
 This entire process is called **build time** (or **image build time**) to clearly distinguish it from the compilation of Java source code to bytecode. 
 
-The `native-image` tool can be used to build a **native executable**, which is the default, or a **native shared library**. This quick start guide focuses on building a native executable; to learn more about shared libraries, go [here](SharedLibrary.md).
+The `native-image` tool can be used to build a **native executable**, which is the default, or a **native shared library**. This quick start guide focuses on building a native executable; to learn more about shared libraries, go [here](NativeInteroperability.md).
 
 To get used to Native Image terminology and get better understanding of the technology, we recommend you to read about the [Basics of Native Image](ProgrammingModel.md). 
 
@@ -141,7 +141,7 @@ For example, build a native executable for a HelloWorld application.
 
 To build a native executable from a JAR file in the current working directory, use the following command:
 ```shell
-native-image [options] -jar jarfile [imagename] [options]
+native-image [options] -jar jarfile [imagename]
 ```
 
 1. Prepare the application.
@@ -255,7 +255,7 @@ For more details, see [Native Image Compatibility and Optimization Guide](Limita
 
 Native Image can also interop with native languages through a custom API.
 Using this API, you can specify custom native entry points into your Java application and build it into a shared library.
-To learn more, see [Building a Shared Library](SharedLibrary.md).
+To learn more, see [Building a Shared Library](NativeInteroperability.md).
 
 To find asnwers to most frequently asked questions, go [here](FAQ.md).
 
