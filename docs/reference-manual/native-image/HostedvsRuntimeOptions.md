@@ -1,8 +1,8 @@
 ---
 layout: docs
-toc_group: contributor
+toc_group: contributing
 link_title: Hosted and Runtime Options
-permalink: /reference-manual/native-image/contributor/HostedvsRuntimeOptions/
+permalink: /reference-manual/native-image/contributing/HostedvsRuntimeOptions/
 redirect_from: /$version/reference-manual/native-image/HostedvsRuntimeOptions/
 ---
 

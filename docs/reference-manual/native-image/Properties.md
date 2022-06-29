@@ -152,5 +152,5 @@ Consider the following example.
     
 ### Related Documentation
 
-* [Native Image Programming Model: Image Build Time vs Image Run Time](ProgrammingModel.md#image-build-time-vs-image-run-time)
+* [Native Image Basics: Image Build Time vs Image Run Time](ProgrammingModel.md#image-build-time-vs-image-run-time)
 * [Class Initialization in Native Image](ClassInitialization.md)

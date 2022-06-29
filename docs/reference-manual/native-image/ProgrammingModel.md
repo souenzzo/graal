@@ -1,11 +1,11 @@
 ---
 layout: docs
 toc_group: native-image
-link_title: Programming Model
+link_title: Native Image Basics
 permalink: /reference-manual/native-image/ProgrammingModel/
 ---
 
-# Native Image Programming Model
+# Native Image Basics
 
 * [Native Image and the Native Image Build](#native-image-and-the-native-image-build)
 * [Image Build Time vs Image Run Time](#image-build-time-vs-image-run-time)

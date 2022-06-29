@@ -1,6 +1,6 @@
 ---
 layout: docs
-toc_group: c
+toc_group: java-features
 link_title: Java Native Interface
 permalink: /reference-manual/native-image/java-features/JNI/
 redirect_from: /$version/reference-manual/native-image/JNI/

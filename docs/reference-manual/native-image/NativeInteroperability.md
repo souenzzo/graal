@@ -1,12 +1,12 @@
 ---
 layout: docs
 toc_group: native-interoperability
-link_title: Native Interoperability
+link_title: Interoperability with Native Code
 permalink: /reference-manual/native-image/native-interoperability/
 redirect_from: /$version/reference-manual/native-image/ImplementingNativeMethodsInJavaWithSVM/
 ---
 
-# Native Interoperability
+# Interoperability with Native Code
 
 You can use Native Image to convert Java code into a **native shared library** and call it from a native (C/C++) application just like any C function. 
 There are two mechanisms for calling natively compiled Java methods:

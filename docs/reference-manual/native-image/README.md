@@ -24,7 +24,7 @@ This entire process is called **build time** (or **image build time**) to clearl
 
 The `native-image` tool can be used to build a **native executable**, which is the default, or a **native shared library**. This quick start guide focuses on building a native executable; to learn more about shared libraries, go [here](SharedLibrary.md).
 
-To get used to Native Image terminology and get better understanding of the technology, we recommend you to read about the [Native Image Programming Model](ProgrammingModel.md). 
+To get used to Native Image terminology and get better understanding of the technology, we recommend you to read about the [Basics of Native Image](ProgrammingModel.md). 
 
 ### Table of Contents
 
@@ -269,7 +269,7 @@ Native Image for GraalVM Enterprise Edition is licensed under the [Oracle Techno
 ### Further Reading
 
 This getting started guide is intended for new users or those with little experience of using GraalVM Native Image. 
-We strongly recommend these users to check the [Native Image Programming Model](ProgrammingModel.md) guide to better understand some key aspects before going deeper.
+We strongly recommend these users to check the [Native Image Basics](ProgrammingModel.md) guide to better understand some key aspects before going deeper.
 
 For a gradual learning process, check the Native Image [Build Overview](BuildOverview.md) and [Build Configuration](BuildConfiguration.md) documentation.
 

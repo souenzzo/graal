@@ -32,7 +32,7 @@ In both cases, choosing the base image mostly depends on what your particular na
 
 Everything that is included in a product (GraalVM Native Image) or produced by a product (a native executable, a native shared library, etc.) is covered by the same licence. That is [Oracle Technology Network License Agreement for GraalVM Enterprise Edition](https://www.oracle.com/downloads/licenses/graalvm-otn-license.html).
 
-### Can I distribute a static native image built with GraalVM Enterprise Native Image?
+<!-- ### Can I distribute a static native image built with GraalVM Enterprise Native Image?
 
 If you statically link any GPL code into a native image with GraalVM Enterprise, you will be violating the licence.
 
@@ -50,4 +50,4 @@ Answer goes here.
 
 ### Do I need to configure Native Image to be compatible with third-party libraries? 
 
-Answer goes here.
+Answer goes here. -->

@@ -42,7 +42,7 @@ Images compiled with this option will not be able to be inspected by the tool.
 GraalVM Enterprise Native Image can embed a Software Bill of Materials (SBOM) at build time to detect any libraries that may be susceptible to known security vulnerabilities.
 Native Image provides the `-H:IncludeSBOM` option to embed an SBOM into a native executable. 
 
-> Note: Embedding a Software Bill of Materials (SBOM) is available with GraalVM Enterprise Native Image. The feature is currently experimental and is supported on Linux, macOS, and Windows platforms.
+> Note: Embedding a Software Bill of Materials (SBOM) is available with GraalVM Enterprise Native Image. The feature is currently experimental.
 
 The CycloneDX format is supported and the option takes `cyclonedx` as an argument. 
 To embed a CycloneDX SBOM into a native executable, pass the `-H:IncludeSBOM=cyclonedx` option to the `native-image` command. 
@@ -89,8 +89,8 @@ After embedding the compressed SBOM into the executable, the tool is able to ext
 
 The tool can extract the SBOM from both executables and shared libraries. 
 To scan for any vulnerable libraries, submit the SBOM to a vulnerability scanner. 
-For example, the popular Anchore software supply chain management platform makes the `grype` scanner freely available. 
-You can check whether the libraries given in you SBOMs have known vulnerabilities documented in Anchore's database. 
+For example, the popular [Anchore software supply chain management platform](https://anchore.com/) makes the `grype` scanner freely available.
+You can check whether the libraries given in your SBOMs have known vulnerabilities documented in Anchore's database. 
 For this purpose, the output of the tool can be fed directly to the `grype` scanner to check for vulnerable libraries, using the command `$GRAALVM_HOME/bin/native-image-inspect --sbom <path_to_binary> | grype` which produces the following output:
 ```shell
 NAME                 INSTALLED      VULNERABILITY   SEVERITY

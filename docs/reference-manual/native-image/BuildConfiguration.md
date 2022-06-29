@@ -177,4 +177,4 @@ This option is only allowed to be used on command line.
 * [Build Output](BuildOutput.md)
 * [Reachability Metadata](ReachabilityMetadata.md)
 * [Class Initialization in Native Image](ClassInitialization.md)
-* [Native Image Programming Model](ProgrammingModel.md)
+* [Native Image Basics](ProgrammingModel.md)

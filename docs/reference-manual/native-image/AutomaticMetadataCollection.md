@@ -1,12 +1,12 @@
 ---
 layout: docs
 toc_group: reachability-metadata
-link_title: Metadata Collection with the Tracing Agent
+link_title: Collect Metadata with the Tracing Agent
 permalink: /reference-manual/native-image/metadata/AutomaticMetadataCollection/
 redirect_from: /$version/reference-manual/native-image/Agent/
 ---
 
-# Metadata Collection with the Tracing Agent
+# Collect Metadata with the Tracing Agent
 
 * [Tracing Agent](#tracing-agent)
 * [Conditional Metadata Collection](#conditional-metadata-collection)
@@ -14,18 +14,19 @@ redirect_from: /$version/reference-manual/native-image/Agent/
 * [Agent Advanced Usage](#agent-advanced-usage)
 * [Native Image Configure Tool](#native-image-configure-tool)
  
-Native images are built ahead-of-time and their execution relies on the static analysis performed by the `native-image` builder.
-However, this analysis cannot always completely predict all the dynamically-accessed program elements like Java Native Interface (JNI), Java Reflection, Dynamic Proxy objects (`java.lang.reflect.Proxy`), class path resources (`Class.getResource`). 
-Undetected usages of these dynamic features need to be provided to the `native-image` tool in the form of 
-[metadata](ReachabilityMetadata.md) (precomputed in code or using JSON configuration files). 
+The Native Image tool relies on the static analysis of an application's reachable code at runtime. 
+However, the analysis cannot always completely predict all usages of the Java Native Interface (JNI), Java Reflection, Dynamic Proxy objects, or class path resources. 
+Undetected usages of these dynamic features must be provided to the `native-image` tool in the form of [metadata](ReachabilityMetadata.md) (precomputed in code or as JSON configuration files).
 
-This guide shows how to automatically collect metadata for an application and write JSON configuration files. To learn how to compute dynamic feature calls in code, go [here](ReachabilityMetadata.md#computing-metadata-in-code).
+This guide shows you how to automatically collect metadata for an application and write JSON configuration files. 
+To learn how to compute dynamic feature calls in code, see [Reachability Metadata](ReachabilityMetadata.md#computing-metadata-in-code).
 
 ## Tracing Agent
 
-To gather metadata and make preparing configuration files easier and more convenient, GraalVM provides a **Tracing Agent** (in further text referred as *agent*) that tracks all usages of dynamic features during application execution on a regular Java VM.
+GraalVM provides a **Tracing Agent** to easily gather metadata and prepare configuration files. 
+The agent tracks all usages of dynamic features during application execution on a regular Java VM.
 
-You enable the agent on the command line with the `java` command from GraalVM JDK:
+Enable the agent on the command line with the `java` command from the GraalVM JDK:
 ```shell
 $JAVA_HOME/bin/java -agentlib:native-image-agent=config-output-dir=/path/to/config-dir/ ...
 ```

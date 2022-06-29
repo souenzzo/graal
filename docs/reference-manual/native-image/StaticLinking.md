@@ -1,13 +1,15 @@
 ---
 layout: docs
 toc_group: build-overview
-link_title: Static Native Images
-permalink: /reference-manual/native-image/overview/StaticImages/
+link_title: Static Linking
+permalink: /reference-manual/native-image/overview/StaticLinking/
 ---
 
-# Static and Mostly Static Images
+# Static Linking
+ 
+GraalVM Native Image by default builds dynamically linked binaries: at build time it loads your application classes and interfaces and hooks them together in a process of dynamic linking.
 
-With GraalVM Native Image you can create static or mostly static images, depending on the purpose.
+However, with GraalVM Native Image, you can also create static or mostly static images, depending on the purpose.
 
 **Static native images** are statically linked binaries which can be used without any additional library dependencies.
 This makes them easier to distribute and to deploy on slim or distroless container images.

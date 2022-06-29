@@ -15,11 +15,11 @@ Thus, some Java features may require special "treatment" such as a command line 
 
 The reference information here explains how Native Image handles some Java features.
 
-- [JCA Security Services](JCASecurityServices.md)
-- [URL Protocols](URLProtocols.md)
-- [Certificate Management](CertificateManagement.md)
-- [Reflection](Reflection.md)
-- [Java Native Interface (JNI)](JNI.md)
-- [Dynamic Proxy](DynamicProxy.md)
 - [Accessing Resources](Resources.md)
+- [Certificate Management](CertificateManagement.md)
+- [Dynamic Proxy](DynamicProxy.md)
+- [Java Native Interface (JNI)](JNI.md)
+- [JCA Security Services](JCASecurityServices.md)
 - [Logging](Logging.md)
+- [Reflection](Reflection.md)
+- [URL Protocols](URLProtocols.md)

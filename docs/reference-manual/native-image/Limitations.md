@@ -18,7 +18,7 @@ Native Image provides an optimization to reduce the memory footprint and startup
 This approach relies on a ["closed-world assumption"](ProgrammingModel.md#static-analysis-reachability-and-closed-world-assumption) in which all code is known at build time. That is, no new code is loaded at run time.
 As with most optimizations, not all applications are amenable to this approach.
 If the `native-image` builder is unable to optimize an application at build time, it generates a so-called "fallback file" that requires a Java VM to run.
-We recommend to check [Native Image Programming Model](ProgrammingModel.md) for a detailed description what happens with your Java application at build and run times.
+We recommend to check [Native Image Basics](ProgrammingModel.md) for a detailed description what happens with your Java application at build and run times.
 
 ## Features Requiring Metadata
 
