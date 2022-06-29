@@ -15,7 +15,7 @@ permalink: /reference-manual/native-image/ProgrammingModel/
 ## Native Image and the Native Image Build
 
 Native Image is written in Java and takes Java bytecode as input to produce a standalone binary (an **executable**, or a **shared library**).
-During the process of producing a binary, Native Image can execute user code.
+During the process of producing a binary, Native Image can run user code.
 Finally, Native Image links compiled user code, parts of the Java runtime (for example, the garbage collector, threading support), and the results of code execution into the binary.
 
 We refer to this binary as a **native image**, or simply **image**.

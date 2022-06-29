@@ -7,15 +7,15 @@ permalink: /reference-manual/native-image/LLVMBackend/
 
 # LLVM Backend for Native Image
 
-Native Image includes an alternative backend which uses the [LLVM intermediate representation](https://llvm.org/docs/LangRef.html) and the [LLVM compiler](http://llvm.org/docs/CommandGuide/llc.html) to produce native executables.
-This LLVM backend allows users to [target alternative architectures](#how-to-add-a-target-architecture-to-graalvm-using-llvm-backend) that are not directly supported by GraalVM Native Image, at some performance costs.
-To enable it, pass the `-H:CompilerBackend=llvm` option at image build time. 
+Native Image includes an alternative backend that uses a [LLVM intermediate representation](https://llvm.org/docs/LangRef.html) and the [LLVM compiler](http://llvm.org/docs/CommandGuide/llc.html) to produce native executables.
+This LLVM backend enables users to [target alternative architectures](#how-to-add-a-target-architecture-to-graalvm-using-llvm-backend) that are not directly supported by GraalVM Native Image. However, this approach introduces some performance costs.
+To enable it, pass the `-H:CompilerBackend=llvm` option on the command line. 
 
 The LLVM backend requires GraalVM's LLVM toolchain to be installed (with `gu install llvm-toolchain`).
 
 ## Code Generation Options
 
-* `-H:+SpawnIsolates`: enables isolates, which are disabled by default when using the LLVM backend as they incur a performance penalty.
+* `-H:+SpawnIsolates`: enables isolates. (These are disabled by default when using the LLVM backend because they incur a performance penalty.)
 * `-H:+BitcodeOptimizations`: enables aggressive optimizations at the LLVM bitcode level. This is experimental and may cause bugs.
 
 ## Debugging Options
@@ -32,7 +32,7 @@ The LLVM backend requires GraalVM's LLVM toolchain to be installed (with `gu ins
 
 ## How to Add a Target Architecture to GraalVM Using LLVM Backend
 
-An interesting use case for the LLVM backend is to target a new architecture without having to implement a complete new backend for Native Image.
+An interesting use case for the LLVM backend is to target a new architecture without having to implement a completely new backend for Native Image.
 The following are the necessary steps to achieve this at the moment.
 
 ### Target-Specific LLVM Settings

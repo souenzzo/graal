@@ -306,7 +306,7 @@ class Example {
 ```
 
 ### Dynamic Proxy Metadata In Code
-The following methods are evaluated at image build time when called with constant arguments:
+The following methods are evaluated at build time when called with constant arguments:
  - `java.lang.reflect.Proxy.getProxyClass`
  - `java.lang.reflect.Proxy.newProxyInstance`
 
@@ -327,13 +327,13 @@ Metadata for dynamic proxies is provided in `proxy-config.json` files.
 ```
 
 ## Serialization
-Java can serialize any class that implements the `Serializable` interfaces.
+Java can serialize any class that implements the `Serializable` interface.
 Serialization usually requires reflectively accessing the class of the object being serialized.
 The JDK also requires additional information about the class to serialize its object.
 Native Image supports serialization with proper metadata.
 
 ### Serialization Metadata In Code
-There is currently no way to register classes used for serialization in code.
+It is not possible to register classes used for serialization in code.
 
 ### Serialization Metadata in JSON
 Metadata for serialization is provided in `serialization-config.json` files.
@@ -359,20 +359,20 @@ Metadata for serialization is provided in `serialization-config.json` files.
   ]
 }
 ```
-Each entry in `types` allows serializing and deserializing objects of the class given by `name`.
+Each entry in `types` enables serializing and deserializing objects of the class given by `name`.
 Lambda serialization is also supported: all lambdas declared in the methods of the class given by `name` can be serialized/deserialized.
 
 ## Predefined Classes
 
-Native Image requires all classes to be known at image build time (a "closed-world assumption").
+Native Image requires all classes to be known at build time (a "closed-world assumption").
 However, Java has support for loading new classes at runtime.
-To emulate class loading, the [agent](AutomaticMetadataCollection.md) can trace dynamically loaded classes and save their bytecode for later use by the image builder.
+To emulate class loading, the [agent](AutomaticMetadataCollection.md) can trace dynamically loaded classes and save their bytecode for later use by the native image builder.
 At runtime, if there is an attempt to load a class with the same name and bytecodes as one of the classes encountered during tracing, the predefined class will be supplied to the application.
 
 > Note: Predefined classes metadata is not meant to be manually written.
 
 ### Predefined Classes Metadata In Code
-There is currently no way to specify predefined classes in code.
+It is not possible to specify predefined classes in code.
 
 ### Predefined Classes Metadata in JSON
 Metadata for predefined classes is provided in `predefined-classes-config.json` files.
@@ -389,7 +389,7 @@ Metadata for predefined classes is provided in `predefined-classes-config.json` 
   }
 ]
 ```
-The JSON schema is accompanied by the `agent-extracted-predefined-classes` directory that contains the bytecodes of the listed classes.
+The JSON schema is accompanied by the `agent-extracted-predefined-classes` directory that contains the bytecode of the listed classes.
 
 ### Related Documentation
 
