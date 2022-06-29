@@ -1,8 +1,8 @@
 ---
 layout: docs
-toc_group: java-features
+toc_group: dynamic-features
 link_title: Dynamic Proxy
-permalink: /reference-manual/native-image/java-features/DynamicProxy/
+permalink: /reference-manual/native-image/dynamic-features/DynamicProxy/
 redirect_from: /$version/reference-manual/native-image/DynamicProxy/
 ---
 

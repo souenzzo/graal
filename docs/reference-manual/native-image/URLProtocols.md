@@ -1,12 +1,12 @@
 ---
 layout: docs
-toc_group: java-features
+toc_group: dynamic-features
 link_title: URL Protocols
-permalink: /reference-manual/native-image/java-features/URLProtocols/
+permalink: /reference-manual/native-image/dynamic-features/URLProtocols/
 redirect_from: /$version/reference-manual/native-image/URLProtocols/
 ---
 
-# URL Protocols
+# URL Protocols in Native Image
 
 URL Protocols in Native Image can be divided into three classes:
 

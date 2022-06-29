@@ -1,12 +1,12 @@
 ---
 layout: docs
-toc_group: java-features
+toc_group: dynamic-features
 link_title: Accessing Resources
-permalink: /reference-manual/native-image/java-features/Resources/
+permalink: /reference-manual/native-image/dynamic-features/Resources/
 redirect_from: /$version/reference-manual/native-image/Resources/
 ---
 
-# Accessing Resources
+# Accessing Resources in Native Image
 
 By default, the `native-image` builder will not integrate any of the resources that are on the classpath into the native executable.
 To make calls such as `Class.getResource()` or `Class.getResourceAsStream()` (or their corresponding `ClassLoader` methods) return specific resources (instead of `null`), you must specify the resources that should be accessible at runtime. 

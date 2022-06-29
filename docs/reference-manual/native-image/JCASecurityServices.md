@@ -1,8 +1,8 @@
 ---
 layout: docs
-toc_group: java-features
+toc_group: dynamic-features
 link_title: JCA Security Services
-permalink: /reference-manual/native-image/java-features/JCASecurityServices/
+permalink: /reference-manual/native-image/dynamic-features/JCASecurityServices/
 redirect_from: /$version/reference-manual/native-image/featuresJCASecurityServices/
 ---
 

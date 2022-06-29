@@ -1,8 +1,8 @@
 ---
 layout: docs
-toc_group: java-features
+toc_group: dynamic-features
 link_title: Java Native Interface
-permalink: /reference-manual/native-image/java-features/JNI/
+permalink: /reference-manual/native-image/dynamic-features/JNI/
 redirect_from: /$version/reference-manual/native-image/JNI/
 ---
 

@@ -1,12 +1,12 @@
 ---
 layout: docs
-toc_group: java-features
-link_title: Java Reflection
-permalink: /reference-manual/java-features/Reflection/
+toc_group: dynamic-features
+link_title: Reflection
+permalink: /reference-manual/dynamic-features/Reflection/
 redirect_from: /$version/reference-manual/native-image/Reflection/
 ---
 
-# Java Reflection in Native Images
+# Reflection in Native Images
 
 * [Automatic Detection](#automatic-detection)
 * [Manual Configuration](#manual-configuration)
