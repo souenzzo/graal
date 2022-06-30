@@ -2,7 +2,7 @@
 layout: docs
 toc_group: native-image
 link_title: Native Image Basics
-permalink: /reference-manual/native-image/ProgrammingModel/
+permalink: /reference-manual/native-image/Basics/
 ---
 
 # Native Image Basics
@@ -12,7 +12,7 @@ permalink: /reference-manual/native-image/ProgrammingModel/
 * [Native Image Heap](#native-image-heap)
 * [Static Analysis, Reachability, and Closed-World Assumption](#static-analysis-reachability-and-closed-world-assumption)
 
-## Native Image and the Native Image Build
+## Native Image, Native Executable, Native Shared Library
 
 Native Image is written in Java and takes Java bytecode as input to produce a standalone binary (an **executable**, or a **shared library**).
 During the process of producing a binary, Native Image can run user code.

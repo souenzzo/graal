@@ -261,7 +261,7 @@ To automatically collect metadata for your application, see [Automatic Collectio
 There are also Maven and Gradle plugins for Native Image to automate building, testing and configuring native executables. Learn more [here](https://graalvm.github.io/native-build-tools/latest/index.html).
 
 Lastly, not all applications may be compatible with Native Image. 
-For more details, see [Native Image Compatibility and Optimization Guide](Limitations.md).
+For more details, see [Native Image Compatibility and Optimization Guide](Compatibility.md).
 
 Native Image can also interop with native languages through a custom API.
 Using this API, you can specify custom native entry points into your Java application and build it into a shared library.

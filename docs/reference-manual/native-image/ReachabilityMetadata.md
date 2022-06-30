@@ -401,5 +401,5 @@ The JSON schema is accompanied by the `agent-extracted-predefined-classes` direc
 ### Related Documentation
 
 * [Metadata Collection with the Tracing Agent](AutomaticMetadataCollection.md)
-* [Native Image Compatibility Guide](Limitations.md)
+* [Native Image Compatibility Guide](Compatibility.md)
 * [GraalVM Reachability Metadata Repository](https://github.com/oracle/graalvm-reachability-metadata)
