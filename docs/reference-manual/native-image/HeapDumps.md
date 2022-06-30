@@ -2,7 +2,7 @@
 layout: docs
 toc_group: debugging-and-diagnostics
 link_title: Generating Heap Dumps
-permalink: /reference-manual/native-image/debugging-and-diagnostics/Heapdump/
+permalink: /reference-manual/native-image/debugging-and-diagnostics/HeapDumps/
 redirect_from: /$version/reference-manual/native-image/NativeImageHeapdump/
 ---
 
