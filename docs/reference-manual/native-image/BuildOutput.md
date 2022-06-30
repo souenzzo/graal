@@ -71,7 +71,7 @@ Finished generating 'helloworld' in 16.2s.
 In this stage, the Native Image build process is set up and [`Features`][https://www.graalvm.org/sdk/javadoc/org/graalvm/nativeimage/hosted/Feature.html] are initialized.
 
 #### <a name="glossary-imagekind"></a>Native Image Kind
-By default, Native Image generates *executables* but it can also generate [*native shared libraries*][NativeInteroperability.md] and [*static executables*][StaticLinking.md].
+By default, Native Image generates *executables* but it can also generate [*native shared libraries*][InteropWithNativeCode.md] and [*static executables*][StaticLinking.md].
 
 #### <a name="glossary-version-info"></a>Version Info
 The version info of the Native Image process.
