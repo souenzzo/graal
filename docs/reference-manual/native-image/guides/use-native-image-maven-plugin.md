@@ -111,19 +111,46 @@ For demonstration purposes, you will use a fortune teller application that simul
     <build>
         <plugins>
             <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.0.0</version>
+                <executions>
+                    <execution>
+                        <id>java</id>
+                        <goals>
+                            <goal>java</goal>
+                        </goals>
+                        <configuration>
+                            <mainClass>${mainClass}</mainClass>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+                <configuration>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.source}</target>
+                </configuration>
+            </plugin>
+
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
-                <version>3.2.0</version>
+                <version>3.2.2</version>
                 <configuration>
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>Fortune</mainClass>
+                            <mainClass>${mainClass}</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
             </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
@@ -139,7 +166,7 @@ For demonstration purposes, you will use a fortune teller application that simul
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>Fortune</mainClass>
+                            <mainClass>${mainClass}</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>
@@ -147,6 +174,7 @@ For demonstration purposes, you will use a fortune teller application that simul
                     </descriptorRefs>
                 </configuration>
             </plugin>
+
         </plugins>
     </build>
     ```
@@ -168,43 +196,46 @@ For demonstration purposes, you will use a fortune teller application that simul
 
 ## Build a Java Application into a Native Executable with Maven
 
-1. Register the `native-maven-plugin` plugin for GraalVM Native Image by add the following profile in _pom.xml_:
+1. Register the Maven plugin for GraalVM Native Image, `native-maven-plugin`, in the profile called `native` by adding the following to _pom.xml_:
     ```xml
     <profiles>
         <profile>
             <id>native</id>
             <build>
-            <plugins>
-                <plugin>
-                <groupId>org.graalvm.buildtools</groupId>
-                <artifactId>native-maven-plugin</artifactId>
-                <version>0.9.11</version>
-                <extensions>true</extensions>
-                <executions>
-                    <execution>
-                    <id>build-native</id>
-                    <goals>
-                        <goal>build</goal>
-                    </goals>
-                    <phase>package</phase>
-                    </execution>
-                    <execution>
-                    <id>test-native</id>
-                    <goals>
-                        <goal>test</goal>
-                    </goals>
-                    <phase>test</phase>
-                    </execution>
-                </executions>
-                    <configuration>
-                        <skip>false</skip>
-                        <imageName>fortune</imageName>
-                        <buildArgs>
-                            --no-fallback
-                        </buildArgs>
-                    </configuration>
-                </plugin>
-            </plugins>
+                <plugins>
+                    <plugin>
+                        <groupId>org.graalvm.buildtools</groupId>
+                        <artifactId>native-maven-plugin</artifactId>
+                        <version>${native.maven.plugin.version}</version>
+                        <extensions>true</extensions>
+                        <executions>
+                            <execution>
+                                <id>build-native</id>
+                                <goals>
+                                    <goal>build</goal>
+                                </goals>
+                                <phase>package</phase>
+                            </execution>
+                            <execution>
+                                <id>test-native</id>
+                                <goals>
+                                    <goal>test</goal>
+                                </goals>
+                                <phase>test</phase>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <imageName>${imageName}</imageName>
+                            <fallback>false</fallback>
+                            <agent>
+                                <enabled>true</enabled>
+                                <options>
+                                    <option>experimental-class-loader-support</option>
+                                </options>
+                            </agent>
+                        </configuration>
+                    </plugin>
+                </plugins>
             </build>
         </profile>
     </profiles>
@@ -231,9 +262,6 @@ For demonstration purposes, you will use a fortune teller application that simul
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>exec-maven-plugin</artifactId>
         <version>3.0.0</version>
-        <configuration>
-            <mainClass>${mainClass}</mainClass>
-        </configuration>
         <executions>
             <execution>
                 <id>java-agent</id>
@@ -246,32 +274,43 @@ For demonstration purposes, you will use a fortune teller application that simul
                     <arguments>
                         <argument>-classpath</argument>
                         <classpath/>
-                        <argument>Fortune</argument>
+                        <argument>${mainClass}</argument>
                     </arguments>
+                </configuration>
+            </execution>
+            <execution>
+                <id>native</id>
+                <goals>
+                    <goal>exec</goal>
+                </goals>
+                <configuration>
+                    <executable>${project.build.directory}/${imageName}</executable>
+                    <workingDirectory>${project.build.directory}</workingDirectory>
                 </configuration>
             </execution>
         </executions>
     </plugin>
     ```
 
-3. Execute your application with the agent by running:
+3. Run your application with the agent enabled:
     ```shell
-    mvn -Pnative -Dagent=true -DskipTests -DskipNativeBuild=true package exec:exec@java-agent
+    mvn -Pnative -Dagent exec:exec@java-agent
+    <!-- mvn -Pnative -Dagent=true -DskipTests -DskipNativeBuild=true package exec:exec@java-agent -->
     ```
     The agent generates the configuration files in a subdirectory of `target/native/agent-output`. Those files will be automatically used if you run your build with the agent enabled.
 
 4. Now build a native executable directly with Maven by applying the required configuration:
 
     ```shell
-    mvn -Pnative -Dagent=true -DskipTests package exec:exec@native
+    mvn -Pnative -Dagent package
+    <!-- mvn -Pnative -Dagent=true -DskipTests package exec:exec@native -->
     ```
-    Notice the `-DskipTests` command which skips running tests on the JVM with Maven Surefire (enabled by default).
+    <!-- Notice the `-DskipTests` command which skips running tests on the JVM with Maven Surefire (enabled by default). -->
     When the command completes a native executable, `fortune`, is generated in the `/target` directory of the project and ready for use.
 
     The executable's name is derived from the artifact ID, but you can specify any custom name in the `native-maven-plugin` plugin within a <configuration> node:
     ```xml
     <configuration>
-        ...
         <imageName>futureteller</imageName>
     </configuration>
     ```
@@ -279,7 +318,8 @@ For demonstration purposes, you will use a fortune teller application that simul
 5. Run the application as a native executable:
 
     ```shell
-    ./target/fortune
+    mvn -Pnative exec:exec@native
+    <!-- ./target/fortune -->
     ```
 
     To see the benefits of executing your application as a native executable, `time` the execution and compare with running on the JVM.
