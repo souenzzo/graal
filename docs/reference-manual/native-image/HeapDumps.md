@@ -18,8 +18,6 @@ Another possibility is to write a special method which will generate a heap dump
 A dedicated [`org.graalvm.nativeimage.VMRuntime#dumpHeap`](https://github.com/oracle/graal/blob/master/substratevm/src/com.oracle.svm.core/src/com/oracle/svm/core/VMInspection.java) API exists for this purpose.
 Both possibilities are covered in this guide.
 
-> Note: This feature is available with **GraalVM Enterprise** only.
-
 ## Handling SIGUSR1 Signal
 
 The following Java example is a simple multi-threaded application which runs for 60 seconds.
