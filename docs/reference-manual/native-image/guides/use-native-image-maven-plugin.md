@@ -17,11 +17,13 @@ For demonstration purposes, you will use a fortune teller application that simul
 
 ## Prepare a Demo Application
 
-> You are expected to have [GraalVM installed with Native Image support](../README.md). 
+> You are expected to have [GraalVM installed with Native Image support](../README.md).
 
-1. Crate a new Java project with **Maven** in your favourite IDE, called "Fortune". The application should contain a sole Java file with the following content:
+1. Crate a new Java project with **Maven** in your favourite IDE, called "Fortune", in the `org.example` package name. The application should contain a sole Java file with the following content:
 
     ```java
+    package org.example;
+    
     import com.fasterxml.jackson.core.JsonProcessingException;
     import com.fasterxml.jackson.databind.JsonNode;
     import com.fasterxml.jackson.databind.ObjectMapper;
@@ -178,10 +180,19 @@ For demonstration purposes, you will use a fortune teller application that simul
         </plugins>
     </build>
     ```
+4. Replace the default `<properties>` section in `pom.xml` with this content:
 
-    The `<mainClass>...</mainClass` value should provide the path to the main class, the same path as specified in `<exec.mainClass>...<exec.mainClass>` in the project configuration. In this case, it is `Fortune`.
+    <properties>
+        <native.maven.plugin.version>0.9.12</native.maven.plugin.version>
+        <junit.jupiter.version>5.8.1</junit.jupiter.version>
+        <maven.compiler.source>${java.specification.version}</maven.compiler.source>
+        <maven.compiler.target>${java.specification.version}</maven.compiler.target>
+        <mainClass>Fortune</mainClass>
+    </properties>
+    
+    You just "hardcoded" plugins versions and the entry point class to your application.
 
-4. Test packaging and running the application. From the root application directory, execute:
+5. Now compile and run the application on the JVM (GraalVM SDK). From the root application directory, execute:
 
     ```shell
     mvn clean package
@@ -225,7 +236,6 @@ For demonstration purposes, you will use a fortune teller application that simul
                             </execution>
                         </executions>
                         <configuration>
-                            <imageName>${imageName}</imageName>
                             <fallback>false</fallback>
                             <agent>
                                 <enabled>true</enabled>
