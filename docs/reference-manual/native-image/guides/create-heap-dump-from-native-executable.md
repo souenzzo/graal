@@ -7,18 +7,17 @@ permalink: /reference-manual/native-image/guides/create-heap-dump/
 
 # Create a Heap Dump from a Native Executable
 
-With GraalVM Enterprise Edition you can create a heap dump of a running executable to monitor its execution. Just like any other Java heap dump, it can be opened with the [VisualVM](../../../tools/visualvm.md) tool.
+You can create a heap dump of a running executable to monitor its execution. Just like any other Java heap dump, it can be opened with the [VisualVM](../../../tools/visualvm.md) tool.
 
-A executable created by the `native-image` tool does not implement JVMTI agent, so it's not possible to trigger a heap dump using conventional tools such as _VisualVM_ or _jmap_.
-However, you can build a native executable so that it dumps its heap in three ways:
+You can build a native executable so that it dumps its heap in three ways:
 
-1. The initial heap of a native executable can be dumped using the `-XX:+DumpHeapAndExit` command-line option.
-2. The native executable can create a heap dump when it receives a `USR1` signal (other supported signals are `QUIT/BREAK` for stack dumps and `USR2` to dump runtime compilation information). The command-line option to use is `-H:+AllowVMInspection`.
-3. You can write a method that will create a heap dump at certain points in the lifetime of your application. For example, when certain conditions are met while running a native executable, your application code can trigger a heap dump. A dedicated [`org.graalvm.nativeimage.VMRuntime#dumpHeap`](https://github.com/oracle/graal/blob/master/substratevm/src/com.oracle.svm.core/src/com/oracle/svm/core/VMInspection.java) API exists for this purpose.
+1. Dump the initial heap of a native executable using the `-XX:+DumpHeapAndExit` command-line option.
+2. Build a native executabke with the `-H:+AllowVMInspection` option. Then create heap dumps sending `USR1` (other supported signals are `QUIT/BREAK` for stack dumps and `USR2` to dump runtime compilation information).
+3. Create a heap dumps programmatically through the [`org.graalvm.nativeimage.VMRuntime#dumpHeap`](https://github.com/oracle/graal/blob/master/substratevm/src/com.oracle.svm.core/src/com/oracle/svm/core/VMInspection.java) API.
 
 All three approaches are described below.
 
->Note: This feature is available with **GraalVM Enterprise** only. This feature is not available on the Microsoft Windows platform.
+>Note: Creating heap dumps is not available on the Microsoft Windows platform.
 
 ## Dump the Initial Heap of a Native Executable
 
@@ -257,4 +256,6 @@ The condition to create a heap dump is provided as an option on the command line
     ![Heap Dump showing Persons](img/SVMHeapDumpAPI.png)
 
 ### Related Documentation
+
+* [Debugging and Diagnostics](../DebuggingAndDiagnostics.md)
 * [VisualVM](../../../tools/visualvm.md)

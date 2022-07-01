@@ -7,19 +7,22 @@ permalink: /reference-manual/native-image/overview/StaticLinking/
 
 # Static Linking
  
+- [Build a Static Binary](#build-a-static-binary)
+- [Build a Mostly Static Binary](#build-a-mostly-static-binary)
+
 GraalVM Native Image by default builds dynamically linked binaries: at build time it loads your application classes and interfaces and hooks them together in a process of dynamic linking.
 
-However, with GraalVM Native Image, you can also create static or mostly static images, depending on the purpose.
+However, with GraalVM Native Image, you can also create static or mostly static binaries, depending on the purpose.
 
-**Static native images** are statically linked binaries which can be used without any additional library dependencies.
+**Static binaries** are statically linked binaries which can be used without any additional library dependencies.
 This makes them easier to distribute and to deploy on slim or distroless container images.
 They are created by statically linking against [musl-libc](https://musl.libc.org/), a lightweight `libc` implementation.
 
-**Mostly static native images** statically link against all libraries except `libc`.
-This approach is ideal for deploying such native images on distroless container images.
+**Mostly static binaries** statically link against all libraries except `libc`.
+This approach is ideal for deploying such binaries on distroless container images.
 Note that it currently only works when linking against `glibc`.
 
-## Prerequisites
+### Prerequisites
 
 - Linux AMD64 operating system
 - GraalVM distribution for Java 11 with Native Image support
@@ -41,7 +44,7 @@ You should get the `musl` toolchain first, and then compile and install `zlib` i
     make install
     ```
 
-## Build a Static Native Image
+## Build a Static Binary
 
 1. First, ensure `$TOOLCHAIN_DIR/bin` is present on your `PATH` variable.
     To verify this, run:
@@ -59,7 +62,7 @@ You should get the `musl` toolchain first, and then compile and install `zlib` i
     native-image --static --libc=musl Class
     ```
 
-## Build a Mostly Static Native Image
+## Build a Mostly Static Binary
 
 You can build a mostly static native image which statically links everything except `libc`.
 Statically linking all your libraries except `glibc` ensures your application has all the libraries it needs to run on any Linux `glibc`-based distribution.

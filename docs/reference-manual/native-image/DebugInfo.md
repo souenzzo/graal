@@ -8,14 +8,6 @@ redirect_from: /$version/reference-manual/native-image/DebugInfo/
 
 # Debug Info Feature
 
-- [Source File Caching](#source-file-caching)
-- [Special Considerations for Debugging Java from GDB](#special-considerations-for-debugging-java-from-gdb)
-- [Identifying Source Code Location](#identifying-source-code-location)
-- [Configuring Source Paths in GNU Debugger](#configuring-source-paths-in-gnu-debugger)
-- [Checking Debug Info on Linux](#checking-debug-info-on-linux)
-- [Debugging with Isolates](#debugging-with-isolates)
-- [Debugging Helper Methods](#debugging-helper-methods)
-
 To add debug information to a generated native image, provide the `-g` option to the `native-image` builder:
 ```shell
 native-image -g Hello
@@ -44,6 +36,16 @@ and local variable information by passing flag `-H:+SourceLevelDebug` can cause 
 slightly differently and for some applications this can slow down execution.
 
 > Note: Native Image debugging currently works on Linux with initial support for macOS. The feature is experimental.
+
+### Table of Contents
+
+- [Source File Caching](#source-file-caching)
+- [Special Considerations for Debugging Java from GDB](#special-considerations-for-debugging-java-from-gdb)
+- [Identifying Source Code Location](#identifying-source-code-location)
+- [Configuring Source Paths in GNU Debugger](#configuring-source-paths-in-gnu-debugger)
+- [Checking Debug Info on Linux](#checking-debug-info-on-linux)
+- [Debugging with Isolates](#debugging-with-isolates)
+- [Debugging Helper Methods](#debugging-helper-methods)
 
 ## Source File Caching
 

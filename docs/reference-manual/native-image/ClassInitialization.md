@@ -81,5 +81,5 @@ Class initialization can also be specified programmatically using [`RuntimeClass
 
 ### Related Documentation
 
-* [Native Image Basics](ProgrammingModel.md#image-build-time-vs-image-run-time)
+* [Native Image Basics](NativeImageBasics.md#image-build-time-vs-image-run-time)
 * [Native Image Compatibility Guide](Compatibility.md)

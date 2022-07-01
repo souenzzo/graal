@@ -8,18 +8,19 @@ redirect_from: /$version/reference-manual/native-image/Agent/
 
 # Collect Metadata with the Tracing Agent
 
-* [Tracing Agent](#tracing-agent)
-* [Conditional Metadata Collection](#conditional-metadata-collection)
-* [Build a Native Executable with Java Reflection Example](#build-a-native-executable-with-java-reflection-example)
-* [Agent Advanced Usage](#agent-advanced-usage)
-* [Native Image Configure Tool](#native-image-configure-tool)
- 
 The Native Image tool relies on the static analysis of an application's reachable code at runtime. 
 However, the analysis cannot always completely predict all usages of the Java Native Interface (JNI), Java Reflection, Dynamic Proxy objects, or class path resources. 
 Undetected usages of these dynamic features must be provided to the `native-image` tool in the form of [metadata](ReachabilityMetadata.md) (precomputed in code or as JSON configuration files).
 
-This guide shows you how to automatically collect metadata for an application and write JSON configuration files. 
+Here you will find information how to automatically collect metadata for an application and write JSON configuration files.
 To learn how to compute dynamic feature calls in code, see [Reachability Metadata](ReachabilityMetadata.md#computing-metadata-in-code).
+
+### Table of Contents
+
+* [Tracing Agent](#tracing-agent)
+* [Conditional Metadata Collection](#conditional-metadata-collection)
+* [Agent Advanced Usage](#agent-advanced-usage)
+* [Native Image Configure Tool](#native-image-configure-tool)
 
 ## Tracing Agent
 
@@ -61,122 +62,14 @@ This directory (or any of its subdirectories) is searched for files with the nam
 Not all of those files must be present. 
 When multiple files with the same name are found, all of them are considered.
 
+To test the agent collecting metadata on an example application, go to the [Build a Native Executable with Reflection](guides/build-with-reflection.md) guide.
+
 ## Conditional Metadata Collection
 
 The agent can deduce metadata conditions based on their usage in executed code.
 Conditional metadata is mainly aimed towards library maintainers with the goal of reducing overall footprint.
 
 To collect conditional metadata with the agent, see [Conditional Metadata Collection](ExperimentalAgentOptions.md#generating-conditional-configuration-using-the-agent)
-
-## Build a Native Executable with Java Reflection Example
-
-For demonstration purposes, we will use the following Java application:
-
-```java
-import java.lang.reflect.Method;
-
-class StringReverser {
-    static String reverse(String input) {
-        return new StringBuilder(input).reverse().toString();
-    }
-}
-
-class StringCapitalizer {
-    static String capitalize(String input) {
-        return input.toUpperCase();
-    }
-}
-
-public class ReflectionExample {
-    public static void main(String[] args) throws ReflectiveOperationException {
-        String className = args[0];
-        String methodName = args[1];
-        String input = args[2];
-
-        Class<?> clazz = Class.forName(className);
-        Method method = clazz.getDeclaredMethod(methodName, String.class);
-        Object result = method.invoke(null, input);
-        System.out.println(result);
-    }
-}
-```
-
-In this application non-constant strings for accessing program elements by name must come as external inputs.
-The main method invokes a method of a particular class (`Class.forName`) whose names are passed as command line arguments.
-Providing any other class or method name on the command line leads to an exception.
-
-1. Save the code in a file named _ReflectionExample.java_:
-
-2. Compile the example and invoke each method:
-    ```shell
-    $JAVA_HOME/bin/javac ReflectionExample.java
-    $JAVA_HOME/bin/java ReflectionExample StringReverser reverse "hello"
-    olleh
-    $JAVA_HOME/bin/java ReflectionExample StringCapitalizer capitalize "hello"
-    HELLO
-    ```
-
-3. Build a native image normally, without a reflection configuration file, and run it:
-    ```shell
-    $JAVA_HOME/bin/native-image ReflectionExample
-    [reflectionexample:59625]    classlist:     467.66 ms
-    ...
-    ./reflectionexample
-    ```
-    The `reflectionexample` binary is just a launcher for the JVM. To build a native image with reflective lookup operations, apply the agent to write a configuration file to be later fed to the `native-image` builder.
-
-4. Create a directory `META-INF/native-image` in the working directory:
-    ```shell
-    mkdir -p META-INF/native-image
-    ```
-
-5. Run the application on the JVM (GraalVM JDK) and enable the agent, passing the necessary arguments:
-    ```shell
-    $JAVA_HOME/bin/java -agentlib:native-image-agent=config-output-dir=META-INF/native-image ReflectionExample StringReverser reverse "hello"
-    ```
-    This command creates a _reflection-config.json_ file which makes the `StringReverser` class and the `reverse()` method accessible via reflection.
-    The _jni-config.json_, _proxy-config.json_ , and _resource-config.json_ configuration files are written in that directory too.
-
-6. Build a native image:
-    ```shell
-    $JAVA_HOME/bin/native-image --no-fallback ReflectionExample
-    ```
-    The `native-image` builder automatically picks up configuration files in the _META-INF/native-image_ directory or subdirectories.
-    However, it is recommended to have _META-INF/native-image_ location on the class path, either via a JAR file or via the `-cp` flag.
-    It will help to avoid confusion for IDE users where a directory structure is defined by the tool.
-
-7. Test the methods, but remember that you have not run the agent twice to create a configuration that supports both:
-    ```shell
-    ./reflectionexample StringReverser reverse "hello"
-    olleh
-    ./reflectionexample  StringCapitalizer capitalize "hello"
-    Exception in thread "main" java.lang.ClassNotFoundException: StringCapitalizer
-        at com.oracle.svm.core.hub.ClassForNameSupport.forName(ClassForNameSupport.java:60)
-        at java.lang.Class.forName(DynamicHub.java:1161)
-        at ReflectionExample.main(ReflectionExample.java:21)
-    ```
-
-    Neither the agent nor `native-image` can automatically check if the provided configuration files are complete.
-    The agent only observes and records which values are accessed through reflection so that the same accesses are possible in a native image.
-    You can either manually edit the _reflection-config.json_ file, or re-run the tracing agent to transform the existing configuration file, or extend it by using `config-merge-dir` option:
-    
-    ```shell
-    $JAVA_HOME/bin/java -agentlib:native-image-agent=config-merge-dir=META-INF/native-image ReflectionExample StringCapitalizer capitalize "hello"
-    ```
-    
-    
-    Note, the different `config-merge-dir` option instructs the agent to extend the existing configuration files instead of overwriting them. 
-    After re-building the native image, the `StringCapitalizer` class and the `capitalize` method will be accessible too.
-    
-    ![](/img/reflect_config_file_merged.png)
-
-8. Execute the application testing both methods:
-    ```shell
-    ./reflectionexample StringReverser reverse "hello"
-    olleh
-    ./reflectionexample  StringCapitalizer capitalize "hello"
-    HELLO
-    ```
 
 ## Agent Advanced Usage
 
@@ -305,5 +198,6 @@ An arbitrary number of `--input-dir` arguments with sets of configuration files 
 
 ### Further Reading
 
+* [Build a Native Executable with Reflection](guides/build-with-reflection.md)
 * [Reachability Metadata](ReachabilityMetadata.md)
 * [Experimental Agent Options](ExperimentalAgentOptions.md)

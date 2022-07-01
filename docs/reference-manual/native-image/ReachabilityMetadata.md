@@ -8,6 +8,17 @@ redirect_from: /$version/reference-manual/native-image/DynamicProxy/
 
 # Reachability Metadata
 
+The dynamic language features of the JVM (including reflection and resource handling) compute the *dynamically-accessed program elements* such as invoked methods or resource URLs at runtime. 
+The `native-image` tool performs [static analysis](NativeImageBasics.md#static-analysis-reachability-and-closed-world-assumption) while building a native binary to determine those dynamic features, but it cannot always exhaustively predict all uses.
+To ensure inclusion of these elements into the native binary, you should provide **reachability metadata** (in further text referred as *metadata*) to the `native-image` builder. 
+Providing the builder with reachability metadata also ensures seamless compatibility with third-party libraries at runtime.
+
+Metadata can be provided to the `native-image` builder in following ways:
+- By [computing metadata in code](#computing-metadata-in-code) [when the native binary is built](NativeImageBasics.md#image-build-time-vs-image-run-time) and storing required elements into the [initial heap of the native binary](NativeImageBasics.md#native-image-heap).
+- By [providing JSON files](#specifying-metadata-with-json) stored in the `META-INF/native-image/<artifact.id>` project directory. For more information about how to collect metadata for your application automatically, see [Collecting Metadata Automatically](AutomaticMetadataCollection.md).
+
+### Table of Contents
+
 * [Computing Metadata in Code](#computing-metadata-in-code)
 * [Specifying Metadata with JSON](#specifying-metadata-with-json)
 * [Metadata Types](#metadata-types)
@@ -17,15 +28,6 @@ redirect_from: /$version/reference-manual/native-image/DynamicProxy/
 * [Dynamic Proxy](#dynamic-proxy)
 * [Serialization](#serialization)
 * [Predefined Classes](#predefined-classes)
-
-The dynamic language features of the JVM (including reflection and resource handling) compute the *dynamically-accessed program elements* such as invoked methods or resource URLs at runtime. 
-The `native-image` tool performs [static analysis](ProgrammingModel.md#static-analysis-reachability-and-the-closed-world-assumption) while building a native binary to determine those dynamic features, but it cannot always exhaustively predict all uses.
-To ensure inclusion of these elements into the native binary, you should provide **reachability metadata** (in further text referred as *metadata*) to the `native-image` builder. 
-Providing the builder with reachability metadata also ensures seamless compatibility with third-party libraries at runtime.
-
-Metadata can be provided to the `native-image` builder in following ways:
-- By [computing metadata in code](#computing-metadata-in-code) [when the native binary is built](ProgrammingModel.md#image-build-time-vs-image-run-time) and storing required elements into the [initial heap of the native binary](ProgrammingModel.md#the-native-image-heap).
-- By [providing JSON files](#specifying-metadata-with-json) stored in the `META-INF/native-image/<artifact.id>` project directory. For more information about how to collect metadata for your application automatically, see [Collecting Metadata Automatically](AutomaticMetadataCollection.md).
 
 ## Computing Metadata in Code
 
@@ -40,7 +42,7 @@ Computing metadata in code can be achieved in two ways:
         }
     }
     ```
-  the `Class.forName("Foo")` will be computed into a constant when native binary is built and stored in its [initial heap](ProgrammingModel.md#the-native-image-heap).
+  the `Class.forName("Foo")` will be computed into a constant when native binary is built and stored in its [initial heap](NativeImageBasics.md#native-image-heap).
   If the class `Foo` does not exist, the call will be transformed into `throw ClassNotFoundException("Foo")`.
 
 2. By [initializing classes at build time](ClassInitialization.md) and storing dynamically accessed elements into the initial heap of the native executable. For example:
@@ -92,9 +94,9 @@ Currently, we support only `typeReachable` as a condition.
 
 Native Image accepts the following types of reachability metadata:
 - [Java reflection](#reflection) (the `java.lang.reflect.*` API) enables Java code to examine its own classes, methods, fields, and their properties at run time.   
-- [JNI](#jni) allows native code to access classes, methods, fields and their properties at run time.
+- [JNI](#java-native-interface) allows native code to access classes, methods, fields and their properties at run time.
 - [Resources and Resource Bundles](#resources-and-resource-bundles) allow arbitrary files present in the application to be loaded.
-- [Dynamic JDK Proxies](#dynamic-jdk-proxies) create classes on demand that implement a given list of interfaces. 
+- [Dynamic JDK Proxies](#dynamic-proxy) create classes on demand that implement a given list of interfaces. 
 - [Serialization](#serialization) enables writing and reading Java objects to and from streams.
 - [Predefined Classes](#predefined-classes) provide support for dynamically generated classes.
 
@@ -215,7 +217,7 @@ It is not possible to specify JNI metadata in code.
 
 ### JNI Metadata in JSON
 Metadata for JNI is provided in `jni-config.json` files.
-The JSON schema of JNI metadata is identical to the [Reflection metadata schema](#reflection-metadata-in-json).
+The JSON schema of JNI metadata is identical to the [Reflection metadata schema](#specifying-reflection-metadata-in-json).
 
 ## Resources and Resource Bundles
 Java is capable of accessing any resource on the application class path, or the module path for which the requesting code has permission to access.
@@ -402,4 +404,4 @@ The JSON schema is accompanied by the `agent-extracted-predefined-classes` direc
 
 * [Metadata Collection with the Tracing Agent](AutomaticMetadataCollection.md)
 * [Native Image Compatibility Guide](Compatibility.md)
-* [GraalVM Reachability Metadata Repository](https://github.com/oracle/graalvm-reachability-metadata)
+* [GraalVM Reachability Metadata Repository](https://github.com/oracle/graalvm-reachability)

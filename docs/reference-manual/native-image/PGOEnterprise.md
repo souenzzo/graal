@@ -11,7 +11,7 @@ redirect_from: /$version/reference-manual/native-image/PGO/
 GraalVM Enterprise allows to apply profile-guided optimizations (PGO) for additional performance gain and higher throughput of native images.
 With PGO you can collect the profiling data in advance and then feed it to the native image builder, which will use this information to optimize the performance of the resulting binary.
 
-Note: This feature is available with **GraalVM Enterprise** only.
+> Note: This feature is available with GraalVM Enterprise only.
 
 Here is how you can build an optimized native image, using the _OptimizedImage.java_ example program.
 

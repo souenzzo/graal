@@ -8,14 +8,16 @@ redirect_from: /$version/reference-manual/native-image/BuildConfiguration/
 
 # Native Image Build Configuration
 
+Native Image supports a wide range of options to configure the `native-image` builder.
+
+### Table of Contents
+
 * [Embedding a Configuration File](#embedding-a-configuration-file)
 * [Configuration File Format](#configuration-file-format)
 * [Order of Arguments Evaluation](#order-of-arguments-evaluation)
 * [Memory Configuration for Native Image Build](#memory-configuration-for-native-image-build)
 * [Specifying Types Required to Be Defined at Build Time](#specifying-types-required-to-be-defined-at-build-time)
-
-Native Image supports a wide range of options to configure the `native-image` builder.
-
+ 
 ## Embedding a Configuration File
 
 We recommend that you provide the configuration for the `native-image` builder by embedding a _native-image.properties_ file into a project JAR file.
@@ -174,7 +176,6 @@ This option is only allowed to be used on command line.
 
 ### Further Reading
 
-* [Build Output](BuildOutput.md)
 * [Reachability Metadata](ReachabilityMetadata.md)
 * [Class Initialization in Native Image](ClassInitialization.md)
-* [Native Image Basics](ProgrammingModel.md)
+* [Native Image Basics](NativeImageBasics.md)
