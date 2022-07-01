@@ -1,13 +1,14 @@
 ---
 layout: ni-docs
 toc_group: native-image
-link_title: Native Image Reference
+link_title: Getting Started
 permalink: /reference-manual/native-image/
 ---
 
 # Getting Started with Native Image
 
-Native Image is a technology to compile Java code ahead-of-time to a binary -- a **native executable**. A native executable includes only the code required at run time, that is the application classes, standard-library classes, the language runtime, and statically-linked native code from the JDK. 
+Native Image is a technology to compile Java code ahead-of-time to a binary -- a **native executable**. 
+A native executable includes only the code required at run time, that is the application classes, standard-library classes, the language runtime, and statically-linked native code from the JDK. 
 
 An executable file produced by Native Image has several important advantages, in that it
 
@@ -18,13 +19,13 @@ An executable file produced by Native Image has several important advantages, in
 - Presents a reduced attack surface
 
 A native executable is created by the **Native Image builder** or `native-image` that processes your application classes and [other metadata](ReachabilityMetadata.md) to create a binary for a specific operating system and architecture.
-First, the `native-image` tool performs a static analysis of your code to determine the classes and methods that are **reachable** when your application runs.
-Second, it compiles classes, methods, and resources into a binary executable.
-This entire process is called **build time** (or **image build time**) to clearly distinguish it from the compilation of Java source code to bytecode. 
+First, the `native-image` tool performs static analysis of your code to determine the classes and methods that are **reachable** when your application runs.
+Second, it compiles classes, methods, and resources into a binary.
+This entire process is called **build time** to clearly distinguish it from the compilation of Java source code to bytecode. 
 
-The `native-image` tool can be used to build a **native executable**, which is the default, or a **native shared library**. This quick start guide focuses on building a native executable; to learn more about shared libraries, go [here](InteropWithNativeCode.md).
+The `native-image` tool can be used to build a **native executable**, which is the default, or a **native shared library**. This quick start guide focuses on building a native executable; to learn more about native shared libraries, go [here](InteropWithNativeCode.md).
 
-To get used to Native Image terminology and get better understanding of the technology, we recommend you to read about the [Basics of Native Image](ProgrammingModel.md). 
+To get used to Native Image terminology and get better understanding of the technology, we recommend you to read the [Basics of Native Image](NativeImageBasics.md). 
 
 ### Table of Contents
 
@@ -32,8 +33,8 @@ To get used to Native Image terminology and get better understanding of the tech
 * [Build a Native Executable](#build-a-native-image)
 * [Build Overview](#build-and-configuration-overview)
 * [Configuring Native Image with Third-Party Libraries](#configuring-native-image-with-third-party-libraries)
-* [Further Reading](#further-reading)
 * [License](#license)
+* [Further Reading](#further-reading)
 
 ## Install Native Image
 
@@ -221,7 +222,7 @@ The command to build a native executable from a Java module is:
 native-image [options] --module <module>[/<mainclass>] [options]
 ```
 
-For more information about how to produce a native executable from a modular Java application, see [Building a HelloWorld Java Module into a Native Executable](https://github.com/graalvm/graalvm-demos/tree/master/native-hello-module).
+For more information about how to produce a native executable from a modular Java application, see [Building a HelloWorld Java Module into a Native Executable](guides/build-java-module-app-aot.md).
 
 ## Build Overview
 
@@ -234,7 +235,7 @@ Native Image will output the progress and various statistics during the build. T
 
 ## Configuring Native Image with Third-Party Libraries
 
-For more complex applications that use external libraries, you must provide the `native-image` builder with reachability metadata.
+For more complex applications that use external libraries, you must provide the `native-image` builder with metadata.
 
 Building a standalone binary with the `native-image` tool takes place under a "closed world assumption". 
 The `native-image` tool performs an analysis to see which classes, methods, and fields within your application are reachable and must be included in the native image. 
@@ -251,14 +252,12 @@ To automatically collect metadata for your application, see [Automatic Collectio
 There are also Maven and Gradle plugins for Native Image to automate building, testing and configuring native executables. Learn more [here](https://graalvm.github.io/native-build-tools/latest/index.html).
 
 Lastly, not all applications may be compatible with Native Image. 
-For more details, see [Native Image Compatibility and Optimization Guide](Compatibility.md).
+For more details, see [Native Image Compatibility Guide](Compatibility.md).
 
 Native Image can also interop with native languages through a custom API.
-Using this API, you can specify custom native entry points into your Java application and build it into a shared library.
-To learn more, see [Building a Shared Library](InteropWithNativeCode.md).
-
-To find asnwers to most frequently asked questions, go [here](FAQ.md).
-
+Using this API, you can specify custom native entry points into your Java application and build it into a nativw shared library.
+To learn more, see [Interoperability with Native Code](InteropWithNativeCode).
+ 
 ## License
 
 The Native Image technology is distributed as a separate installable to GraalVM.
@@ -269,12 +268,12 @@ Native Image for GraalVM Enterprise Edition is licensed under the [Oracle Techno
 ### Further Reading
 
 This getting started guide is intended for new users or those with little experience of using GraalVM Native Image. 
-We strongly recommend these users to check the [Native Image Basics](ProgrammingModel.md) guide to better understand some key aspects before going deeper.
+We strongly recommend these users to check the [Basics of Native Image](NativeImageBasics.md) page to better understand some key aspects before going deeper.
 
 For a gradual learning process, check the Native Image [Build Overview](BuildOverview.md) and [Build Configuration](BuildConfiguration.md) documentation.
 
-Consider running [interactive workshops](https://luna.oracle.com/lab/5fde71fb-8044-4c82-aa1c-3f2e5771caed/) to get some practical experience.
+Consider running interactive workshops to get some practical experience: go to [Luna Labs]](https://luna.oracle.com/) and search for "Native Image".
 
 If you have stumbled across a potential bug, please [submit an issue in GitHub](https://github.com/oracle/graal/issues/new/choose).
 
-If you would like to contribute to Native Image, follow our standard [GraalVM contributing workflow](https://www.graalvm.org/community/contributors/).
+If you would like to contribute to Native Image, follow our standard [contributing workflow](Contributing.md).
