@@ -60,4 +60,4 @@ _(see `ELFMachine$ELFAArch64Relocations` for an example)_
 
 ### Related Documentation
 
-* [Native Image Basics](ProgrammingModel.md)
+* [Native Image Basics](NativeImageBasics.md)

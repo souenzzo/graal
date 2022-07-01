@@ -1,6 +1,6 @@
 ---
 layout: docs
-toc_group: reachability-metadata
+toc_group: metadata
 link_title: Experimental Agent Options
 permalink: /reference-manual/native-image/metadata/ExperimentalAgentOptions/
 redirect_from: /$version/reference-manual/native-image/ExperimentalAgentOptions/

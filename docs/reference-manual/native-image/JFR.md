@@ -2,12 +2,10 @@
 layout: docs
 toc_group: debugging-and-diagnostics
 link_title: JDK Flight Recorder
-permalink: /reference-manual/native-image/debugging-and-diagnostics/JFR
+permalink: /reference-manual/native-image/debugging-and-diagnostics/JFR/
 redirect_from: /$version/reference-manual/native-image/JFR/
 ---
-# JFR Events Support by Native Image
-# Native Image Support of JFR Events
-# Native Image JFR Support
+
 # JDK Flight Recorder (JFR) with Native Image
 
 JDK Flight Recorder (JFR) is an event recorder for capturing information about a JVM, and an application running on the JVM. 

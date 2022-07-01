@@ -32,4 +32,4 @@ Here you will learn how to:
 - [Use Native Image Maven plugin to Convert Java Applications into Native Executables](use-native-image-maven-plugin.md)
 - [Use System Properties in a Native Executable](use-system-properties.md)
 
-> Note: To follow these guides, a user is expected to have [GraalVM installed with Native Image support](../getting-started.md). 
+> Note: To follow these guides, a user is expected to have [GraalVM installed with Native Image support](../README.md#install-native-image). 

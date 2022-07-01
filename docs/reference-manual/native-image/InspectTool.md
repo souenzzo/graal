@@ -2,7 +2,7 @@
 layout: docs
 toc_group: debugging-and-diagnostics
 link_title: Inspection Tool
-permalink: /reference-manual/native-image/debugging-and-diagnostics/inspect
+permalink: /reference-manual/native-image/debugging-and-diagnostics/InspectTool/
 redirect_from: /$version/reference-manual/native-image/inspect/
 ---
 

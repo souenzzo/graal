@@ -107,5 +107,4 @@ You can read system properties at build time and incorporate them into the resul
 
 * [Class Initialization in Native Image](../ClassInitialization.md)
 * [Native Image Build Configuration](../BuildConfiguration.md)
-* [Native Image Compatibility and Optimization Guide](../Limitations.md)
-* [Native Image Options](../Options.md)
+* [Native Image Options](../BuildOptions.md)

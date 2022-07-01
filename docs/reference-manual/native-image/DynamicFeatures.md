@@ -20,6 +20,5 @@ The reference information here explains how Native Image handles some dynamic fe
 - [Dynamic Proxy](DynamicProxy.md)
 - [Java Native Interface (JNI)](JNI.md)
 - [JCA Security Services](JCASecurityServices.md)
-- [Logging](Logging.md)
 - [Reflection](Reflection.md)
 - [URL Protocols](URLProtocols.md)

@@ -1,8 +1,8 @@
 ---
 layout: docs
-toc_group: native-image
+toc_group: metadata
 link_title: Compatibility Guide
-permalink: /reference-manual/native-image/Compatibility/
+permalink: /reference-manual/native-image/metadata/Compatibility/
 redirect_from: /$version/reference-manual/native-image/Limitations/
 ---
 

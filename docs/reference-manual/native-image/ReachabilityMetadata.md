@@ -1,6 +1,6 @@
 ---
 layout: docs
-toc_group: reachability-metadata
+toc_group: metadata
 link_title: Reachability Metadata
 permalink: /reference-manual/native-image/metadata/
 redirect_from: /$version/reference-manual/native-image/DynamicProxy/
