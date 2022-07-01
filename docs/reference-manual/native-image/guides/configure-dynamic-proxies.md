@@ -1,6 +1,6 @@
 ---
 layout: ni-docs
-toc_group: native-image-guides
+toc_group: how-to-guides
 link_title: Configure Dynamic Proxies Manually
 permalink: /reference-manual/native-image/guides/configure-dynamic-proxies/
 ---

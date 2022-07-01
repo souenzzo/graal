@@ -1,6 +1,6 @@
 ---
 layout: ni-docs
-toc_group: native-image-guides
+toc_group: how-to-guides
 link_title: Build a Micronaut Application into a Native Executable
 permalink: /reference-manual/native-image/guides/build-micronaut-app-into-native-executable/
 ---

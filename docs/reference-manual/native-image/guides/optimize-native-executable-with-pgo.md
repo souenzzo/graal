@@ -1,6 +1,6 @@
 ---
 layout: ni-docs
-toc_group: native-image-guides
+toc_group: how-to-guides
 link_title: Optimize a Native Executable with PGO
 permalink: /reference-manual/native-image/guides/optimize-native-executable-with-pgo/
 ---

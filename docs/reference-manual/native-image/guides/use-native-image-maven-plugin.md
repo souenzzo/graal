@@ -1,6 +1,6 @@
 ---
 layout: ni-docs
-toc_group: native-image-guides
+toc_group: how-to-guides
 link_title: Use Native Image Maven Plugin
 permalink: /reference-manual/native-image/guides/use-native-image-maven-plugin/
 ---

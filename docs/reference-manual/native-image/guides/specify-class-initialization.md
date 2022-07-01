@@ -1,6 +1,6 @@
 ---
 layout: ni-docs
-toc_group: native-image-guides
+toc_group: how-to-guides
 link_title: Specify Class Initialization
 permalink: /reference-manual/native-image/guides/specify-class-initialization/
 ---

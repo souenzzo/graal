@@ -1,6 +1,6 @@
 ---
 layout: ni-docs
-toc_group: native-image-guides
+toc_group: how-to-guides
 link_title: Build Java Modules into a Native Executable
 permalink: /reference-manual/native-image/guides/build-java-modules-into-native-executable/
 ---

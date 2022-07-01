@@ -1,6 +1,6 @@
 ---
 layout: ni-docs
-toc_group: native-image-guides
+toc_group: how-to-guides
 link_title: Add Logging to a Native Executable
 permalink: /reference-manual/native-image/guides/add-logging-to-native-executable/
 ---

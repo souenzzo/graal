@@ -1,6 +1,6 @@
 ---
 layout: ni-docs
-toc_group: native-image-guides
+toc_group: how-to-guides
 link_title: Include Resources
 permalink: /reference-manual/native-image/guides/include-resources/
 ---

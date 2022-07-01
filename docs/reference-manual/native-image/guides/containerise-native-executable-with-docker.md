@@ -1,6 +1,6 @@
 ---
 layout: ni-docs
-toc_group: native-image-guides
+toc_group: how-to-guides
 link_title: Containerise a Native Executable and Run in a Docker Container
 permalink: /reference-manual/native-image/guides/containerise-native-executable-and-run-in-docker-container/
 ---

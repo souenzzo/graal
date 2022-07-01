@@ -1,6 +1,6 @@
 ---
 layout: ni-docs
-toc_group: native-image-guides
+toc_group: how-to-guides
 link_title: Build and Run Native Executables with JFR
 permalink: /reference-manual/native-image/guides/build-and-run-native-executable-with-jfr/
 ---

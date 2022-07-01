@@ -1,6 +1,6 @@
 ---
 layout: ni-docs
-toc_group: native-image-guides
+toc_group: how-to-guides
 link_title: Access Environment Variables
 permalink: /reference-manual/native-image/Guides/access-environment-variables/
 ---

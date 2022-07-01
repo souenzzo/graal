@@ -1,6 +1,6 @@
 ---
 layout: ni-docs
-toc_group: native-image-guides
+toc_group: how-to-guides
 link_title: Debug Native Executables with GNU
 permalink: /reference-manual/native-image/guides/debug-native-image-process/
 ---
