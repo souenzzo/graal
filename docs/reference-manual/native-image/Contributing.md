@@ -19,6 +19,6 @@ If you want to contribute changes to Native Image core, you must adhere to the p
 
 There are some expert level options that a Native Image developer may find useful or needed, for example, the option to dump graphs of the `native-image` builder or enable assertions at image run time. This information can be found in [Native Image Hosted and Runtime Options](HostedvsRuntimeOptions.md).
 
-<!-- Finally, if you would like to ensure complete compatibility of your library with Native Image, consider contributing your library metadata to the [GraalVM Reachability Metadata Repository](https://github.com/oracle/graalvm-reachability-metadata). 
+Finally, if you would like to ensure complete compatibility of your library with Native Image, consider contributing your library metadata to the [GraalVM Reachability Metadata Repository](https://github.com/oracle/graalvm-reachability-metadata). 
 Follow [contributing rules](https://github.com/oracle/graalvm-reachability-metadata/CONTRIBUTING.md) for this repository. 
-Using this open source repository, users can share the burden of maintaining metadata for third-party dependencies. -->
+Using this open source repository, users can share the burden of maintaining metadata for third-party dependencies.

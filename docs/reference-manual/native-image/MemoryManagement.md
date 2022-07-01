@@ -232,6 +232,6 @@ Which data is printed in detail depends on the used GC.
 ./helloworld -XX:+PrintGC -XX:+VerboseGC
 ```
 
-### Related Documentation
+### Further Reading
 
 * [Memory Configuration for Native Image Build](BuildConfiguration.md#memory-configuration-for-native-image-build)

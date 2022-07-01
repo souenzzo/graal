@@ -303,7 +303,7 @@ native-image-configure generate --input-dir=/path/to/config-dir-0/ --input-dir=/
 This command reads one set of configuration files from `/path/to/config-dir-0/` and another from `/path/to/config-dir-1/` and then writes a set of configuration files that contains both of their information to `/path/to/merged-config-dir/`.
 An arbitrary number of `--input-dir` arguments with sets of configuration files can be specified. See `native-image-configure help` for all options.
 
-### Related Documentation
+### Further Reading
 
 * [Reachability Metadata](ReachabilityMetadata.md)
 * [Experimental Agent Options](ExperimentalAgentOptions.md)

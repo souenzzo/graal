@@ -71,6 +71,6 @@ native-image -H:+StaticExecutableWithDynamicLibC Class
 
 > Note: This currently only works for `glibc`.
 
-### Related Documentation
+### Further Reading
 
 * Run an interactive lab and practice creating small Distroless containers in Oracle Linux environment with GraalVM Native Image and a simple a Spring boot application: [GraalVM Native Image, Spring and Containerisation](https://luna.oracle.com/lab/fdfd090d-e52c-4481-a8de-dccecdca7d68).

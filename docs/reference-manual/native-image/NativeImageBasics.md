@@ -7,13 +7,6 @@ permalink: /reference-manual/native-image/Basics/
 
 # Native Image Basics
 
-* [Native Image and the Native Image Build](#native-image-and-the-native-image-build)
-* [Image Build Time vs Image Run Time](#image-build-time-vs-image-run-time)
-* [Native Image Heap](#native-image-heap)
-* [Static Analysis, Reachability, and Closed-World Assumption](#static-analysis-reachability-and-closed-world-assumption)
-
-## Native Image, Native Executable, Native Shared Library
-
 Native Image is written in Java and takes Java bytecode as input to produce a standalone binary (an **executable**, or a **shared library**).
 During the process of producing a binary, Native Image can run user code.
 Finally, Native Image links compiled user code, parts of the Java runtime (for example, the garbage collector, threading support), and the results of code execution into the binary.
@@ -22,14 +15,20 @@ We refer to this binary as a **native image**, or simply **image**.
 We refer to the process of producing a binary the **native image build** or **image build**, and Native Image itself as the **`native-image` builder**, or the **builder**.
 
 To clearly distinguish between code executed during the native image build, and code executed during the image execution, we refer to the difference between the two as [**image build time** and **image run time**](#image-build-time-vs-image-run-time).
-To produce a minimal image, Native Image employs a process called [**static analysis**](#static-analysis-reachability-and-the-closed-world-assumption).
+To produce a minimal image, Native Image employs a process called [**static analysis**](#static-analysis-reachability-and-closed-world-assumption).
+
+### Table of Contents
+
+* [Image Build Time vs Image Run Time](#image-build-time-vs-image-run-time)
+* [Native Image Heap](#native-image-heap)
+* [Static Analysis, Reachability, and Closed-World Assumption](#static-analysis-reachability-and-closed-world-assumption)
 
 ## Image Build Time vs Image Run Time
 
 During the image build, Native Image may execute user code.
 This code can have side effects, such as writing a value to a static field of a class.
 We say that this code is executed at *image build time*.
-Values written to static fields by this code are saved in the [**image heap**](#the-native-image-heap).
+Values written to static fields by this code are saved in the [**image heap**](#native-image-heap).
 *Image run time* refers to code and state in the binary when it is executed.
 
 The easiest way to see the difference between these two concepts is through [configurable class initialization](ClassInitialization.md).

@@ -193,6 +193,6 @@ As a result, it causes the size of the executable to increase for smaller applic
 Therefore, an optimized mode is set by default in which this lookup is simplified utilizing the fact that all bundles are known ahead of build time.
 For the original Java VM lookup, use the `-H:-LocalizationOptimizedMode` option.
 
-### Related Documentation
+### Further Reading
 
 * [Logging in Native Image](Logging.md)

@@ -95,7 +95,7 @@ Run `native-image --help-extra` for non-standard options help.
 
 Native Image options are also distinguished as hosted and runtime options.
 
-### Related Documentation
+### Further Reading
 
 * [Native Image Hosted and Runtime Options](HostedvsRuntimeOptions.md) guide.
 * [Build Configuration](BuildConfiguration.md#order-of-arguments-evaluation)

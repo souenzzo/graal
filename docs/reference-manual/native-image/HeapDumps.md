@@ -180,6 +180,6 @@ Your command-line options are: --heapdump
 
 The resulting heap dump can be then opened with the [VisualVM](../../tools/visualvm.md) tool like any other Java heap dump.
 
-### Related Documentation
+### Further Reading
 
 * [JDK Flight Recorder (JFR) with Native Image](JFR.md)

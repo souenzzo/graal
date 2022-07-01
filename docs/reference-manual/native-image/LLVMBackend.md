@@ -58,6 +58,6 @@ This means that the Graal compiler needs an understanding of object file relocat
 
 _(see `ELFMachine$ELFAArch64Relocations` for an example)_
 
-### Related Documentation
+### Further Reading
 
 * [Native Image Basics](NativeImageBasics.md)

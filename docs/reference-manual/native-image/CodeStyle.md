@@ -66,6 +66,6 @@ This plugin is automatically configured by `mx ideinit`.
 
 See the [documentation on IDE integration](https://github.com/graalvm/mx/blob/master/docs/IDE.md) for further suggestions.
 
-### Related Documentation
+### Further Reading
 
 * [Native Image Hosted and Runtime Options](HostedvsRuntimeOptions.md)

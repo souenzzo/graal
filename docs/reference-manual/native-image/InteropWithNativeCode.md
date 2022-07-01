@@ -26,6 +26,8 @@ To build a native shared library from a JAR file, use the following syntax:
 native-image -jar <jarfile> --shared
 ```
 
+### Further Reading
+
 Follow a step-by-step guide to build a native shared library and learn some Native Image C API tips on practice: [Build a Native Shared Library](guides/build-native-shared-library.md).
 
 Learn more about implementing native methods in Java with Native Image using [JNI Invocation API](JNIInvocationAPI.md).

@@ -201,7 +201,7 @@ Run `native-image --expert-options-all | grep "BuildOutput"` to see all build ou
 -H:±BuildOutputProgress      Report progress in build output. Default: + (enabled).
 ```
 
-### Related Documentation
+### Further Reading
 
 * [Native Image Build Overview](BuildOverview.md)
 * [Native Image Build Configuration](BuildConfiguration.md)

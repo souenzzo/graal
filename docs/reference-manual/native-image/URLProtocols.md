@@ -34,6 +34,6 @@ See the [documentation on security services](JCASecurityServices.md) for more de
 No other URL protocols are currently tested.
 They can still be enabled using `--enable-url-protocols=<protocols>`, however they might not work as expected.
 
-### Related Documentation
+### Further Reading
 
 - [JCA Security Services in Native Image](JCASecurityServices.md)

@@ -169,7 +169,6 @@ The object tree report name has the structure: `object_tree_<image_name>_<date_t
 The image name is the name of the generated image, which can be set with the `-H:Name=<name>` option.
 The `<date_time>` is in the `yyyyMMdd_HHmmss` format.
 
-
-### Related Documentation
+### Further Reading
 
 * [Hosted and Runtime Options](HostedvsRuntimeOptions.md)

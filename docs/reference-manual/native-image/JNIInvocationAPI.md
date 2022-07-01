@@ -272,7 +272,7 @@ The actual logic can, of course, be made more robust and OS-independent.
 
 Implementing any JVM native method in Java and/or making callbacks to the JVM with Native Image should now be as easy as expanding upon the given example and invoking `native-image`.
 
-### Related Documentation
+### Further Reading
 
 * [Native Image C API](JNI.md)
 * [Java Native Interface (JNI) on Native Image](JNI.md)

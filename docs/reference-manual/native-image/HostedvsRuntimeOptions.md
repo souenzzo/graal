@@ -63,6 +63,6 @@ Ignored if `Kind == SHARED_LIBRARY`.
 * `-H:Path=FileSystemPath`:
   the directory where the generated executable is placed.
 
-### Related Documentation
+### Further Reading
 
 * [Native Image Build Options](BuildOptions.md)

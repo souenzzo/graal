@@ -109,6 +109,6 @@ Native Image provides two options for that: `-H:DynamicProxyConfigurationFiles=<
 The `java.lang.reflect.Proxy` API also allows creation of a dynamic proxy that does not implement any user provided interfaces.
 In this case the generated dynamic proxy class only implements `java.lang.reflect.Proxy`.
 
-### Related Documentation
+### Further Reading
 
 - [Reachability Metadata: Dynamic Proxy](ReachabilityMetadata.md#dynamic-proxy)

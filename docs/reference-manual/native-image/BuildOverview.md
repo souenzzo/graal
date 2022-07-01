@@ -23,6 +23,8 @@ The options fall into three categories:
 
 Find a complete list of options for the `native-image` tool [here](BuildOptions.md).
 
+### Further Reading
+
 For more tweaks and how to properly configure the `native-image` tool, see [Build Configuration](BuildConfiguration.md#order-of-arguments-evaluation).
 
 Native Image will output the progress and various statistics when building the native binary. To learn more about the output, and the different build phases, see [Build Output](BuildOutput.md).

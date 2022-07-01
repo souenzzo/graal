@@ -46,6 +46,6 @@ This file is used when validating certificates at both build time and run time.
 In other words, when a new certificate file is specified at run time via setting the `javax.net.ssl.trustStore\*` system properties, the new certificates will still be checked against the `<java.home>/lib/security/blacklisted.certs` loaded at
 image build time.
 
-### Related Documentation
+### Further Reading
 
 - [JCA Security Services in Native Image](JCASecurityServices.md)

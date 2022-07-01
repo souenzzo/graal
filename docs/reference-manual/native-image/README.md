@@ -1,7 +1,7 @@
 ---
 layout: ni-docs
 toc_group: native-image
-link_title: Getting Started
+link_title: Native Image
 permalink: /reference-manual/native-image/
 ---
 
@@ -30,8 +30,7 @@ To get used to Native Image terminology and get better understanding of the tech
 ### Table of Contents
 
 * [Install Native Image](#install-native-image)
-* [Build a Native Executable](#build-a-native-image)
-* [Build Overview](#build-and-configuration-overview)
+* [Build a Native Executable](#build-a-native-executable)
 * [Configuring Native Image with Third-Party Libraries](#configuring-native-image-with-third-party-libraries)
 * [License](#license)
 * [Further Reading](#further-reading)
@@ -256,7 +255,7 @@ For more details, see [Native Image Compatibility Guide](Compatibility.md).
 
 Native Image can also interop with native languages through a custom API.
 Using this API, you can specify custom native entry points into your Java application and build it into a nativw shared library.
-To learn more, see [Interoperability with Native Code](InteropWithNativeCode).
+To learn more, see [Interoperability with Native Code](InteropWithNativeCode.md).
  
 ## License
 

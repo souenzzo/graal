@@ -398,7 +398,7 @@ Metadata for predefined classes is provided in `predefined-classes-config.json` 
 
 The JSON schema is accompanied by the `agent-extracted-predefined-classes` directory that contains the bytecode of the listed classes.
 
-### Related Documentation
+### Further Reading
 
 * [Metadata Collection with the Tracing Agent](AutomaticMetadataCollection.md)
 * [Native Image Compatibility Guide](Compatibility.md)

@@ -58,7 +58,7 @@ Here is how you can build an optimized native image, using the _OptimizedImage.j
 You can specify where to write the profile when running an instrumented native image by passing the `-XX:ProfilesDumpFile=YourFileName` option at run time.
 You can also collect multiple profile files, by specifying different names, and add them to the image build.
 
-### Related Documentation
+### Further Reading
 
 * [Memory Management](MemoryManagement.md)
 * [Class Initialization at Image Build Time](ClassInitialization.md)

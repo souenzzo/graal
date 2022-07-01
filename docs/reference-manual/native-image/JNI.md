@@ -171,6 +171,6 @@ The JNI functions `FromReflectedMethod` and `ToReflectedMethod` can be used to o
 The functions `FromReflectedField` and `ToReflectedField` convert between `jfieldID` and `java.lang.reflect.Field`.
 In order to use these functions, [reflection support](Reflection.md) must be enabled and the methods and fields in question must be included in the reflection configuration, which is specified with `-H:ReflectionConfigurationFiles=`.
 
-### Related Documentation
+### Further Reading
 
 - [Reachability Metadata: Java Native Interface](ReachabilityMetadata.md#java-native-interface)

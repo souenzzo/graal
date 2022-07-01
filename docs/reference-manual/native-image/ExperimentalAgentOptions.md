@@ -86,7 +86,7 @@ Conditions are generated using the call tree of the application. The heuristics 
 The primary goal of this heuristic is to attempt to find where a method creates different configuration entries depending on the caller (for example, a method that wraps `Class.forName` calls.)
 This implies that the heuristic will not work well for code that generates configuration through a different dependency (for example, same method returns calls `Class.forName` with different class parameters depending on a system property).
 
-### Related Documentation
+### Further Reading
 
 * [Reachability Metadata](ReachabilityMetadata.md)
 * [Metadata Collection with the Tracing Agent](AutomaticMetadataCollection.md)

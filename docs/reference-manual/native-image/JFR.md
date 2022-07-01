@@ -122,7 +122,7 @@ Note that:
 - JFR events recording is not supported on GraalVM distribution for Windows. 
 - JFR is only supported with native executables built on GraalVM JDK 11.
 
-## What to Read Next 
+### Further Reading
 
 - [Practice how to enable JFR support with Native Image and record events at run time using a demo application](/guides/build-and-run-native-executable-with-jfr.md).
 

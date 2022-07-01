@@ -99,6 +99,6 @@ netty-codec-http2    4.1.76.Final   CVE-2022-24823  Medium
 
 You can then use this report to update any vulnerable dependencies found in your executable.
 
-### Related Documentation
+### Further Reading
 
 - [Debugging and Diagnostics](DebuggingAndDiagnostics.md)

@@ -64,6 +64,6 @@ Note that for automatic registration to work, the service interface must have a 
 If relying on third party code that doesn't comply to the above requirements, manual configuration will be required. In that case, providers for such services must explicitly be registered using `-H:AdditionalSecurityProviders`.
 Note that these options are only required in very specific cases and should not normally be needed.
 
-### Related Documentation
+### Further Reading
 
 * [URL Protocols in Native Image](URLProtocols.md)
