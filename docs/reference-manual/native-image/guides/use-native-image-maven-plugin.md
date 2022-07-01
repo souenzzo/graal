@@ -17,7 +17,7 @@ For demonstration purposes, you will use a fortune teller application that simul
 
 ## Prepare a Demo Application
 
-> You are expected to have [GraalVM installed with Native Image support](../README.md).
+> You are expected to have [GraalVM installed with Native Image support](../README.md#install-native-image).
 
 1. Crate a new Java project with **Maven** in your favourite IDE, called "Fortune", in the `org.example` package name. The application should contain a sole Java file with the following content:
 
@@ -383,4 +383,4 @@ This plugin requires JUnit Platform 1.8 or higher and Maven Surefire 2.22.0 or h
 ### Related Documentation
 
 * [Maven plugin for GraalVM Native Image building](https://graalvm.github.io/native-build-tools/latest/maven-plugin.html)
-* [Collect Metadata with the Tracing Agent](../AutomaticMetadataCollection.md)
+* [Metadata Collection with the Tracing Agent](../AutomaticMetadataCollection.md#tracing-agent)

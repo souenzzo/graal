@@ -49,10 +49,12 @@ This code iterates over your environment variables and prints out the ones that 
     export HELLOWORLD='Hello World!'
     ./envmap HELLO
     ```
-    Output
-
+    You should receive the expected output:
     ```
     HELLOWORLD=Hello World!
     ```
 
 ### Related Documentation
+
+* [Native Image Build Configuration](../BuildConfiguration.md)
+

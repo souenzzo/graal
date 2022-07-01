@@ -31,7 +31,7 @@ $GRAALVM_HOME/bin/native-image HelloWorld -H:+AllowVMInspection
 Heap dump created at '/path/to/helloworld.hprof'.
 ```
 
-## Handle a `USR1` Signal
+## Handle USR1 Signals
 
 The following example is a simple multi-threaded Java application that runs for 60 seconds. 
 This provides you with enough time to send it a `USR1` signal. The application will handle the signal and create a heap dump in the application's working directory. The heap dump will contain the `Collection` of `Person`s referenced by the static variable `CROWD`.
@@ -116,7 +116,7 @@ Follow these steps to build a native executable that will produce a heap dump wh
         }
     ```
 
-2. Build a native executable
+2. Build a native executable:
 
     Compile SVMHeapDump.java as follows:
     ```shell
@@ -149,7 +149,7 @@ Follow these steps to build a native executable that will produce a heap dump wh
     ```shell
     kill -SIGUSR1 57509
     ```
-    The heap dump will be created in the working directory while the application continues to run. The heap dump can be opened with the [VisualVM](../../tools/visualvm.md) tool, as illustrated below.
+    The heap dump will be created in the working directory while the application continues to run. The heap dump can be opened with the [VisualVM](../../../tools/visualvm.md) tool, as illustrated below.
 
     ![Heap Dump showing Persons](img/SVMHeapDump.png)
 
@@ -251,7 +251,7 @@ The condition to create a heap dump is provided as an option on the command line
       Heap dump created /var/folders/hw/s9d78jts67gdc8cfyq5fjcdm0000gp/T/SVMHeapDump-6437252222863577987.hprof, size: 8051959
     ```
 
-    The resulting heap dump can be then opened with the [VisualVM](../../tools/visualvm.md) tool like any other Java heap dump, as illustrated below.
+    The resulting heap dump can be then opened with the [VisualVM](../../../tools/visualvm.md) tool like any other Java heap dump, as illustrated below.
 
     ![Heap Dump showing Persons](img/SVMHeapDumpAPI.png)
 

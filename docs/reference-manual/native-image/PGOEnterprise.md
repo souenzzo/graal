@@ -60,5 +60,5 @@ You can also collect multiple profile files, by specifying different names, and 
 
 ### Further Reading
 
-* [Memory Management](MemoryManagement.md)
-* [Class Initialization at Image Build Time](ClassInitialization.md)
+* [Optimize a Native Executable with Profile-Guided Optimizations](guides/optimize-native-executable-with-pgo.md)
+- [Improving performance of GraalVM native images with profile-guided optimizations](https://medium.com/graalvm/improving-performance-of-graalvm-native-images-with-profile-guided-optimizations-9c431a834edb)

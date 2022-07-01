@@ -27,7 +27,7 @@ The data for the fortune phrases is provided by [YourFortune](https://github.com
 
 ## Prepare a Demo Application
 
-> You are expected to have [GraalVM installed with Native Image support](../getting-started.md). 
+> You are expected to have [GraalVM installed with Native Image support](../README.md#install-native-image). 
 
 1. Crate a new Java project with **Gradle** in your favourite IDE, called "Fortune". Rename the default filename `App.java` to `Fortune.java` and replace its content with the following: 
 
@@ -224,4 +224,4 @@ To invoke the agent, add `-Pagent` to the `run` and `nativeBuild` commands, or `
 ### Related Documentation
 
 * [Gradle plugin for GraalVM Native Image building](https://graalvm.github.io/native-build-tools/latest/gradle-plugin.html)
-* [Metadata Collection with the Tracing Agent](../AssistedConfiguration.md)
+* [Metadata Collection with the Tracing Agent](../AutomaticMetadataCollection.md#tracing-agent)

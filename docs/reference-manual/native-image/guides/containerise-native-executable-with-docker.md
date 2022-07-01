@@ -83,6 +83,6 @@ With GraalVM Native Image you have the ability to build a statically linked nati
 
 ### Related Documentation
 
-* [Build a Static or Mostly-Static Native Executable guide](build-static-executable.md)
+* [GraalVM Native Image, Spring and Containerisation](https://luna.oracle.com/lab/fdfd090d-e52c-4481-a8de-dccecdca7d68)
 * [GraalVM Community Images](../../../getting-started/graalvm-community/container-images/graalvm-ce-container-images.md)
-* [GraalVM Native Image, Spring and Containerisation](https://luna.oracle.com/lab/fdfd090d-e52c-4481-a8de-dccecdca7d68) interactive lab. It shows how to create small Distroless containers to package your GraalVM Native Image native executables in, allowing you to shrink your Docker Images even further.
+* [Build a Static or Mostly-Static Native Executable](build-static-executable.md)

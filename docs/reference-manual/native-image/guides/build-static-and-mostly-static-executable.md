@@ -2,7 +2,7 @@
 layout: ni-docs
 toc_group: how-to-guides
 link_title: Build a Static or Mostly-Static Native Executable
-permalink: /reference-manual/native-image/build-static-executable/
+permalink: /reference-manual/native-image/build-static-executables/
 ---
 
 # Build a Static or Mostly-Static Native Executable
@@ -107,10 +107,6 @@ To build a  a mostly-static native executable for the above `EnvMap` demo, run:
 native-image -H:+StaticExecutableWithDynamicLibC EnvMap
 ```
 
-### Related Documentation
-
-* [GraalVM Native Image, Spring and Containerisation](https://luna.oracle.com/lab/fdfd090d-e52c-4481-a8de-dccecdca7d68/steps#step-6-building-a-mostly-static-executable--packaging-it-in-a-distroless-image) interactive lab to build a mostly static executable of a Spring Boot application.
-
 ## Frequently Asked Questions
 
 ### What is the recommended base Docker image for deploying a static or mostly-static native executable?
@@ -118,3 +114,7 @@ native-image -H:+StaticExecutableWithDynamicLibC EnvMap
 A fully static native executable gives you the most flexibility to choose a base container image - it can run on anything including a `FROM scratch` image.
 A mostly-static native executable requires a container image that provides `glibc`, but has no additional requirements.
 In both cases, choosing the base container image generally depends on your native executable's specific requirements.
+
+### Related Documentation
+
+* [GraalVM Native Image, Spring and Containerisation](https://luna.oracle.com/lab/fdfd090d-e52c-4481-a8de-dccecdca7d68) interactive lab to build a mostly static executable of a Spring Boot application.

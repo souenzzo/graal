@@ -49,7 +49,7 @@ The following steps illustrate how to include a resource in a native executable.
     }
     ```
 
-2. Download the [_fortunes.u8_](../assets/fortunes.u8) resource file and save it in the same directory as _Fortune.java_.
+2. Download the [_fortunes.u8_](https://github.com/oracle/graal/blob/3ed4a7ebc5004c51ae310e48be3828cd7c7802c2/docs/reference-manual/native-image/assets/fortunes.u8) resource file and save it in the same directory as _Fortune.java_.
 
 3. Compile the Java source code:
 

@@ -115,8 +115,5 @@ The logger can also be initialized at runtime, as shown in the following example
 
 ### Related Documentation
 
-* [Class Initialization in Native Image](../ClassInitialization.md)
-* [Include Resources in a Native Executable](include-resources.md)
+* [Reachability Metadata: Reflection](../ReachabilityMetadata.md#reflection)
 * [Native Image Build Configuration](../BuildConfiguration.md)
-* [Reflection Use in Native Images](../Reflection.md)
-* [Use of Resources in a Native Executable](../Resources.md)

@@ -12,7 +12,7 @@ You can optimize this native executable even more for additional performance gai
 
 With PGO you can collect the profiling data in advance and then feed it to the `native-image` tool, which will use this information to optimize the performance of the resulting binary.
 
-Note: PGO is available with **GraalVM Enterprise** only.
+> Note: PGO is available with GraalVM Enterprise Edition only.
 
 This guide shows how to apply PGO and transform your Java application into an optimized native executable.
 
@@ -34,7 +34,7 @@ Arrays.stream(persons)
 
 Follow these steps to build an optimized native executable using PGO.
 
-1.  Save [the following code](https://github.com/graalvm/graalvm-demos/blob/master/scala-examples/streams/Streams.java) to the file named _Streams.java_:
+1.  Save [the following code](https://github.com/graalvm/graalvm-demos/blob/master/streams/Streams.java) to the file named _Streams.java_:
 
     ```java
     import java.util.Arrays;
@@ -186,6 +186,5 @@ With PGO you "train" your application for specific workloads and significantly i
 
 ### Related Documentation
 
+- [Profile-Guided Optimizations](../PGOEnterprise.md)
 - [Improving performance of GraalVM native images with profile-guided optimizations](https://medium.com/graalvm/improving-performance-of-graalvm-native-images-with-profile-guided-optimizations-9c431a834edb)
-
-- [Better Java Streams performance with GraalVM](https://medium.com/graalvm/stream-api-performance-with-graalvm-be6cfe7fbb52)

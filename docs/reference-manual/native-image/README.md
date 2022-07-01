@@ -271,7 +271,7 @@ We strongly recommend these users to check the [Basics of Native Image](NativeIm
 
 For a gradual learning process, check the Native Image [Build Overview](BuildOverview.md) and [Build Configuration](BuildConfiguration.md) documentation.
 
-Consider running interactive workshops to get some practical experience: go to [Luna Labs]](https://luna.oracle.com/) and search for "Native Image".
+Consider running interactive workshops to get some practical experience: go to [Luna Labs](https://luna.oracle.com/) and search for "Native Image".
 
 If you have stumbled across a potential bug, please [submit an issue in GitHub](https://github.com/oracle/graal/issues/new/choose).
 

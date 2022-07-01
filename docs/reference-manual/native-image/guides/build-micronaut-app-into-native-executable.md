@@ -11,10 +11,6 @@ This guide shows how to create a simple [Micronaut](https://micronaut.io/) appli
 
 1. Create a sample Micronaut REST application. Go to [Micronaut Launch](https://micronaut.io/launch/). Select **Micronaut Application** as application type. Click **FEATURES**, search and add **graalvm** packaging feature. You can keep rest values as default and click **Generate Project**. Then **Download ZIP**.
 
-    ![Micronaut Launch application](img/micronaut_launch.png)
-
-    There are, of course, other ways to create Micronaut projects, as using the [Micronaut CLI]() or project creation wizard in VS Code with the [GraalVM Tools for Micronaut Extension](https://marketplace.visualstudio.com/items?itemName=oracle-labs-graalvm.micronaut) installed.
-
 2. Unzip the downloaded package and enter application directory:
 
     ```shell
@@ -172,3 +168,4 @@ The output is a platform-dependent Docker image containing a native executable o
 ### Related Documentation
 
 * [Creating your first Micronaut GraalVM application](https://guides.micronaut.io/latest/micronaut-creating-first-graal-app.html)
+* [Use Maven to Build Java Applications into Native Executables](use-native-image-maven-plugin.md)

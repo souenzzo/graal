@@ -188,14 +188,11 @@ $GRAALVM_HOME/bin/gu install llvm-toolchain
     
 The advantage of using the Native Image C API is that you can determine what your API will look like. 
 The restriction is that your parameter and return types must be non-object types.
-Using JNI Invocation API for calling functions within a native shared library is more complicated.  
-<!--It feels like this sentence is just hanging -->
-
 If you want to manage Java objects from C, you should consider [JNI Invocation API](../JNI.md). 
-We recommend you read the [Embedding Truffle Languages](https://nirvdrum.com/2022/05/09/truffle-language-embedding.html) blog post by Kevin Menard where he compares both mechanisms for exposing Java methods.
 
 ### Related Documentation
-* [Access Environment Variables in a Native Executable at Run Time](access-environment-variables.md)
-* [Build a Shared Library](../README.md#build-a-shared-library)
-* [Java Native Interface (JNI) in Native Image](../JNI.md)
+
+* [Interoperability with Native Code](../InteropWithNativeCode.md)
 * [Native Image C API](../C-API.md)
+* [Java Native Interface (JNI) on Native Image](../JNI.md)
+* [Embedding Truffle Languages](https://nirvdrum.com/2022/05/09/truffle-language-embedding.html) blog post by Kevin Menard where he compares both mechanisms for exposing Java methods.

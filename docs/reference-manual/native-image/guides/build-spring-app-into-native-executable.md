@@ -227,14 +227,11 @@ Now we will go step-by-step explaining what necessary dependencies should be add
     ls -lh target/jibber
     ```
 
-You can further "shrink" this native executable by [containerising and running it from a Docker container](#containerise-native-executable-with-docker.md).
+You can further "shrink" this native executable by [containerising and running it from a Docker container](containerise-native-executable-with-docker.md).
 
 ### Related Documentation
 
-Get hands-on lab experience in Oracle Cloud by running the interactive lab: [GraalVM Native Image, Spring and Containerisation](https://luna.oracle.com/lab/fdfd090d-e52c-4481-a8de-dccecdca7d68). This lab will also show how to create small Distroless containers to package your GraalVM Native Image native executables in, allowing you to shrink your Docker Images even further.
-
-See how to package you can further package a Spring application to lightweight Docker container containing a native executable with [Spring Boot Buildpacks](https://docs.spring.io/spring-native/docs/current/reference/htmlsingle/#getting-started-buildpacks).
-
-Learn more about the [Spring Native project](https://docs.spring.io/spring-native/docs/current/reference/htmlsingle/#getting-started).
-
-Read more about [Native Build Tools](https://graalvm.github.io/native-build-tools/).
+- Run an interactive lab: [GraalVM Native Image, Spring and Containerisation](https://luna.oracle.com/lab/fdfd090d-e52c-4481-a8de-dccecdca7d68). This lab will also show how to create small Distroless containers to package your GraalVM Native Image native executables in, allowing you to shrink your Docker Images even further.
+- Package a Spring application to lightweight Docker container containing a native executable with [Spring Boot Buildpacks](https://docs.spring.io/spring-native/docs/current/reference/htmlsingle/#getting-started-buildpacks).
+- Learn more about the [Spring Native project](https://docs.spring.io/spring-native/docs/current/reference/htmlsingle/#getting-started).
+- Read more about [Native Build Tools](https://graalvm.github.io/native-build-tools/).

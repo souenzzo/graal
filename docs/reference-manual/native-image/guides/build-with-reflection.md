@@ -78,7 +78,7 @@ The following application demonstrates the use of Java reflection.
     is used by the application and therefore did not include it in the native executable. 
 
 ## Example with Configuration
-To build a native executable containing references to the classes and methods that are accessed via reflection, provide the `native-image` utility with a configuration file that specifies the classes and corresponding methods. (For more information about configuration files, see [Reflection Use in Native Images](../Reflection.md).) You can create this file by hand, but a more convenient approach is to generate the configuration using the tracing agent. The agent generates the configuration for you automatically when you run your application (for more information, see [Assisted Configuration with Tracing Agent](../Agent.md)). 
+To build a native executable containing references to the classes and methods that are accessed via reflection, provide the `native-image` utility with a configuration file that specifies the classes and corresponding methods. (For more information about configuration files, see [Reflection Use in Native Images](../Reflection.md).) You can create this file by hand, but a more convenient approach is to generate the configuration using the tracing agent. The agent generates the configuration for you automatically when you run your application (for more information, see [Assisted Configuration with Tracing Agent](../AutomaticMetadataCollection.md#tracing-agent). 
 
 The following steps demonstrate how to use the javaagent tool, and its output, to create a native executable that relies on reflection.
 
@@ -150,6 +150,6 @@ The following steps demonstrate how to use the javaagent tool, and its output, t
 
 ### Related Documentation
 
-* [Assisted Configuration with Tracing Agent](../Agent.md)
-* [java.lang.reflect javadoc](https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/reflect/package-summary.html)
-* [Reflection Use in Native Images](../Reflection.md)
+* [Reachability Metadata: Reflection](../ReachabilityMetadata.md#reflection)
+* [Assisted Configuration with Tracing Agent](../AutomaticMetadataCollection.md#tracing-agent) 
+* [java.lang.reflect Javadoc](https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/reflect/package-summary.html)

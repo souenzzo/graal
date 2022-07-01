@@ -7,20 +7,22 @@ permalink: /reference-manual/native-image/overview/StaticLinking/
 
 # Static Linking
  
-- [Build a Static Binary](#build-a-static-binary)
-- [Build a Mostly Static Binary](#build-a-mostly-static-binary)
-
 GraalVM Native Image by default builds dynamically linked binaries: at build time it loads your application classes and interfaces and hooks them together in a process of dynamic linking.
 
-However, with GraalVM Native Image, you can also create static or mostly static binaries, depending on the purpose.
+However, with GraalVM Native Image, you can also create static or mostly static executables, depending on the purpose.
 
-**Static binaries** are statically linked binaries which can be used without any additional library dependencies.
+**Static native executables** are statically linked binaries which can be used without any additional library dependencies.
 This makes them easier to distribute and to deploy on slim or distroless container images.
 They are created by statically linking against [musl-libc](https://musl.libc.org/), a lightweight `libc` implementation.
 
-**Mostly static binaries** statically link against all libraries except `libc`.
+**Mostly static native executables** statically link against all libraries except `libc`.
 This approach is ideal for deploying such binaries on distroless container images.
 Note that it currently only works when linking against `glibc`.
+
+### Table of Contents
+
+- [Build a Static Binary](#build-a-static-binary)
+- [Build a Mostly Static Binary](#build-a-mostly-static-binary)
 
 ### Prerequisites
 
@@ -44,7 +46,7 @@ You should get the `musl` toolchain first, and then compile and install `zlib` i
     make install
     ```
 
-## Build a Static Binary
+## Build a Static Native Executable
 
 1. First, ensure `$TOOLCHAIN_DIR/bin` is present on your `PATH` variable.
     To verify this, run:
@@ -62,7 +64,7 @@ You should get the `musl` toolchain first, and then compile and install `zlib` i
     native-image --static --libc=musl Class
     ```
 
-## Build a Mostly Static Binary
+## Build a Mostly Static Native Executable
 
 You can build a mostly static native image which statically links everything except `libc`.
 Statically linking all your libraries except `glibc` ensures your application has all the libraries it needs to run on any Linux `glibc`-based distribution.
@@ -76,4 +78,5 @@ native-image -H:+StaticExecutableWithDynamicLibC Class
 
 ### Further Reading
 
-* Run an interactive lab and practice creating small Distroless containers in Oracle Linux environment with GraalVM Native Image and a simple a Spring boot application: [GraalVM Native Image, Spring and Containerisation](https://luna.oracle.com/lab/fdfd090d-e52c-4481-a8de-dccecdca7d68).
+* [Build a Static or Mostly-Static Native Executable](guides/build-static-and-mostly-static-executable.md)
+* Run an interactive lab to create Distroless containers in Oracle Linux environment with GraalVM Native Image and a simple Spring boot application: [GraalVM Native Image, Spring and Containerisation](https://luna.oracle.com/lab/fdfd090d-e52c-4481-a8de-dccecdca7d68)

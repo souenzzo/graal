@@ -8,7 +8,7 @@ permalink: /reference-manual/native-image/guides/use-graalvm-dashboard/
 # Use GraalVM Dashboard to Optimize the Size of a Native Executable
 
 The [GraalVM Dashboard](https://www.graalvm.org/dashboard) is a web-based tool that visualizes the composition of a native executable. It displays the breakdown of packages, classes, and methods included in a native executable, and provides a visual summary of objects that contributed most to its heap size. 
-The GraalVM Dashboard uses report files created by the native image builder. (For more information, see [GraalVM Getting Started Guide](https://www.graalvm.org/dashboard/?ojr=help%3Btopic%3Dgetting-started.md).)
+The GraalVM Dashboard uses report files created by the native image builder. (For more information, see [GraalVM Getting Started](https://www.graalvm.org/dashboard/?ojr=help%3Btopic%3Dgetting-started.md).)
 
 This guide demonstrates how to use the dashboard to optimize the size of a native executable. It introduces two implementations of a "fortune" sample application that simulate the traditional `fortune` Unix program (for more information, see [fortune](https://en.wikipedia.org/wiki/Fortune_(Unix))).
 
@@ -26,13 +26,13 @@ Package the contents of the first implementation ([fortune](https://github.com/g
     ```
     The application should slowly print a random phrase.
 
-    The application's [_pom.xml_](https://github.com/graalvm/graalvm-demos/blob/master/fortune-demo/fortune/pom.xml) file employs the [Native Image Maven plugin](../NativeMavenPlugin.md) to build a native executable, configured to produce diagnostic data using these two options:
+    The application's [_pom.xml_](https://github.com/graalvm/graalvm-demos/blob/master/fortune-demo/fortune/pom.xml) file employs the [Native Image Maven plugin](https://graalvm.github.io/native-build-tools/latest/maven-plugin.html) to build a native executable, configured to produce diagnostic data using these two options:
 
-    ```
+    ```shell
     -H:DashboardDump=fortune -H:+DashboardAll
     ```
 
-    These options result in a file named _fortune.bgv_. (For more information about different options, see [Dumping the Data for GraalVM Dashboard](https://www.graalvm.org/dashboard/?ojr=help%3Btopic%3Dgetting-started.md#dumping-the-data-for-graalvm-dashboard).)
+    These options result in a file named _fortune.bgv_. (For more information about different options, see [Dumping the Data for GraalVM Dashboard](https://www.graalvm.org/dashboard/?ojr=help%3Btopic%3Dgetting-started.md).)
 
     Compare the sizes of the JAR file and the native executable (for example, using `du`):
 
@@ -79,9 +79,9 @@ The first implementation of the fortune application uses the [Jackson JSON parse
     ```
     The application should behave in exactly the same way as the first implementation.
 
-    The application's [_pom.xml_](https://github.com/graalvm/graalvm-demos/blob/master/fortune-demo/staticfortune/pom.xml) file again uses the [Native Image Maven plugin](../NativeMavenPlugin.md) to build a native executable. However, for this implementation it adds an extra option to initialize class `demo.StaticFortune` at build time:
+    The application's [_pom.xml_](https://github.com/graalvm/graalvm-demos/blob/master/fortune-demo/staticfortune/pom.xml) file again uses the [Native Image Maven plugin](https://graalvm.github.io/native-build-tools/latest/maven-plugin.html) to build a native executable. However, for this implementation it adds an extra option to initialize class `demo.StaticFortune` at build time:
 
-    ```
+    ```shell
     -H:DashboardDump=staticfortune -H:+DashboardAll --initialize-at-build-time=demo.StaticFortune
     ```
 
@@ -118,7 +118,6 @@ The first implementation of the fortune application uses the [Jackson JSON parse
 
 ### Related Documentation
 
-* [Class Initialization in Native Image](../ClassInitialization.md)
-* [GraalVM Dashboard Getting Started Guide](https://www.graalvm.org/dashboard/?ojr=help%3Btopic%3Dgetting-started.md)
 * [Making sense of Native Image contents](https://medium.com/graalvm/making-sense-of-native-image-contents-741a688dab4d)
-* [Use of Resources in a Native Executable](../Resources.md)
+* [GraalVM Dashboard](https://www.graalvm.org/dashboard/?ojr=help%3Btopic%3Dgetting-started.md)
+* [Class Initialization in Native Image](../ClassInitialization.md)

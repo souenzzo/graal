@@ -76,5 +76,4 @@ For the demo, you will use a simple HelloWorld Java module gathered with Maven:
 
 ### Related Documentation
 
-Learn more how you can [access resources for a Java module at run time](../docs/Resources.md#resources-in-java-modules). 
-You can ensure the exact modules the resources should be taken from are included into a final binary.
+- Learn more how you can [access resources for a Java module at run time](../Resources.md#resources-in-java-modules).
