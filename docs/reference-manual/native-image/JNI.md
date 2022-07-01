@@ -17,6 +17,18 @@ Java code can load native code from a shared object with `System.loadLibrary()`.
 Alternatively, native code can load the JVM's native library and attach to its Java environment using JNI's Invocation API.
 The Native Image JNI implementation supports both approaches.
 
+### Table of Contents
+
+* [Reflection Metadata](#reflection-metadata)
+* [Object Handles](#object-handles)
+* [Java-to-Native Method Calls](#java-to-native-method-calls)
+* [Native-to-Java Method Calls](#native-to-java-method-calls)
+* [JNI Functions](#jni-functions)
+* [Object Creation](#object-creation)
+* [Field Accesses](#field-accesses)
+* [Exceptions](#exceptions)
+* [Monitors](#monitors)
+
 ## Reflection Metadata
 
 JNI supports looking up classes by their names, and looking up methods and fields by their names and signatures.
@@ -54,6 +66,11 @@ class JNIRegistrationFeature implements Feature {
 ```
 To activate the custom feature `--features=<fully qualified name of JNIRegistrationFeature class>` needs to be passed to native-image.
 [Native Image Build Configuration](BuildConfiguration.md#embedding-a-configuration-file) explains how this can be automated with a `native-image.properties` file in `META-INF/native-image`.
+
+### java.lang.reflect Support
+The JNI functions `FromReflectedMethod` and `ToReflectedMethod` can be used to obtain the corresponding `jmethodID` to a `java.lang.reflect.Method`, or to a `java.lang.reflect.Constructor` object, and vice versa.
+The functions `FromReflectedField` and `ToReflectedField` convert between `jfieldID` and `java.lang.reflect.Field`.
+In order to use these functions, [reflection support](Reflection.md) must be enabled and the methods and fields in question must be included in the reflection configuration, which is specified with `-H:ReflectionConfigurationFiles=`.
 
 ## Object Handles
 
@@ -165,11 +182,6 @@ Native Image provides implementations of these functions.
 However, the `native-image` builder directly assigns intrinsic locks only to objects of classes which the analysis can observe as being used in Java `synchronized` statements and with `wait()`, `notify()` and `notifyAll()`.
 For other objects, synchronization falls back on a slower mechanism which uses a map to store lock associations, which itself needs synchronization.
 For that reason, it can be beneficial to wrap synchronization in Java code.
-
-## java.lang.reflect Support
-The JNI functions `FromReflectedMethod` and `ToReflectedMethod` can be used to obtain the corresponding `jmethodID` to a `java.lang.reflect.Method`, or to a `java.lang.reflect.Constructor` object, and vice versa.
-The functions `FromReflectedField` and `ToReflectedField` convert between `jfieldID` and `java.lang.reflect.Field`.
-In order to use these functions, [reflection support](Reflection.md) must be enabled and the methods and fields in question must be included in the reflection configuration, which is specified with `-H:ReflectionConfigurationFiles=`.
 
 ### Further Reading
 

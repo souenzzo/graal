@@ -36,4 +36,4 @@ They can still be enabled using `--enable-url-protocols=<protocols>`, however th
 
 ### Further Reading
 
-- [JCA Security Services in Native Image](JCASecurityServices.md)
+- [Native Image Build Configuration](BuildConfiguration.md)

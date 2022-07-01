@@ -8,11 +8,6 @@ redirect_from: /$version/reference-manual/native-image/Reflection/
 
 # Reflection in Native Images
 
-* [Automatic Detection](#automatic-detection)
-* [Manual Configuration](#manual-configuration)
-* [Conditional Configuration](#conditional-configuration)
-* [Configuration with Features](#configuration-with-features)
-
 Java reflection support (the `java.lang.reflect.*` API) enables Java code to examine its own classes, methods, fields and their properties at run time.
 
 Native Image has partial support for reflection and needs to know ahead-of-time the reflectively accessed program elements.
@@ -20,9 +15,14 @@ Examining and accessing program elements through `java.lang.reflect.*` or loadin
 (Note: loading classes with `Class.forName(String)` are included here since it is closely related to reflection.)
 
 Native Image tries to resolve the target elements through a static analysis that detects calls to the Reflection API.
-Where the analysis fails, the program elements reflectively accessed at run time must be specified using a manual configuration.
+Where the analysis fails, the program elements reflectively accessed at run time must be specified using a manual configuration. See [Reachability Metadata](ReachabilityMetadata.md) and [Collect Metadata with the Tracing Agent](AutomaticMetadataCollection.md) for more information.
 
-See also the [guide on assisted configuration of Java resources and other dynamic features](BuildConfiguration.md#assisted-configuration-of-native-image-builds).
+### Table of Contents
+
+* [Automatic Detection](#automatic-detection)
+* [Manual Configuration](#manual-configuration)
+* [Conditional Configuration](#conditional-configuration)
+* [Configuration with Features](#configuration-with-features)
 
 ## Automatic Detection
 
@@ -161,7 +161,7 @@ If a `condition` is omitted, the element is always included.
 When the same `condition` is used for two distinct elements in two configuration entries, both elements will be included when the condition is satisfied.
 When a configuration entry should be enabled if one of several types are reachable, it is necessary to add two configuration entries: one entry for each condition.
 
-When used with [assisted configuration](BuildConfiguration.md#assisted-configuration-of-native-image-builds), conditional entries of existing configuration will not be fused with agent-collected entries.
+When used with [assisted configuration](AutomaticMetadataCollection.md#conditional-metadata-collection), conditional entries of existing configuration will not be fused with agent-collected entries.
 
 ## Configuration with Features
 
@@ -185,18 +185,19 @@ class RuntimeReflectionRegistrationFeature implements Feature {
 To activate the custom feature `--features=<fully qualified name of RuntimeReflectionRegistrationFeature class>` needs to be passed to native-image.
 [Native Image Build Configuration](BuildConfiguration.md) explains how this can be automated with a `native-image.properties` file in `META-INF/native-image`.
 
-### Use of Reflection at Image Build Time
+### Use of Reflection at Build Time
 
 Reflection can be used without restrictions during the native image generation, for example, in static initializers.
 At this point, code can collect information about methods and fields and store them in their own data structures, which are then reflection-free at run time.
 
 ### Unsafe Accesses
+
 The `Unsafe` class, although its use is discouraged, provides direct access to the memory of Java objects.
 The `Unsafe.objectFieldOffset()` method provides the offset of a field within a Java object.
 Note that the offsets that are queried during native image generation can be different from the offsets at run time.
 
-
 ### Further Reading
 
 * [Reachability Metadata: Reflection](ReachabilityMetadata.md#reflection)
+* [Collect Metadata with the Tracing Agent](AutomaticMetadataCollection.md)
 * [Class Initialization in Native Image](ClassInitialization.md)

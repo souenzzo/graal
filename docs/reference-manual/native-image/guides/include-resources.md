@@ -1,7 +1,7 @@
 ---
 layout: ni-docs
 toc_group: how-to-guides
-link_title: Include Resources
+link_title: Include Resources in a Native Executable
 permalink: /reference-manual/native-image/guides/include-resources/
 ---
 
@@ -71,5 +71,4 @@ The following steps illustrate how to include a resource in a native executable.
 
 ### Related Documentation
 
-* [Native Image Build Configuration](../BuildConfiguration.md)
-* [Use of Resources in a Native Executable](../Resources.md)
+* [Accessing Resources in Native Image](../Resources.md)

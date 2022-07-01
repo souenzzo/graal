@@ -86,5 +86,6 @@ In addition to the C level API, you can use [JNI Invocation API](JNIInvocationAP
 
 ### Further Reading
 
+* [Build a Native Shared Library](guides/build-native-shared-library.md)
 * [Implementing Native Methods in Java with Native Image using JNI Invocation API](JNIInvocationAPI.md)
 * [Java Native Interface (JNI) on Native Image](JNI.md)
