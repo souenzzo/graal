@@ -1,5 +1,5 @@
 ---
-layout: docs
+layout: ni-docs
 toc_group: optimizations-and-performance
 link_title: Memory Management at Image Run Time
 permalink: /reference-manual/native-image/optimizations-and-performance/MemoryManagement/

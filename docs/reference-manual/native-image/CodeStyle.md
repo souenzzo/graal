@@ -1,5 +1,5 @@
 ---
-layout: docs
+layout: ni-docs
 toc_group: contributing
 link_title: Code Style
 permalink: /reference-manual/native-image/contributing/CodeStyle/

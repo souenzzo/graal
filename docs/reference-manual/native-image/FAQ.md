@@ -1,5 +1,5 @@
 ---
-layout: docs
+layout: ni-docs
 toc_group: native-image
 link_title: FAQ
 permalink: /reference-manual/native-image/FAQ/

@@ -1,5 +1,5 @@
 ---
-layout: docs
+layout: ni-docs
 toc_group: debugging-and-diagnostics
 link_title: Inspection Tool
 permalink: /reference-manual/native-image/debugging-and-diagnostics/InspectTool/

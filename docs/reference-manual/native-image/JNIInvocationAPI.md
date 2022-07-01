@@ -1,5 +1,5 @@
 ---
-layout: docs
+layout: ni-docs
 toc_group: native-interoperability
 link_title: JNI Invocation API
 permalink: /reference-manual/native-image/native-interoperability/JNIInvocationAPI/

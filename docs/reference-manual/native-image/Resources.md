@@ -1,5 +1,5 @@
 ---
-layout: docs
+layout: ni-docs
 toc_group: dynamic-features
 link_title: Accessing Resources
 permalink: /reference-manual/native-image/dynamic-features/Resources/

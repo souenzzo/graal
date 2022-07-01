@@ -1,5 +1,5 @@
 ---
-layout: docs
+layout: ni-docs
 toc_group: metadata
 link_title: Reachability Metadata
 permalink: /reference-manual/native-image/metadata/

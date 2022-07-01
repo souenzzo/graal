@@ -1,5 +1,5 @@
 ---
-layout: docs
+layout: ni-docs
 toc_group: build-overview
 link_title: Static Linking
 permalink: /reference-manual/native-image/overview/StaticLinking/

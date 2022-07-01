@@ -1,5 +1,5 @@
 ---
-layout: docs
+layout: ni-docs
 toc_group: native-interoperability
 link_title: Native Interoperability
 permalink: /reference-manual/native-image/native-interoperability/

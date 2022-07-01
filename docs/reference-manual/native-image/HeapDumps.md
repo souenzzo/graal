@@ -1,5 +1,5 @@
 ---
-layout: docs
+layout: ni-docs
 toc_group: debugging-and-diagnostics
 link_title: Creating Heap Dumps
 permalink: /reference-manual/native-image/debugging-and-diagnostics/HeapDumps/

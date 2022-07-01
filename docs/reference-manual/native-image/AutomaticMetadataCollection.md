@@ -1,5 +1,5 @@
 ---
-layout: docs
+layout: ni-docs
 toc_group: metadata
 link_title: Collect Metadata with the Tracing Agent
 permalink: /reference-manual/native-image/metadata/AutomaticMetadataCollection/

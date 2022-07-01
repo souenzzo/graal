@@ -1,5 +1,5 @@
 ---
-layout: docs
+layout: ni-docs
 toc_group: metadata
 link_title: Compatibility Guide
 permalink: /reference-manual/native-image/metadata/Compatibility/

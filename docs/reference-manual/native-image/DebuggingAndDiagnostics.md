@@ -1,5 +1,5 @@
 ---
-layout: docs
+layout: ni-docs
 toc_group: debugging-and-diagnostics
 link_title: Debugging and Diagnostics
 permalink: /reference-manual/native-image/debugging-and-diagnostics/

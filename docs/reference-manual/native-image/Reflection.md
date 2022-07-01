@@ -1,5 +1,5 @@
 ---
-layout: docs
+layout: ni-docs
 toc_group: dynamic-features
 link_title: Reflection
 permalink: /reference-manual/dynamic-features/Reflection/
