@@ -15,14 +15,19 @@ In this guide you will learn how to enable Native Image Maven plugin to build a 
 
 For demonstration purposes, you will use a fortune teller application that simulates the traditional [fortune Unix program](https://en.wikipedia.org/wiki/Fortune_(Unix)). The data for the fortune phrases is provided by [YourFortune](https://github.com/your-fortune).
 
-## Prepare a Demo Application
-
+We recommend that you follow the instructions and create the application step-by-step. However, you can download the ready-to-use project. Clone [GraalVM demos repository](https://github.com/graalvm/graalvm-demos) and navigate into the `fortune-demo/fortune` directory:
+    ```
+    git clone https://github.com/graalvm/graalvm-demos
+    cd fortune-demo/fortune
+    ```
 > You are expected to have [GraalVM installed with Native Image support](../README.md#install-native-image).
 
-1. Crate a new Java project with **Maven** in your favourite IDE, called "Fortune", in the `org.example` package name. The application should contain a sole Java file with the following content:
+## Prepare a Demo Application
+
+1. Crate a new Java project with **Maven** in your favourite IDE, called "Fortune", in the `demo` package. The application should contain a sole Java file with the following content:
 
     ```java
-    package org.example;
+    package demo;
     
     import com.fasterxml.jackson.core.JsonProcessingException;
     import com.fasterxml.jackson.databind.JsonNode;
@@ -187,7 +192,8 @@ For demonstration purposes, you will use a fortune teller application that simul
         <junit.jupiter.version>5.8.1</junit.jupiter.version>
         <maven.compiler.source>${java.specification.version}</maven.compiler.source>
         <maven.compiler.target>${java.specification.version}</maven.compiler.target>
-        <mainClass>Fortune</mainClass>
+        <imageName>fortune</imageName>
+        <mainClass>demo.Fortune</mainClass>
     </properties>
     
     You just "hardcoded" plugins versions and the entry point class to your application.
@@ -202,7 +208,7 @@ For demonstration purposes, you will use a fortune teller application that simul
     ```shell
     mvn exec:java -Dexec.mainClass=Fortune
     ```
-    The application should return a random saying,  every time you re-run - a new one.
+    The application should return a random saying.
     Now go ahead and build a native version of this application with GraalVM Native Image and Maven.
 
 ## Build a Java Application into a Native Executable with Maven
@@ -237,6 +243,9 @@ For demonstration purposes, you will use a fortune teller application that simul
                         </executions>
                         <configuration>
                             <fallback>false</fallback>
+                            <buildArgs>
+                                <arg>-H:DashboardDump=fortune -H:+DashboardAll</arg>
+                            </buildArgs>
                             <agent>
                                 <enabled>true</enabled>
                                 <options>
@@ -305,7 +314,6 @@ For demonstration purposes, you will use a fortune teller application that simul
 3. Run your application with the agent enabled:
     ```shell
     mvn -Pnative -Dagent exec:exec@java-agent
-    <!-- mvn -Pnative -Dagent=true -DskipTests -DskipNativeBuild=true package exec:exec@java-agent -->
     ```
     The agent generates the configuration files in a subdirectory of `target/native/agent-output`. Those files will be automatically used if you run your build with the agent enabled.
 
@@ -313,9 +321,7 @@ For demonstration purposes, you will use a fortune teller application that simul
 
     ```shell
     mvn -Pnative -Dagent package
-    <!-- mvn -Pnative -Dagent=true -DskipTests package exec:exec@native -->
     ```
-    <!-- Notice the `-DskipTests` command which skips running tests on the JVM with Maven Surefire (enabled by default). -->
     When the command completes a native executable, `fortune`, is generated in the `/target` directory of the project and ready for use.
 
     The executable's name is derived from the artifact ID, but you can specify any custom name in the `native-maven-plugin` plugin within a <configuration> node:
@@ -325,11 +331,14 @@ For demonstration purposes, you will use a fortune teller application that simul
     </configuration>
     ```
 
-5. Run the application as a native executable:
+5. Run the demo by launching a native executable directly or with the Maven profile:
+
+    ```shell
+    ./target/fortune
+    ```
 
     ```shell
     mvn -Pnative exec:exec@native
-    <!-- ./target/fortune -->
     ```
 
     To see the benefits of executing your application as a native executable, `time` the execution and compare with running on the JVM.
