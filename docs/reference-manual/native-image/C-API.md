@@ -82,10 +82,10 @@ int graal_detach_thread(graal_isolatethread_t* thread);
 int graal_tear_down_isolate(graal_isolatethread_t* thread);
 ```
 
-In addition to the C level API, you can use [JNI Invocation API](JNIInvocationAPI.md) to create an isolate from Java, expose and call Java methods embeded in a native shared library.
+In addition to the C level API, you can use the [JNI Invocation API](JNIInvocationAPI.md) to create an isolate from Java, expose and call Java methods embedded in a native shared library.
 
-### Further Reading
+### Related Documentation
 
-* [Build a Native Shared Library](guides/build-native-shared-library.md)
-* [Implementing Native Methods in Java with Native Image using JNI Invocation API](JNIInvocationAPI.md)
-* [Java Native Interface (JNI) on Native Image](JNI.md)
+- [Build a Native Shared Library](guides/build-native-shared-library.md)
+- [Interoperability with Native Code](InteropWithNativeCode.md)
+- [JNI Invocation API](JNIInvocationAPI.md)

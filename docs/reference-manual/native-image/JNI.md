@@ -183,6 +183,8 @@ However, the `native-image` builder directly assigns intrinsic locks only to obj
 For other objects, synchronization falls back on a slower mechanism which uses a map to store lock associations, which itself needs synchronization.
 For that reason, it can be beneficial to wrap synchronization in Java code.
 
-### Further Reading
+### Related Documentation
 
+- [Interoperability with Native Code](InteropWithNativeCode.md)
+- [JNI Invocation API](JNIInvocationAPI.md)
 - [Reachability Metadata: Java Native Interface](ReachabilityMetadata.md#java-native-interface)

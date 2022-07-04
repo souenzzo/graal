@@ -55,7 +55,7 @@ The package name of the class, as well as the name of the method, has to corresp
 The first argument is a portable (e.g., `long`) identifier of the Native Image isolate thread.
 The rest of the arguments match the parameters of the entry point.
 
-## Loading the Native Library
+## Load the Native Library
 
 The next step is to bind the JDK with the generated `.so` library.
 For example, make sure the implementation of the native `Native.add` method is loaded.
@@ -68,7 +68,7 @@ public static void main(String[] args) {
 ```
 This is assuming your `LD_LIBRARY_PATH` environment variable is specified, or the `java.library.path` Java property is properly set.
 
-## Initializing a Native Image Isolate
+## Initialize a Native Image Isolate
 
 Before making calls to the `Native.add` method, we need to create a Native Image isolate.
 Native Image provides a special built-in to allow that: `CEntryPoint.Builtin.CREATE_ISOLATE`.
@@ -103,7 +103,7 @@ public final class Native {
 ```
 The standard JVM is started. It initializes a Native Image isolate, attaches the current thread to the isolate, and the universal answer `42` is then computed three times inside of the isolate.
 
-## Calling JVM from Native Java
+## Call JVM from Native Java
 
 There is a detailed [tutorial on the C interface](https://github.com/oracle/graal/blob/master/substratevm/src/com.oracle.svm.tutorial/src/com/oracle/svm/tutorial/CInterfaceTutorial.java) of Native Image.
 The following example shows how to make a callback to JVM.
@@ -272,7 +272,7 @@ The actual logic can, of course, be made more robust and OS-independent.
 
 Implementing any JVM native method in Java and/or making callbacks to the JVM with Native Image should now be as easy as expanding upon the given example and invoking `native-image`.
 
-### Further Reading
+### Related Documentation
 
-* [Native Image C API](JNI.md)
-* [Java Native Interface (JNI) on Native Image](JNI.md)
+- [Interoperability with Native Code](InteropWithNativeCode.md)
+- [Java Native Interface (JNI) in Native Image](JNI.md)

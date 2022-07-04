@@ -2,12 +2,10 @@
 layout: ni-docs
 toc_group: how-to-guides
 link_title: Build a Native Shared Library
-permalink: /reference-manual/native-image/build-native-shared-library/
+permalink: /reference-manual/native-image/guides/build-native-shared-library/
 ---
 
 # Build a Native Shared Library
-
-You can use GraalVM Native Image to convert Java code into a native shared library that you can then call just like any C function. 
 
 To build a native shared library, pass the command-line argument `--shared` to the `native-image` tool, as follows
 
@@ -192,7 +190,7 @@ If you want to manage Java objects from C, you should consider [JNI Invocation A
 
 ### Related Documentation
 
+* [Embedding Truffle Languages](https://nirvdrum.com/2022/05/09/truffle-language-embedding.html)-- a blog post by Kevin Menard where he compares both mechanisms for exposing Java methods.
 * [Interoperability with Native Code](../InteropWithNativeCode.md)
+* [Java Native Interface (JNI) in Native Image](../JNI.md)
 * [Native Image C API](../C-API.md)
-* [Java Native Interface (JNI) on Native Image](../JNI.md)
-* [Embedding Truffle Languages](https://nirvdrum.com/2022/05/09/truffle-language-embedding.html) blog post by Kevin Menard where he compares both mechanisms for exposing Java methods.
