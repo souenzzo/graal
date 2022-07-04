@@ -16,26 +16,26 @@ If your Java application deployed as a native executable behaves differently tha
 - using the standard Linux GNU Debugger (GDB);
 - using the built-in Java debugging in VS Code enabled with the [GraalVM Tools for Java extension](https://marketplace.visualstudio.com/items?itemName=oracle-labs-graalvm.graalvm).
 
-In this guide you will learn how to debug a Java application running as a native executable using the GNU Debugger. 
-To learn how to debug native executables in VS Code, check [this guide](../../../tools/vscode/graalvm/native-image-debugging.md).
+In this guide you will learn how to debug a native executable using the GNU Debugger. 
+To learn how to debug a native executable using VS Code, check [this guide](../../../tools/vscode/graalvm/native-image-debugging.md).
 
 > Note: Native Image debugging currently works on Linux with initial support for macOS. The feature is experimental.
 
 ## Run a Demo
 
-To build a native executable with debug information, provide the `-g` option to the `native-image` builder.
-This is enough to enable source-level debugging, and the debugger (GDB) then correlates machine instructions with specific source lines in Java files. 
+To build a native executable with debug information, provide the `-g` command-line option to the `native-image` builder.
+This will enable source-level debugging, and the debugger (GDB) then correlates machine instructions with specific source lines in Java files. 
 
-### Prerequisities
+### Prerequisites
 
 - Linux AMD64
 - GNU Debugger (GDB) 10.1 or higher
 
-Follow the steps to test debugging a Java application running as a native executable with GDB. The below workflow is know to work on Linux OS with GDB 10.1.
+Follow the steps to test debugging a native executable with GDB. The below workflow is know to work on Linux OS with GDB 10.1.
 
 1. Save the following code to the file named _GDBDemo.java_. 
 
-2. Compile with the Graal compiler and generate a native executable with debug information:
+2. Compile it and generate a native executable with debug information:
 
     ```shell 
     $JAVA_HOME/bin/javac JFRDemo.java
@@ -43,11 +43,11 @@ Follow the steps to test debugging a Java application running as a native execut
     ```shell
     native-image -g -O0 JFRDemo
     ```
-    The `-g` flag instructs `native-image` to generate debug information. The resulting image will contain debug records in a format GDB understands.
+    The `-g` option instructs `native-image` to generate debug information. The resulting native executable will contain debug records in a format GDB understands.
 
-    Notice that you also pass `-O0` which specifies that no compiler optimizations should be performed. Disabling all optimizations is not required, but in general it makes the debugging experience better.
+    Notice that you can also pass `-O0` which specifies that no compiler optimizations should be performed. Disabling all optimizations is not required, but in general it makes the debugging experience better.
 
-3. Launch the debugger and executae your Java application from the native executable:
+3. Launch the debugger and run your native executable:
 
     ```shell
     gdb ./jfrdemo
@@ -63,11 +63,11 @@ Follow the steps to test debugging a Java application running as a native execut
     <!-- ```
     (gdb) args.length > 0
     ``` -->
-5. Pass `<arg>` to the command line. Step over to the next function call. If the image segfaults, you can print the backtrace of the entire stack (`bt`).
+5. Pass `<arg>` to the command line. Step over to the next function call. If the native executable segfaults, you can print the backtrace of the entire stack (`bt`).
 
 The debugger points machine instructions back from the binary to specific source lines in Java files. Note that single stepping within a compiled method includes file and line number information for inlined code. GDB may switch files even though you are still in the same compiled method.
 
-Most of the regular debugging actions are suppored by GDB, namely:
+Most of the regular debugging actions are supported by GDB, namely:
 
   - single stepping including both into and over function calls
   - stack backtraces (not including frames detailing inlined code)
