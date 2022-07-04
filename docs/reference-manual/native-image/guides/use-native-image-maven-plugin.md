@@ -101,7 +101,21 @@ We recommend that you follow the instructions and create the application step-by
     }
     ```
 
-2. Add an explicit FasterXML Jackson dependency that allows for reading and writing JSON, data-binding, used in the application. Open _pom.xml_, a Maven configuration file, and insert the following in the `<dependencies>` section:
+2. Copy and paste the following file, [fortunes.json](https://github.com/graalvm/graalvm-demos/blob/master/fortune-demo/fortune/src/main/resources/fortunes.json) under `resources/`. Your project tree should be:
+
+    ```shell
+    .
+    ├── pom.xml
+    └── src
+        └── main
+            ├── java
+            │   └── demo
+            │       └── Fortune.java
+            └── resources
+                └── fortunes.json
+    ```
+
+3. Add an explicit FasterXML Jackson dependency that allows for reading and writing JSON, data-binding, used in the application. Open _pom.xml_, a Maven configuration file, and insert the following in the `<dependencies>` section:
 
     ```xml
     <dependencies>
@@ -113,7 +127,7 @@ We recommend that you follow the instructions and create the application step-by
     </dependencies>
     ```
 
-3. Add regular Maven plugins for building and assembling a Maven project into an executable JAR. Insert the following into the `build` section in _pom.xml_:
+4. Add regular Maven plugins for building and assembling a Maven project into an executable JAR. Insert the following into the `build` section in _pom.xml_:
     ```xml
     <build>
         <plugins>
@@ -185,7 +199,8 @@ We recommend that you follow the instructions and create the application step-by
         </plugins>
     </build>
     ```
-4. Replace the default `<properties>` section in `pom.xml` with this content:
+
+5. Replace the default `<properties>` section in `pom.xml` with this content:
 
     <properties>
         <native.maven.plugin.version>0.9.12</native.maven.plugin.version>
@@ -197,23 +212,9 @@ We recommend that you follow the instructions and create the application step-by
     </properties>
     
     You just "hardcoded" plugins versions and the entry point class to your application.
+    The next steps will be focused what you should do to enable Maven plugin for GraalVM Native Image.
 
-5. Now compile and run the application on the JVM (GraalVM SDK). From the root application directory, execute:
-
-    ```shell
-    mvn clean package
-    ```
-    When the build succeeds, run the application on the JVM. Since you have installed GraalVM, it will run on GraalVM JDK.
-
-    ```shell
-    mvn exec:java -Dexec.mainClass=Fortune
-    ```
-    The application should return a random saying.
-    Now go ahead and build a native version of this application with GraalVM Native Image and Maven.
-
-## Build a Java Application into a Native Executable with Maven
-
-1. Register the Maven plugin for GraalVM Native Image, `native-maven-plugin`, in the profile called `native` by adding the following to _pom.xml_:
+6. Register the Maven plugin for GraalVM Native Image, `native-maven-plugin`, in the profile called `native` by adding the following to _pom.xml_:
     ```xml
     <profiles>
         <profile>
@@ -275,7 +276,7 @@ We recommend that you follow the instructions and create the application step-by
     - To enable the agent via the command line, pass the `-Dagent=true` flag when running Maven.
     So your next step is to run with the agent.
 
-2. Before running with the agent, register a separate Mojo execution in the `native` profile which allows forking the Java process. It is required to execute your application with the agent.
+7. Before running with the agent, register a separate Mojo execution in the `native` profile which allows forking the Java process. It is required to execute your application with the agent.
     ```xml
     <plugin>
         <groupId>org.codehaus.mojo</groupId>
@@ -309,15 +310,24 @@ We recommend that you follow the instructions and create the application step-by
             </execution>
         </executions>
     </plugin>
+    ``` 
+    Now you are all set to convert this Java application into a native executable with Native Image Maven plugin.
+
+## Build a Java Application into a Native Executable with Maven 
+
+1. Compile the project on the JVM (GraalVM SDK) to receive a runnable JAR with all dependencies. From the root application directory, execute:
+
+    ```shell
+    mvn clean package
     ```
 
-3. Run your application with the agent enabled:
+2. Run your application with the agent enabled:
     ```shell
     mvn -Pnative -Dagent exec:exec@java-agent
     ```
     The agent generates the configuration files in a subdirectory of `target/native/agent-output`. Those files will be automatically used if you run your build with the agent enabled.
 
-4. Now build a native executable directly with Maven by applying the required configuration:
+3. Now build a native executable directly with Maven:
 
     ```shell
     mvn -Pnative -Dagent package
@@ -331,7 +341,7 @@ We recommend that you follow the instructions and create the application step-by
     </configuration>
     ```
 
-5. Run the demo by launching a native executable directly or with the Maven profile:
+4. Run the demo by launching a native executable directly or with the Maven profile:
 
     ```shell
     ./target/fortune
@@ -343,7 +353,7 @@ We recommend that you follow the instructions and create the application step-by
 
     To see the benefits of executing your application as a native executable, `time` the execution and compare with running on the JVM.
 
-The configuration of Maven plugin for GraalVM Native Image building could go much further than in this guide. Check the [plugin documentation](https://graalvm.github.io/native-build-tools/latest/maven-plugin.html#agent-support).
+The configuration of Native Image Maven plugin could go much further than in this guide. Check the [plugin documentation](https://graalvm.github.io/native-build-tools/latest/maven-plugin.html#agent-support).
 To remind, if your application does not call dynamically any classes at run time, the execution with the agent is needless. 
 Your workflow in that case you just be:
 
