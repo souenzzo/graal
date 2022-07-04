@@ -1,13 +1,15 @@
 ---
 layout: ni-docs
 toc_group: how-to-guides
-link_title: Build a Static or Mostly-Static Native Executable
+link_title: Build a Statically Linked or Mostly-Statically Linked Native Executable
 permalink: /reference-manual/native-image/build-static-executables/
 ---
 
-# Build a Static or Mostly-Static Native Executable
+# Build a Statically Linked or Mostly-Statically Linked Native Executable
 
-With GraalVM Native Image you can create a static or mostly-static native executable, depending on your needs. 
+GraalVM Native Image by default builds dynamically linked binaries: at build time it loads your application classes and interfaces and hooks them together in a process of dynamic linking.
+
+However, you can create a statically linked or mostly-static linked native executable, depending on your needs. 
 
 **A static native executable** is a statically linked binary that can be used without any additional library dependencies.
 A static native executable is easy to distribute and deploy on a slim or distroless container (a scratch container).
@@ -19,6 +21,12 @@ This approach is ideal for deployment on a distroless container image.
 > Note: This currently only works when linked against `glibc`.
 
 This guide shows how you can take advantage of Native Image linking options including fully dynamic, fully static, and mostly static (except `libc`) to generate an executable ideal for your deployment scenario.
+
+### Table of Contents
+
+- [Prerequisites] (#prerequisites-and-preparation)
+- [Build a Static Binary](#build-a-static-native-executable)
+- [Build a Mostly Static Binary](#build-a-mostly-static-executable)
 
 ## Prerequisites and Preparation
 
