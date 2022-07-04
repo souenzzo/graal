@@ -12,16 +12,16 @@ Native Image supports a wide range of options to configure the `native-image` bu
 
 ### Table of Contents
 
-* [Embedding a Configuration File](#embedding-a-configuration-file)
+* [Embed a Configuration File](#embed-a-configuration-file)
 * [Configuration File Format](#configuration-file-format)
 * [Order of Arguments Evaluation](#order-of-arguments-evaluation)
 * [Memory Configuration for Native Image Build](#memory-configuration-for-native-image-build)
-* [Specifying Types Required to Be Defined at Build Time](#specifying-types-required-to-be-defined-at-build-time)
+* [Specify Types Required to Be Defined at Build Time](#specify-types-required-to-be-defined-at-build-time)
  
-## Embedding a Configuration File
+## Embed a Configuration File
 
 We recommend that you provide the configuration for the `native-image` builder by embedding a _native-image.properties_ file into a project JAR file.
-The `native-image` builder will also automatically pick up all configuration options provided in the _META-INF/native-image/_ directory (or any of its subdirectories) and use it to construct `native-image` command line arguments.
+The `native-image` builder will also automatically pick up all configuration options provided in the _META-INF/native-image/_ directory (or any of its subdirectories) and use it to construct `native-image` command-line options.
 
 To avoid a situation when constituent parts of a project are built with overlapping configurations, we recommended you use subdirectories within _META-INF/native-image_: a JAR file built from multiple maven projects cannot suffer from overlapping `native-image` configurations.
 For example:
@@ -48,14 +48,14 @@ Other options that work in this context are:
 * `-H:ResourceConfigurationResources`
 * `-H:SerializationConfigurationResources`
 
-By having such a composable _native-image.properties_ file, building a native executable does not require any additional arguments on the command line.
+By having such a composable _native-image.properties_ file, building a native executable does not require any additional option on the command line.
 It is sufficient to run the following command:
 ```shell
 $JAVA_HOME/bin/native-image -jar target/<name>.jar
 ```
 
 To identify which configuration is applied when building a native executable, use `native-image --verbose`.
-This shows from where `native-image` picks up the configurations to construct the final composite configuration command line options for the native image builder.
+This shows from where `native-image` picks up the configurations to construct the final composite configuration command-line options for the native image builder.
 ```shell
 native-image --verbose -jar build/basic-app-0.1-all.jar
 Apply jar:file://~/build/basic-app-0.1-all.jar!/META-INF/native-image/io.netty/common/native-image.properties
@@ -78,7 +78,7 @@ The following properties are supported.
 
 **Args**
 
-Use this property if your project requires custom `native-image` command line options to build correctly.
+Use this property if your project requires custom `native-image` command-line options to build correctly.
 For example, the `native-image-configure-examples/configure-at-runtime-example` contains `Args = --initialize-at-build-time=com.fasterxml.jackson.annotation.JsonProperty$Access` in its _native-image.properties_ file to ensure the class `com.fasterxml.jackson.annotation.JsonProperty$Access` is initialized at executable build time.
 
 **JavaArgs**
@@ -93,7 +93,7 @@ If `ImageName` is not used, a name is automatically chosen:
     * `native-image -jar <name.jar>` has a default executable name `<name>`
     * `native-image -cp ... fully.qualified.MainClass` has a default executable name `fully.qualified.mainclass`
 
-Note that using `ImageName` does not prevent the user overriding the name via the command line.
+Note that using `ImageName` does not prevent you from overriding the name via the command line.
 For example, if `foo.bar` contains `ImageName=foo_app`:
     * `native-image -jar foo.bar` generates the executable `foo_app` but
     * `native-image -jar foo.bar application` generates the executable `application`
@@ -108,7 +108,7 @@ export NATIVE_IMAGE_USER_HOME= $HOME/.local/share/native-image
 
 ## Order of Arguments Evaluation
 The options passed to `native-image` are evaluated from left to right.
-This also extends to arguments that are passed indirectly via configuration files in the _META-INF/native-image_ directory.
+This also extends to options that are passed indirectly via configuration files in the _META-INF/native-image_ directory.
 Consider the example where there is a JAR file that includes _native-image.properties_ containing `Args = -H:Optimize=0`.
 You can override the setting that is contained in the JAR file by using the `-H:Optimize=2` option after `-cp <jar-file>`.
 
@@ -146,11 +146,11 @@ By default, the `native-image` tool uses up to 32 threads (but not more than the
 
 For other related options available to the `native-image` tool, see the output from the command `native-image --expert-options-all`.
 
-## Specifying Types Required to Be Defined at Build Time
+## Specify Types Required to Be Defined at Build Time
 
-A well-structured library or application should handle linking of Java types (ensuring all reachable Java types are fully defined at build time) when building a native image by itself.
-The default behavior is to throw linking errors, if they occur, at run time. 
-However, you can prevent unwanted linking errors by specifing which classes are required to be fully linked at build time.
+A well-structured library or application should handle linking of Java types (ensuring all reachable Java types are fully defined at build time) when building a native binary by itself.
+The default behavior is to throw linking errors, if they occur, at runtime. 
+However, you can prevent unwanted linking errors by specifying which classes are required to be fully linked at build time.
 For that, use the `--link-at-build-time` option. 
 If the option is used in the right context (see below), you can specify required classes to link at build time without explicitly listing classes and packages.
 It is designed in a way that libraries can only configure their own classes, to avoid any side effects on other libraries.
@@ -174,8 +174,10 @@ This variant requires arguments that are of the same type as the arguments passe
 The given entries are searched and all classes inside are registered as `--link-at-build-time` classes.
 This option is only allowed to be used on command line.
 
-### Further Reading
+### Related Documentation
 
-* [Reachability Metadata](ReachabilityMetadata.md)
-* [Class Initialization in Native Image](ClassInitialization.md)
-* [Native Image Basics](NativeImageBasics.md)
+- [Class Initialization in Native Image](ClassInitialization.md)
+- [Native Image Basics](NativeImageBasics.md)
+- [Native Image Build Options](BuildOptions.md)
+- [Native Image Build Overview](BuildOverview.md)
+- [Reachability Metadata](ReachabilityMetadata.md)
