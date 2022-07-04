@@ -18,9 +18,9 @@ This guide shows how to apply PGO and transform your Java application into an op
 
 ## Run a Demo
 
-For the demo part, you will run a Java application performing queries implemented with the [Java Streams API](https://docs.oracle.com/javase/8/docs/api/java/util/stream/package-summary.html). A user is expected to provide 2 integer arguments: a number of iterations and length of the data array. The application creates the data set with a deterministic random seed and iterate 10 times. The time for each iteration to finish and its checksum is printed to the console.
+For the demo part, you will run a Java application performing queries implemented with the [Java Streams API](https://docs.oracle.com/javase/8/docs/api/java/util/stream/package-summary.html). A user is expected to provide two integer arguments: the number of iterations and the length of the data array. The application creates the data set with a deterministic random seed and iterates 10 times. The time taken for each iteration  and its checksum is printed to the console.
 
-Below is the stream expression that we want to benchmark:
+Below is the stream expression to optimize:
 
 ```java
 Arrays.stream(persons)
@@ -129,62 +129,62 @@ Follow these steps to build an optimized native executable using PGO.
     }
     ```
 
-2.  Compile the application with the GraalVM's default JIT compiler (the Graal compiler):
+2.  Compile the application:
     ```shell 
     $JAVA_HOME/bin/javac Streams.java
     ```
-    (Optional) Run the demo application with `java`, on GraalVM's JDK, giving it some load to see the performance.
+    (Optional) Run the demo application, providing some arguments to observe performance.
     ```shell
     $JAVA_HOME/bin/java Streams 100000 200
     ```
 
-3. Build a native executable with GraalVM Native Image from a class file, and run it to compare the performance:
+3. Build a native executable from the class file, and run it to compare the performance:
     ```shell
     $JAVA_HOME/bin/native-image Streams
     ```
     An executable file, `streams`, is created in the current working directory. 
-    Now run it with the same load to see the performance:
+    Now run it with the same arguments to see the performance:
 
     ```shell
     ./streams 100000 200
     ```
     This version of the program is expected to run slower than on GraalVM's or any regular JDK.
     
-    Next you will build an "instrumented" version of the executable, then run it to gather profiles, and, finally, build an optimized executable based on the gathered profiles.
 
 4. Build an instrumented native executable by passing the `--pgo-instrument` option to `native-image`:
     
     ```shell
     $JAVA_HOME/bin/native-image --pgo-instrument Streams
     ```
-5. Run it with some load to collect the code-execution-frequency profiles:
+5. Run it to collect the code-execution-frequency profiles:
 
     ```shell
     ./streams 100000 20
     ```
 
-    Notice that you run profiling with much smaller data size.
-    Profiles collected from this run are stored in the _default.iprof_ file, if nothing else is specified.
+    Notice that you can profile with a much smaller data size.
+    Profiles collected from this run are stored by default in the _default.iprof_ file.
 
-   > Note: You can specify where to collect the profiles when running an instrumented native executable by passing the `-XX:ProfilesDumpFile=YourFileName` option at run time. You can also collect multiple profile files, by specifying different names, and pass them to the `native-image` tool at build time.
+   > Note: You can specify where to collect the profiles when running an instrumented native executable by passing the `-XX:ProfilesDumpFile=YourFileName` option at run time. 
 
 6. Finally, build an optimized native executable by specifying the path to the collected profiles:
 
     ```shell
     $JAVA_HOME/bin/native-image --pgo=default.iprof Streams
     ```
+  > Note: You can also collect multiple profile files, by specifying different filenames, and pass them to the `native-image` tool at build time.
 
     Run this optimized native executable timing the execution to see the system resources and CPU usage:
     ```
     time ./streams 100000 200
     ```
-    You should get the performance comparable to, or faster, than the Java version of the program. For example, on a machine with 16 GB of memory and 8 cores, the `TOTAL time` for 10 iterations shriked from ~2200 to ~270 milliseconds.
+    You should get the performance comparable to, or faster, than the Java version of the program. For example, on a machine with 16 GB of memory and 8 cores, the `TOTAL time` for 10 iterations reduced from ~2200 to ~270 milliseconds.
 
 This guide showed how you can optimize native executables for additional performance gain and higher throughput.
-GraalVM Enterprise Edition offers extra benefits for building native executables, such as  Profile-Guided Optimisations (PGO). 
+GraalVM Enterprise Edition offers extra benefits for building native executables, such as  Profile-Guided Optimizations (PGO). 
 With PGO you "train" your application for specific workloads and significantly improve the performance.
 
 ### Related Documentation
 
-- [Profile-Guided Optimizations](../PGOEnterprise.md)
 - [Improving performance of GraalVM native images with profile-guided optimizations](https://medium.com/graalvm/improving-performance-of-graalvm-native-images-with-profile-guided-optimizations-9c431a834edb)
+- [Profile-Guided Optimizations](../PGOEnterprise.md)
