@@ -91,24 +91,8 @@ Class<?>[] interfaces = {java.util.Comparator.class};
 The static analysis covers code patterns most frequently used to define dynamic proxy classes.
 For the exceptional cases where the analysis cannot discover the interface array there is also a manual dynamic proxy configuration mechanism.
 
-## Manual Configuration
 
-Dynamic proxy classes can be generated at image build time by specifying the list of interfaces that they implement.
-Native Image provides two options for that: `-H:DynamicProxyConfigurationFiles=<comma-separated-config-files>` and `-H:DynamicProxyConfigurationResources=<comma-separated-config-resources>`. These options accept JSON files whose structure is an array of arrays of fully qualified interface names. For example:
+### Related Documentation
 
-```json
-[
- { "interfaces": [ "java.lang.AutoCloseable", "java.util.Comparator" ] },
- { "interfaces": [ "java.util.Comparator" ] },
- { "interfaces": [ "java.util.List" ] }
-]
-```
-
-> NOTE: The order of the specified proxy interfaces is significant: two requests for a `Proxy` class with the same combination of interfaces but in a different order will result in two distinct behaviours (for more detailed information, refer to [`Proxy Class `javadoc](https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/reflect/Proxy.html).
-
-The `java.lang.reflect.Proxy` API also allows creation of a dynamic proxy that does not implement any user provided interfaces.
-In this case the generated dynamic proxy class only implements `java.lang.reflect.Proxy`.
-
-### Further Reading
-
+- [Configure Dynamic Proxies Manually](guides/configure-dynamic-proxies.md)
 - [Reachability Metadata: Dynamic Proxy](ReachabilityMetadata.md#dynamic-proxy)
