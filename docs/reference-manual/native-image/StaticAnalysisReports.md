@@ -8,15 +8,15 @@ redirect_from: /$version/reference-manual/native-image/Reports/
 
 # Points-to Analysis Reports
 
-The points-to analysis produces two kinds of reports: analysis call tree and image object tree. 
-This information is produced by an intermediate step in the image building process and represents the static analysis view of the call graph and heap object graph. 
-These graphs are further transformed in the image building process before they are AOT compiled into the image and written into the image heap, respectively.
+The points-to analysis produces two kinds of reports: an analysis call tree and an object tree. 
+This information is produced by an intermediate step in the building process and represents the static analysis view of the call graph and heap object graph. 
+These graphs are further transformed in the building process before they are compiled ahead-of-time into the binary and written into the binary heap, respectively.
 
 ## Call tree
 The call tree is a a breadth-first tree reduction of the call graph as seen by the points-to analysis.
-The points-to analysis eliminates calls to methods that it determines cannot be reachable at runtime, based on the analysed receiver types.
-It also completely eliminates invocations in unreachable code blocks, e.g., blocks guarded by a type check that always fails.
-The call tree report is enabled using the `-H:+PrintAnalysisCallTree` option and can be formatted either as a `TXT` file (default) or as a set of `CSV` files using the `-H:PrintAnalysisCallTreeType=CSV` option.
+The points-to analysis eliminates calls to methods that it determines cannot be reachable at runtime, based on the analyzed receiver types.
+It also completely eliminates invocations in unreachable code blocks, such as blocks guarded by a type check that always fails.
+The call tree report is enabled using the `-H:+PrintAnalysisCallTree` command-line option and can be formatted either as a `TXT` file (default) or as a set of `CSV` files using the `-H:PrintAnalysisCallTreeType=CSV` option.
 
 ### TXT Format
 
@@ -28,9 +28,9 @@ VM Entry Points
 │   ├── directly calls <callee> id=<callee-id> @bci=<invoke-bci>
 │   │   └── <callee-sub-tree>
 │   ├── virtually calls <callee> @bci=<invoke-bci>
-│   │   ├── is overridden by <overide-method-i> id=<overide-method-i-id>
+│   │   ├── is overridden by <override-method-i> id=<override-method-i-id>
 │   │   │   └── <callee-sub-tree>
-│   │   └── is overridden by <overide-method-j> id-ref=<overide-method-j-id>
+│   │   └── is overridden by <override-method-j> id-ref=<override-method-j-id>
 │   └── interfacially calls <callee> @bci=<invoke-bci>
 │       ├── is implemented by <implementation-method-x> id=<implementation-method-x-id>
 │       │   └── <callee-sub-tree>
@@ -40,7 +40,7 @@ VM Entry Points
 └── ...
 ```
 
-The tags between `<`and `>` are expanded with concrete values, the rest is printed as presented.
+The tags between `<`and `>` are expanded with concrete values, the remainder is printed as illustrated.
 The methods are formatted using `<qualified-holder>.<method-name>(<qualified-parameters>):<qualified-return-type>` and are expanded until no more callees can be reached.
 
 Since this is a tree reduction of the call graph each concrete method is expanded exactly once.
@@ -56,22 +56,22 @@ For invokes of inline methods the `<invoke-bci>` is a list of bci values, separa
 
 ### CSV Format
 When using the `CSV` format a set of files containing raw data for methods and their relationships is generated.
-The aim of these files is to enable this raw data to be easily imported into graph databases.
-Graph databases can provide the following functionality:
+The aim of these files is to enable this raw data to be easily imported into a graph database.
+A graph database can provide the following functionality:
 
-* Sophisticated graphical visualization of the call tree graph that provide a different perspective compared to text-based formats.
-* Ability to execute complex queries that can for example show a subset of the tree that causes certain code path to be included in the call tree analysis.
+* Sophisticated graphical visualization of the call tree graph that provides a different perspective compared to text-based formats.
+* Ability to execute complex queries that can (for example) show a subset of the tree that causes certain code path to be included in the call tree analysis.
   This querying functionality is crucial in making big analysis call trees manageable.
 
-The process to import the files into graph databases is specific to each database.
-Please follow the instructions provided by the graph database providers to find out how to import them.
+The process to import the files into a graph database is specific to each database.
+Please follow the instructions provided by the graph database provider.
 
-## Image object tree
-The image object tree is an exhaustive expansion of the objects included in the native image heap.
-The tree is obtained by a depth first walk of the native image heap object graph.
+##  Object tree
+The object tree is an exhaustive expansion of the objects included in the native binary heap.
+The tree is obtained by a depth first walk of the native binary heap object graph.
 It is enabled using the `-H:+PrintImageObjectTree` option.
 The roots are either static fields or method graphs that contain embedded constants.
-The printed values are concrete constant objects added to the native image heap.
+The printed values are concrete constant objects added to the native binary heap.
 Produces a file with the structure:
 
 ```
@@ -101,7 +101,7 @@ Heap roots
 └── ...
 ```
 
-The tags between `<`and `>` are expanded with concrete values, the rest is printed as presented.
+The tags between `<`and `>` are expanded with concrete values, the remainder is printed as illustrated.
 The root fields are formatted using `<qualified-holder>.<field-name>:<qualified-declared-type>`.
 The non-root fields are formatted using `<field-name>:<qualified-declared-type>`.
 The value types are formatted using `<qualified-type>`.
@@ -160,13 +160,13 @@ Roots suppression/expansion:
 
 ### Report Files
 
-The reports are generated in the `reports` subdirectory, relative to the image building directory.
-When executing the `native-image` executable the image build directory defaults to the working directory and can be modified using the `-H:Path=<dir>` option.
+The reports are generated in the `reports` subdirectory, relative to the build directory.
+When executing the `native-image` executable the build directory defaults to the working directory and can be modified using the `-H:Path=<dir>` option.
 
-The call tree report name has the structure `call_tree_<image_name>_<date_time>.txt` when using the `TXT` format or, when using the `CSV` format, the call tree reports' names have the structure `call_tree_*_<image_name>_<date_time>.csv`.
+The call tree report name has the structure `call_tree_<binary_name>_<date_time>.txt` when using the `TXT` format or, when using the `CSV` format, the call tree reports' names have the structure `call_tree_*_<binary_name>_<date_time>.csv`.
 When producing `CSV` formatted call tree reports, symbolic links following the structure `call_tree_*.csv` pointing to the latest call tree CSV reports are also generated.
-The object tree report name has the structure: `object_tree_<image_name>_<date_time>.txt`.
-The image name is the name of the generated image, which can be set with the `-H:Name=<name>` option.
+The object tree report name has the structure: `object_tree_<binary_name>_<date_time>.txt`.
+The binary name is the name of the generated binary, which can be set with the `-H:Name=<name>` option.
 The `<date_time>` is in the `yyyyMMdd_HHmmss` format.
 
 ### Further Reading
