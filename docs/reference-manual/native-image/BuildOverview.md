@@ -29,6 +29,4 @@ For more tweaks and how to properly configure the `native-image` tool, see [Buil
 
 Native Image will output the progress and various statistics when building the native binary. To learn more about the output, and the different build phases, see [Build Output](BuildOutput.md).
 
-With Native Image you can build static or mostly static native binaries, ideal for deploying in containers. Learn more [here](StaticLinking.md).
-
 If you are new to GraalVM Native Image or have little experience using it, see the [Native Image Basics](NativeImageBasics.md) to better understand some key aspects before going further.
