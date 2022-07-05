@@ -16,10 +16,10 @@ This guide shows you how to use the Native Image Maven plugin to build a native 
 You will use a **Fortune demo** application that simulates the traditional [fortune Unix program](https://en.wikipedia.org/wiki/Fortune_(Unix)). The data for the fortune phrases is provided by [YourFortune](https://github.com/your-fortune).
 
 We recommend that you follow the instructions and create the application step-by-step. Alternatively, you can use an existing project: clone the [GraalVM demos repository](https://github.com/graalvm/graalvm-demos) and navigate into the `fortune-demo/fortune` directory:
-    ```
-    git clone https://github.com/graalvm/graalvm-demos
-    cd fortune-demo/fortune
-    ```
+```shell
+git clone https://github.com/graalvm/graalvm-demos && cd fortune-demo/fortune
+```
+
 > You must have [GraalVM installed with Native Image support](../README.md#install-native-image).
 
 ## Prepare a Demo Application
