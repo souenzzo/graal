@@ -10,28 +10,21 @@ permalink: /reference-manual/native-image/guides/use-native-image-gradle-plugin/
 You can use the Gradle plugin for GraalVM Native Image to build a native executable from a Java application in one step, in addition to a runnable JAR. 
 The plugin is provided as part of the [Native Build Tools project](https://graalvm.github.io/native-build-tools/latest/index.html) and uses the [Gradle build tool](https://gradle.org/).
 
-
-The Gradle plugin for GraalVM Native Image works with the `application` plugin and registers a number of tasks and extensions for you. The main tasks that you can run are:
-    
-- `nativeCompile` to trigger the generation of a native executable from your Java application
-- `nativeRun` to run the generated native executable
-- `nativeTestCompile` to build a native executable with tests found in the test source set
-- `nativeTest` to run tests found in the test source set against the native executable
-
-For more information, see the [plugin documentation](https://graalvm.github.io/native-build-tools/latest/gradle-plugin.html).
+The Gradle plugin for GraalVM Native Image works with the `application` plugin and registers a number of tasks and extensions for you. For more information, see the [plugin documentation](https://graalvm.github.io/native-build-tools/latest/gradle-plugin.html).
 
 This guide shows you how to use the Native Image Gradle plugin to build a native executable from a Java application, add support for dynamic feature calls, and run JUnit tests.
 
-The **Fortune demo** is a demo Java application that simulates the traditional [fortune Unix program](https://en.wikipedia.org/wiki/Fortune_(Unix)). 
-The data for the fortune phrases is provided by [YourFortune](https://github.com/your-fortune).
-
-## Prepare a Demo Application
+You will use a **Fortune demo** application that simulates the traditional [fortune Unix program](https://en.wikipedia.org/wiki/Fortune_(Unix)). The data for the fortune phrases is provided by [YourFortune](https://github.com/your-fortune).
 
 > You must have [GraalVM installed with Native Image support](../README.md#install-native-image). 
+
+## Prepare a Demo Application
 
 1. Create a new Java project with **Gradle** in your favorite IDE, called "Fortune". Rename the default filename `App.java` to `Fortune.java` and replace its contents with the following: 
 
     ```java
+    package demo;
+
     import com.fasterxml.jackson.core.JsonProcessingException;
     import com.fasterxml.jackson.databind.JsonNode;
     import com.fasterxml.jackson.databind.ObjectMapper;
@@ -104,45 +97,49 @@ The data for the fortune phrases is provided by [YourFortune](https://github.com
     }
     ```
 
-<!--NOTE: where is the fortunes.json file? -->
+2. Copy and paste the following file, [fortunes.json](https://github.com/graalvm/graalvm-demos/blob/master/fortune-demo/fortune/src/main/resources/fortunes.json) under `resources/`. Your project tree should be:
 
-2. Open the Gradle configuration file _build.gradle_, and define the main class for the application in the `application` section:
+    ```shell
+    .
+    ├── build.gradle
+    ├── settings.gradle
+    └── src
+        └── main
+            ├── java
+            │   └── demo
+            │       └── Fortune.java
+            └── resources
+                └── fortunes.json
     ```
+
+3. Open the Gradle configuration file _build.gradle_, and define the main class for the application in the `application` section:
+    ```xml
     application {
-        mainClass = 'org.yourcompany.yourproject.Fortune'
+        mainClass = 'demo.Fortune'
     }
     ```
 
-3. Add explicit FasterXML Jackson dependencies that provide functionality to read and write JSON, data-binding (used in the demo application). Insert the following three lines in the `dependencies` section of _build.gradle_:
+4. Add explicit FasterXML Jackson dependencies that provide functionality to read and write JSON, data-binding (used in the demo application). Insert the following three lines in the `dependencies` section of _build.gradle_:
 
     ```xml
     implementation 'com.fasterxml.jackson.core:jackson-core:2.13.2'
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.2.2'
     implementation 'com.fasterxml.jackson.core:jackson-annotations:2.13.2'
     ```
+    The next steps will be focused what you should do to enable the Maven plugin for GraalVM Native Image.
 
-4. Compile and build the application using Gradle. From the root application directory, run the following command:
+5. Register the Gradle plugin for GraalVM Native Image. Add the following to `plugins` section of your project’s _build.gradle_ file:
 
-    ```shell
-    ./gradlew build -x test
-    ```
-    This task compiles the source assembles the results into a JAR file. (The `-x test` option explicitly disables tests.)
-    When the build succeeds, build a native version of your application with GraalVM Native Image and Gradle.
-
-## Build a native executable from a Java application using Gradle
-
-1. Register the Gradle plugin for GraalVM Native Image. Add the following to `plugins` section of your project’s _build.gradle_ file:
-
-    ```
+    ```xml
     plugins {
     // ...
 
-    // Apply GraalVM Native Image plugin
     id 'org.graalvm.buildtools.native' version '0.9.11'
     }
     ```
+    The Native Image Gradle plugin discovers which JAR files it needs to pass to the `native-image` builder and what the executable main class should be. 
 
-2. The plugin is not yet available on the Gradle Plugin Portal, so declare an additional plugin repository. Add the following to the _settings.gradle_ file:
+6. The plugin is not yet available on the Gradle Plugin Portal, so declare an additional plugin repository. Add the following to the _settings.gradle_ file:
 
     ```
     pluginManagement {
@@ -153,75 +150,143 @@ The data for the fortune phrases is provided by [YourFortune](https://github.com
     }
     ```
     Note that the `pluginManagement {}` block must appear before any other statements in the file.
+    
+7. Compile and build the application using Gradle. From the root application directory, run:
 
-3. Run the `nativeCompile` task to generate a native executable using Gradle:
+    ```shell
+    ./gradlew build -x test
+    ```
+    
+    This task compiles the source into a runnable JAR with all dependencies. The `-x test` option explicitly disables tests.
+    
+    Thanks to the Native Image Gradle plugin, you can already build a native executable directly by running `./gradlew nativeCompile` (if your application does not call any methods reflectively at run time). 
+
+## Build a Native Executable with Gradle
+
+This demo application is a little more complicated than `HelloWorld`, and [requires metadata](../ReachabilityMetadata.md) before building a native executable. 
+In the real-world scenario, your application will, most likely, call either the Java Native Interface (JNI), Java Reflection, Dynamic Proxy objects, or class path resources - the dynamic features that require metadata. 
+
+The Native Image Gradle plugin simplifies generation of the required metadata by injecting the agent automatically for you [Java agent](https://graalvm.github.io/native-build-tools/latest/gradle-plugin.html#agent-support) at compile time. 
+To enable the agent, just pass the `-Pagent` option to any Gradle tasks that extends `JavaForkOptions` (for example, `test`, `run`). 
+
+Next steps show you how to collect metadata and build a native executable with Gradle
+
+1. Run your application with the agent enabled:
+
+    ```shell
+    ./gradlew -Pagent
+    ```
+
+2. Once the metadata is collected, copy it into the project's `/META-INF/native-image` directory using the `metadataCopy` task:
+
+    ```shell
+    ./gradlew metadataCopy --task run --dir src/main/resources/META-INF/native-image
+    ```
+
+3. Build a native executable using metadata acquired by the agent with Gradle:
 
     ```shell
     ./gradlew nativeCompile
     ```
-    
-    The native executable, named _fortune_, is created in the _build/native/nativeCompile_ directory.
+    The native executable, named _fortune_, is created in the _build/native/nativeCompile_ directory. 
+    You can customize the name of the native executable and pass additional parameters to the plugin in the _build.gradle_ file, as follows:
 
-4. Run your native executable:
+    ```
+    graalvmNative {
+        binaries {
+            main {
+                imageName.set('fortuneteller') 
+                buildArgs.add('--verbose') 
+            }
+        }
+    }
+    ```
+    The name for your native executable will be `fortuneteller`. 
+    Notice how you can pass additional arguments to the `native-image` tool using the `buildArgs.add` syntax.
+
+4. Run the application from the native executable:
 
     ```shell
     ./build/native/nativeCompile/fortune
     ```
 
-You can customize the name of the native executable and pass additional parameters to GraalVM in the _build.gradle_ file, as follows:
+To see the benefits of running your application as a native executable, `time` how long it takes and compare the results with running on the JVM.
 
-```
-graalvmNative {
-    binaries {
-        main {
-            imageName.set('native-application') 
-            buildArgs.add('--verbose') 
-        }
-    }
-}
-```
-The name for your native executable will be `native-application`.
-Notice how you can pass additional arguments to the `native-image` tool using the `buildArgs.add` syntax.
-
-## Add Testing Support
+## Add JUnit Testing
 
 The Gradle plugin for GraalVM Native Image can run [JUnit Platform](https://junit.org/junit5/docs/current/user-guide/) tests on your native executable. This means that the tests will be compiled and run as native code.
 
-Support for JUnit is explicit and you can see the following in _build.gradle_:
-```
-tasks.named('test') {
-    // Use JUnit Platform for unit tests.
-    useJUnitPlatform()
-} 
-```
+1. Add support for JUnit in the _build.gradle_ file:
+    ```xml
+    tasks.named('test') {
+        // Use JUnit Platform for unit tests.
+        useJUnitPlatform()
+    } 
+    ```
 
-You do not need to configure anything additionally, and to run the tests, run:
+2. Run JUnit tests:
 
-```shell
-./gradlew nativeTest
-```
+    ```shell
+    ./gradlew nativeTest
+    ```
 
-Currently, the plugin runs tests in "JVM" mode prior to running tests on the native executable. To disable testing support (which comes by default), add the following configuration to the _build.gradle_ file:
+    Currently, the plugin runs tests in "JVM" mode prior to running tests on the native executable. To disable testing support (which comes by default), add the following configuration to the _build.gradle_ file:
 
-```
+    ```
+    graalvmNative {
+        testSupport = false
+    }
+    ```
+
+### Run Tests with the Agent
+
+If you need to test collecting metadata with the agent, add the `-Pagent` option to the `test` and `nativeTest` task invocations:
+
+1. Run the tests on the JVM with the agent:
+
+    ```shell
+    ./gradlew -Pagent test
+    ```
+    It runs your applicaiton on the JVM with the agent, collects the metadata and uses it for testing on `native-image`.
+    The generated configuration files can be found in the `${buildDir}/native/agent-output/${taskName}` directory, for example, `build/native/agent-output/run`. The Native Image Gradle plugin will also substitute `{output_dir}` in the agent options to point to this directory.
+
+2. Test building a native executable using metadata acquired by the agent:
+
+    ```shell
+    ./gradlew -Pagent nativeTest
+    ```
+
+## Add GraalVM Reachability Metadata Support
+
+Since release 0.9.11, the Native Image Gradle plugin adds experimental support for the [GraalVM Reachability Metadata repository](https://github.com/graalvm/graalvm-reachability-metadata/). 
+This repository provides GraalVM configuration for libraries which do not officially support GraalVM native.
+The support needs to be enabled explicitly.
+
+Register the metadata repository in the _settings.gradle_ file:
+
+```xml
 graalvmNative {
-    testSupport = false
+    metadataRepository {
+        enabled = true
+        version = "1.0.0"
+    }
 }
 ```
+The plugin will automatically download the metadata from the repository.
 
-## Add Support for Tracing Agent
+### Summary
 
-The demo does not call any dynamic features at run time. 
-However, in many real-world use cases, your application will, most likely, call either the Java Native Interface (JNI), Java Reflection, Dynamic Proxy objects (`java.lang.reflect.Proxy`), or class path resources (`Class.getResource`) - the dynamic features that need to be provided to the `native-image` tool in the form of configuration files.
+The configuration of Native Image Gradle plugin could go much further than this guide. Check the [plugin documentation](https://graalvm.github.io/native-build-tools/latest/gradle-plugin.html).
 
-The Native Image Gradle plugin simplifies generation of configuration files by injecting the Tracing Agent automatically for you.
+Note that if your application does not call dynamically any classes at run time, the execution with the agent is needless. 
+Your workflow in that case you just be:
 
-To invoke the agent, add `-Pagent` to the `run` and `nativeBuild` commands, or `test` and `nativeTest` task invocations:
+```shell
+./gradlew build
+./gradlew nativeCompile
+```
 
-* `./gradlew -Pagent run` runs on JVM with the agent
-* `./gradlew -Pagent nativeCompile` builds a native executable using configuration acquired by the agent
-* `./gradlew -Pagent test` runs tests on JVM with the agent
-* `./gradlew -Pagent nativeTest` builds a native executable  using configuration acquired by the agent
+Another advantage of the plugin is that if you use GraalVM Enterprise as your `JAVA_HOME` environment, the plugin builds a native executable with enterprise features enabled.
 
 ### Related Documentation
 
