@@ -151,7 +151,7 @@ Follow these steps to build a native executable that will produce a heap dump wh
     ```
     The heap dump will be created in the working directory while the application continues to run. The heap dump can be opened with the [VisualVM](../../../tools/visualvm.md) tool, as illustrated below.
 
-    ![Heap Dump showing Persons](img/SVMHeapDump.png)
+    ![Heap Dump](img/heap-dump.png)
 
 ## Create a Heap Dump from within a Native Executable
 
@@ -253,7 +253,7 @@ The condition to create a heap dump is provided as an option on the command line
 
     The resulting heap dump can be then opened with the [VisualVM](../../../tools/visualvm.md) tool like any other Java heap dump, as illustrated below.
 
-    ![Heap Dump showing Persons](img/SVMHeapDumpAPI.png)
+    ![Heap Dump showing Persons](img/heap-dump-api.png)
 
 ### Related Documentation
 

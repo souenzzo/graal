@@ -104,7 +104,6 @@ You will use a **Fortune demo** application that simulates the traditional [fort
             fortune.printRandomFortune();
         }
     }
-
     ```
 
 3. Delete the `fortune/src/test/java` directory, you will add tests in a later stage.
@@ -114,23 +113,20 @@ You will use a **Fortune demo** application that simulates the traditional [fort
     ```shell
     .
     ├── fortune
-    │   ├── build.gradle
-    │   └── src
-    │       ├── main
-    │       │   ├── java
-    │       │   │   └── demo
-    │       │   │       └── Fortune.java
-    │       │   └── resources
-    │       │       └── fortunes.json
-    │       └── test
-    │           ├── java
-    │           │   └── demo
-    │           │       └── AppTest.java
-    │           └── resources
+    │   ├── build.gradle
+    │   └── src
+    │       ├── main
+    │       │   ├── java
+    │       │   │   └── demo
+    │       │   │       └── Fortune.java
+    │       │   └── resources
+    │       │       └── fortunes.json
+    │       └── test
+    │           └── resources
     ├── gradle
-    │   └── wrapper
-    │       ├── gradle-wrapper.jar
-    │       └── gradle-wrapper.properties
+    │   └── wrapper
+    │       ├── gradle-wrapper.jar
+    │       └── gradle-wrapper.properties
     ├── gradlew
     ├── gradlew.bat
     └── settings.gradle
@@ -152,7 +148,7 @@ You will use a **Fortune demo** application that simulates the traditional [fort
     implementation 'com.fasterxml.jackson.core:jackson-annotations:2.13.2'
     ```
 
-    Remove the dependency on `guava` that won't be used.
+    Also, remove the dependency on `guava` that will not be used.
 
     The next steps will be focused what you should do to enable the Native Image Gradle plugin.
 
@@ -196,7 +192,7 @@ To fix this, instruct the plugin to automatically detect resources to be include
 10. Run the application again by invoking:
 
     ```shell
-    `./gradlew nativeRun`
+    ./gradlew nativeRun
     ```
     This time, the application starts and prints a random quote.
 
