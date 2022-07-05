@@ -315,13 +315,14 @@ We recommend that you follow the instructions and create the application step-by
 
 ## Build a Native Executable with Maven
 
-1. Compile the project on the Java VM to create a runnable JAR with all dependencies. From the root application directory, run the following:
+1. Compile the project on the Java VM to create a runnable JAR with all dependencies. Open a terminal window and, from the root application directory, run:
 
     ```shell
     mvn clean package
     ```
 
 2. Run your application with the agent enabled:
+
     ```shell
     mvn -Pnative -Dagent exec:exec@java-agent
     ```
@@ -335,6 +336,7 @@ We recommend that you follow the instructions and create the application step-by
     When the command completes a native executable, _fortune_, is created in the _/target_ directory of the project and ready for use.
 
     The executable's name is derived from the artifact ID, but you can specify any custom name in the `native-maven-plugin` plugin within a <configuration> node:
+
     ```xml
     <configuration>
         <imageName>fortuneteller</imageName>
@@ -370,6 +372,7 @@ This plugin requires JUnit Platform 1.8 or higher and Maven Surefire 2.22.0 or h
     ```
 
 2. Add an explicit dependency on the `junit-platform-launcher` artifact to the dependencies section of your native profile configuration as in the following example:
+
     ```xml
     <dependencies>
         <dependency>

@@ -20,7 +20,7 @@ You will use a **Fortune demo** application that simulates the traditional [fort
 
 ## Prepare a Demo Application
 
-1. Create a new Java project with **Gradle** in your favorite IDE, called "Fortune". Rename the default filename `App.java` to `Fortune.java` and replace its contents with the following: 
+1. Create a new Java project with **Gradle** in your favorite IDE, called "Fortune", in the `demo` package. Rename the default filename `App.java` to `Fortune.java` and replace its contents with the following: 
 
     ```java
     package demo;
@@ -101,19 +101,32 @@ You will use a **Fortune demo** application that simulates the traditional [fort
 
     ```shell
     .
-    ├── build.gradle
-    ├── settings.gradle
-    └── src
-        └── main
-            ├── java
-            │   └── demo
-            │       └── Fortune.java
-            └── resources
-                └── fortunes.json
+    ├── app
+    │   ├── build.gradle
+    │   └── src
+    │       ├── main
+    │       │   ├── java
+    │       │   │   └── demo
+    │       │   │       └── Fortune.java
+    │       │   └── resources
+    │       │       └── fortunes.json
+    │       └── test
+    │           ├── java
+    │           │   └── demo
+    │           │       └── AppTest.java
+    │           └── resources
+    ├── gradle
+    │   └── wrapper
+    │       ├── gradle-wrapper.jar
+    │       └── gradle-wrapper.properties
+    ├── gradlew
+    ├── gradlew.bat
+    └── settings.gradle
     ```
 
 3. Open the Gradle configuration file _build.gradle_, and define the main class for the application in the `application` section:
-    ```xml
+
+    ```groovy
     application {
         mainClass = 'demo.Fortune'
     }
@@ -121,7 +134,7 @@ You will use a **Fortune demo** application that simulates the traditional [fort
 
 4. Add explicit FasterXML Jackson dependencies that provide functionality to read and write JSON, data-binding (used in the demo application). Insert the following three lines in the `dependencies` section of _build.gradle_:
 
-    ```xml
+    ```groovy
     implementation 'com.fasterxml.jackson.core:jackson-core:2.13.2'
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.2.2'
     implementation 'com.fasterxml.jackson.core:jackson-annotations:2.13.2'
@@ -130,7 +143,7 @@ You will use a **Fortune demo** application that simulates the traditional [fort
 
 5. Register the Gradle plugin for GraalVM Native Image. Add the following to `plugins` section of your project’s _build.gradle_ file:
 
-    ```xml
+    ```groovy
     plugins {
     // ...
 
@@ -139,25 +152,28 @@ You will use a **Fortune demo** application that simulates the traditional [fort
     ```
     The Native Image Gradle plugin discovers which JAR files it needs to pass to the `native-image` builder and what the executable main class should be. 
 
-6. The plugin is not yet available on the Gradle Plugin Portal, so declare an additional plugin repository. Add the following to the _settings.gradle_ file:
+6. The plugin is not yet available on the Gradle Plugin Portal, so declare an additional plugin repository. Open the _settings.gradle_ file and replace the default content with this:
 
-    ```
+    ```groovy
     pluginManagement {
         repositories {
             mavenCentral()
             gradlePluginPortal()
         }
     }
+
+    rootProject.name = 'fortune'
+    include('fortune')
     ```
-    Note that the `pluginManagement {}` block must appear before any other statements in the file.
+    Note that the `pluginManagement {}` block must appear before any other statements in the file.   
     
-7. Compile and build the application using Gradle. From the root application directory, run:
+7. Compile and build the application using Gradle. Open a terminal window and, from the root application directory, run:
 
     ```shell
-    ./gradlew build -x test
+    ./gradlew build
     ```
     
-    This task compiles the source into a runnable JAR with all dependencies. The `-x test` option explicitly disables tests.
+    This task compiles the source into a runnable JAR with all dependencies.
     
     Thanks to the Native Image Gradle plugin, you can already build a native executable directly by running `./gradlew nativeCompile` (if your application does not call any methods reflectively at run time). 
 
@@ -191,7 +207,7 @@ Next steps show you how to collect metadata and build a native executable with G
     The native executable, named _fortune_, is created in the _build/native/nativeCompile_ directory. 
     You can customize the name of the native executable and pass additional parameters to the plugin in the _build.gradle_ file, as follows:
 
-    ```
+    ```groovy
     graalvmNative {
         binaries {
             main {
@@ -217,7 +233,8 @@ To see the benefits of running your application as a native executable, `time` h
 The Gradle plugin for GraalVM Native Image can run [JUnit Platform](https://junit.org/junit5/docs/current/user-guide/) tests on your native executable. This means that the tests will be compiled and run as native code.
 
 1. Add support for JUnit in the _build.gradle_ file:
-    ```xml
+
+    ```groovy
     tasks.named('test') {
         // Use JUnit Platform for unit tests.
         useJUnitPlatform()
@@ -232,7 +249,7 @@ The Gradle plugin for GraalVM Native Image can run [JUnit Platform](https://juni
 
     Currently, the plugin runs tests in "JVM" mode prior to running tests on the native executable. To disable testing support (which comes by default), add the following configuration to the _build.gradle_ file:
 
-    ```
+    ```groovy
     graalvmNative {
         testSupport = false
     }
@@ -264,7 +281,7 @@ The support needs to be enabled explicitly.
 
 Register the metadata repository in the _settings.gradle_ file:
 
-```xml
+```groovy
 graalvmNative {
     metadataRepository {
         enabled = true
