@@ -5,7 +5,7 @@ link_title: Use Native Image Gradle Plugin
 permalink: /reference-manual/native-image/guides/use-native-image-gradle-plugin/
 ---
 
-# Use Gradle to build a Native Executable from a Java Application
+# Use Gradle to Build a Native Executable from a Java Application
 
 You can use the Gradle plugin for GraalVM Native Image to build a native executable from a Java application in one step, in addition to a runnable JAR. 
 The plugin is provided as part of the [Native Build Tools project](https://graalvm.github.io/native-build-tools/latest/index.html) and uses the [Gradle build tool](https://gradle.org/).

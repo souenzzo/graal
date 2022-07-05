@@ -10,7 +10,7 @@ redirect_from: /$version/reference-manual/native-image/BuildOutput/
 
 * [Build Stages](#build-stages)
 * [Resource Usage Statistics](#resource-usage-statistics)
-* [Machine-readable Build Output](#machine-readable-build-output)
+* [Machine-Readable Build Output](#machine-readable-build-output)
 * [Build Output Options](#build-output-options)
 
 Here you will find information about the build output of GraalVM Native Image.
@@ -189,7 +189,7 @@ If the [GC statistics](#glossary-garbage-collection) do not show any problems, t
 The CPU time used by the process divided by the total process time.
 Increase the number of CPU threads to reduce the time to build the native binary.
 
-## Machine-readable Build Output
+## Machine-Readable Build Output
 
 The build output produced by the `native-image` builder is designed for humans, can evolve with new releases, and should thus not be parsed in any way by tools.
 Instead, use the `-H:BuildOutputJSONFile=<file.json>` option to instruct the builder to produce machine-readable build output in JSON format that can be used, for example, for building monitoring tools.

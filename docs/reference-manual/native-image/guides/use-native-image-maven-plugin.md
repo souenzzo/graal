@@ -202,6 +202,7 @@ We recommend that you follow the instructions and create the application step-by
 
 5. Replace the default `<properties>` section in the _pom.xml_ file with this content:
 
+    ```xml
     <properties>
         <native.maven.plugin.version>0.9.12</native.maven.plugin.version>
         <junit.jupiter.version>5.8.1</junit.jupiter.version>
@@ -210,9 +211,9 @@ We recommend that you follow the instructions and create the application step-by
         <imageName>fortune</imageName>
         <mainClass>demo.Fortune</mainClass>
     </properties>
-    
+    ```
     The statements "hardcoded" plugin versions and the entry point class to your application.
-    The next steps will be focused what you should do to enable the Maven plugin for GraalVM Native Image.
+    The next steps will show you how enable the Maven plugin for GraalVM Native Image.
 
 6. Register the Maven plugin for GraalVM Native Image, `native-maven-plugin`, in the profile called `native` by adding the following to the  _pom.xml_ file:
     ```xml
