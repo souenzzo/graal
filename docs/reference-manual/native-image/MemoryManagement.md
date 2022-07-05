@@ -1,12 +1,12 @@
 ---
 layout: ni-docs
 toc_group: optimizations-and-performance
-link_title: Memory Management at Image Run Time
+link_title: Memory Management
 permalink: /reference-manual/native-image/optimizations-and-performance/MemoryManagement/
 redirect_from: /$version/reference-manual/native-image/MemoryManagement/
 ---
 
-# Memory Management at Image Run Time
+# Memory Management
 
 A native image, when being executed, does not run on the Java HotSpot VM but on the runtime system provided with GraalVM.
 That runtime includes all necessary components, and one of them is the memory management.

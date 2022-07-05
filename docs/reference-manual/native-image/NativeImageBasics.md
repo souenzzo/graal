@@ -19,24 +19,24 @@ To produce a minimal image, Native Image employs a process called [**static anal
 
 ### Table of Contents
 
-* [Image Build Time vs Image Run Time](#image-build-time-vs-image-run-time)
+* [Build Time vs Run Time](#build-time-vs-run-time)
 * [Native Image Heap](#native-image-heap)
-* [Static Analysis, Reachability, and Closed-World Assumption](#static-analysis-reachability-and-closed-world-assumption)
+* [Static Analysis](#static-analysis)
 
-## Image Build Time vs Image Run Time
+## Build Time vs Run Time
 
 During the image build, Native Image may execute user code.
 This code can have side effects, such as writing a value to a static field of a class.
-We say that this code is executed at *image build time*.
+We say that this code is executed at *build time*.
 Values written to static fields by this code are saved in the [**image heap**](#native-image-heap).
-*Image run time* refers to code and state in the binary when it is executed.
+*Run time* refers to code and state in the binary when it is executed.
 
 The easiest way to see the difference between these two concepts is through [configurable class initialization](ClassInitialization.md).
 In Java, a class is initialized when it is first used.
-Every Java class used during the image build is said to be **build-time initialized**.
+Every Java class used at build time is said to be **build-time initialized**.
 Note that merely loading a class does not necessarily initialize it.
-The static class initializer of build time initialized classes executes **on the JVM running the image build**.
-If a class is initialized at image build time, its static fields are saved in the produced binary.
+The static class initializer of build-time initialized classes executes **on the JVM running the image build**.
+If a class is initialized at build time, its static fields are saved in the produced binary.
 At run time, using such a class for the first time does not trigger class initialization.
 
 Users can trigger class initialization at build time in different ways:
@@ -177,7 +177,7 @@ Hello, World! My message is: native
 The class initializer of the `Example` class was executed at image build time.
 This created a `String` object for the `message` field and stored it inside the image heap.
 
-## Static Analysis, Reachability, and Closed-World Assumption
+## Static Analysis
 
 Static analysis is a process that determines which program elements (classes, methods and fields) are used by an application.
 These elements are also referred to as **reachable code**.
